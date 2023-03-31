@@ -1,0 +1,350 @@
+@import "reset.scss";
+
+body {
+    background-color: black;
+    font-family: "Roboto", sans-serif;
+    // font-family: 'Urbanist';
+}
+
+:root {
+    --primary: #019cff;
+    --primary-more-dark: #005da1;
+    --special: #f9960b;
+    --bland: #b6cedd;
+}
+
+.container {
+    width: 80%;
+    margin: 0 auto;
+}
+
+section {
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.reveal {
+    position: relative;
+    transform: translateY(150px);
+    opacity: 0;
+    transition: 1s all ease;
+}
+
+.reveal.active {
+    transform: translateY(0);
+    opacity: 1;
+}
+
+.no1-page {
+    width: 100%;
+    height: 100vh;
+    background: url(https://cdn.discordapp.com/attachments/1089123119668658206/1091207896345354320/46195.png) no-repeat
+        center/cover;
+    box-shadow: 0px 0px 1000px 500px rgba(0, 0, 0, 0.6) inset;
+    .content {
+        position: relative;
+        z-index: 2;
+        width: 100%;
+        height: 100%;
+        .header {
+            display: flex;
+            align-self: center;
+            justify-content: space-between;
+            width: 100%;
+            padding: 30px 0;
+            ul.menu-options {
+                display: flex;
+                align-items: center;
+                li {
+                    padding: 0 20px;
+                    span {
+                        cursor: pointer;
+                        display: block;
+                        font-size: 18px;
+                        color: #fff;
+                        font-weight: bold;
+                        transition: 0.3s;
+                        &:hover {
+                            color: var(--primary);
+                        }
+                    }
+                }
+            }
+            .group-login-language {
+                display: flex;
+                align-items: center;
+                .group-login-register {
+                    display: flex;
+                    align-self: center;
+                    span {
+                        cursor: pointer;
+                        display: block;
+                        font-weight: bold;
+                    }
+                    .btn {
+                        padding: 6px 18px;
+                    }
+                    #btnRegister {
+                        margin-right: 10px;
+                        border-radius: 15px;
+                        color: #fff;
+                        transition: 0.3s;
+                        &:hover {
+                            color: var(--primary);
+                        }
+                    }
+                    #btnLogin {
+                        border-radius: 15px;
+                        background-color: #fff;
+                        color: black;
+                        transition: 0.3s;
+                        &:hover {
+                            color: #fff;
+                            background-color: var(--primary);
+                        }
+                    }
+                }
+                .language {
+                    cursor: pointer;
+                    color: #fff;
+                    border: 1px solid #fff;
+                    border-radius: 15px;
+                    padding: 4px 12px;
+                    margin-left: 10px;
+                    transition: 0.3s;
+                    &:hover {
+                        border: 1px solid var(--primary);
+                        i,
+                        span {
+                            color: var(--primary);
+                        }
+                    }
+                    span {
+                        display: inline-block;
+                    }
+                }
+            }
+        }
+        .title {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: #fff;
+            text-align: center;
+            h1 {
+                font-size: 100px;
+                animation: 5s cinematicInOut ease-in-out forwards;
+            }
+            p {
+                font-size: 28px;
+                animation: 5s anim-lineUp ease-out forwards;
+            }
+        }
+    }
+}
+
+.no2-page {
+    width: 100%;
+    height: 100vh;
+    background: url(https://cdn.discordapp.com/attachments/1089123119668658206/1091230578399002624/son-doong-1920x1080-vietnam-cave-4k-16681.png) no-repeat
+        center/cover;
+    box-shadow: 0px 0px 1000px 500px rgba(0, 0, 0, 0.5) inset;
+    .content {
+        position: relative;
+        z-index: 2;
+        width: 100%;
+        height: 100%;
+        .container {
+            position: relative;
+            height: 100%;
+            .content-box {
+                display: flex;
+                align-items: center;
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                width: 100%;
+                height: 80%;
+                padding: 20px;
+                box-sizing: border-box;
+                background-color: #fff;
+                .left-content, .right-content {
+                    width: 50%;
+                    height: 80%;
+                }
+                .left-content {
+                    position: relative;
+                    .header-content-title {
+                        display: block;
+                        font-size: 28px;
+                        font-weight: bold;
+                        margin-bottom: 20px;
+                    }
+                    .content-title {
+                        position: absolute;
+                        top: 50%;
+                        left: 50%;
+                        transform: translate(-50%, -50%);
+                        width: 80%;
+                        font-size: 23px;
+                        color: black;
+                    }
+                }
+                .right-content {
+                    position: relative;
+                    .img {
+                        position: relative;
+                        width: 90%;
+                        height: 100%;
+                        overflow: hidden;
+                        img {
+                            position: absolute;
+                            display: block;
+                            top: 50%;
+                            left: 50%;
+                            height: 110%;
+                            transform: translate(-50%, -50%);
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+.no3-page {
+    width: 100%;
+    height: 100vh;
+    background: url(https://cdn.discordapp.com/attachments/1089123119668658206/1091230684749762560/950377.png) no-repeat
+        center/cover;
+    box-shadow: 0px 0px 1000px 500px rgba(0, 0, 0, 0.5) inset;
+    .content {
+        position: relative;
+        z-index: 2;
+        width: 100%;
+        height: 100%;
+        .container {
+            position: relative;
+            height: 100%;
+            .content-screen {
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                width: 100%;
+                height: 85%;
+                padding: 40px;
+                box-sizing: border-box;
+                background-color: #fff;
+                .group-content {
+                    width: 100%;
+                    &:nth-child(1) {
+                        height: 60%;
+                    }
+                    &:nth-child(2) {
+                        height: 40%;
+                    }
+                    span.header-title {
+                        display: block;
+                        font-size: 28px;
+                        font-weight: bold;
+                        margin-bottom: 20px;
+                    }
+                    .items {
+                        display: flex;
+                        align-items: center;
+                        width: 100%;
+                        height: 80%;
+                        &.no1 {
+                            .item {
+                                width: calc(100% / 3);
+                            }
+                        }
+                        &.no2 {
+                            .item {
+                                width: calc(100% / 4);
+                            }
+                        }
+                        .item {
+                            
+                            height: 100%;
+                            padding: 20px;
+                            box-sizing: border-box;
+                            .item-box {
+                                width: 100%;
+                                height: 100%;
+                                border-radius: 20px;
+                                .img {
+                                    cursor: pointer;
+                                    position: relative;
+                                    width: 100%;
+                                    height: 90%;
+                                    border-radius: 20px;
+                                    overflow: hidden;
+                                    &:hover {
+                                        img {
+                                            transform: translate(-50%, -50%) scale(1.1);
+                                        }
+                                    }
+                                    img {
+                                        display: block;
+                                        position: absolute;
+                                        top: 50%;
+                                        left: 50%;
+                                        width: 100%;
+                                        transform: translate(-50%, -50%);
+                                        transition: 0.5s;
+                                    }
+                                }
+                                span {
+                                    display: block;
+                                    width: 100%;
+                                    text-align: center;
+                                    margin-top: 8px;
+                                    font-size: 20px;
+                                    font-weight: bold;
+                                    color: black;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+// ANIMATION FOR TEXT
+@keyframes anim-lineUp {
+    0% {
+        opacity: 0;
+        transform: translateY(80%);
+    }
+    20% {
+        opacity: 0;
+    }
+    50% {
+        opacity: 1;
+        transform: translateY(0%);
+    }
+    100% {
+        opacity: 1;
+    }
+}
+
+@keyframes cinematicInOut {
+    0% {
+        text-shadow: 0 0 1em white;
+        opacity: 0;
+        margin-left: -0.5em;
+    }
+    25% {
+        text-shadow: 0 0 0 white;
+        opacity: 1;
+        margin-left: 0;
+    }
+}
