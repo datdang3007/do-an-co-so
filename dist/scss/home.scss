@@ -42,105 +42,149 @@ section {
     height: 100vh;
     background: url(https://cdn.discordapp.com/attachments/1089123119668658206/1091207896345354320/46195.png) no-repeat
         center/cover;
-    box-shadow: 0px 0px 1000px 500px rgba(0, 0, 0, 0.6) inset;
+    box-shadow: 0px 0px 1000px 500px rgba(0, 0, 0, 0.5) inset;
+    overflow: hidden;
     .content {
-        position: relative;
-        z-index: 2;
         width: 100%;
         height: 100%;
-        .header {
-            display: flex;
-            align-self: center;
-            justify-content: space-between;
-            width: 100%;
-            padding: 30px 0;
-            ul.menu-options {
+        .container {
+            position: relative;
+            z-index: 2;
+            .header {
                 display: flex;
-                align-items: center;
-                li {
-                    padding: 0 20px;
-                    span {
-                        cursor: pointer;
-                        display: block;
-                        font-size: 18px;
-                        color: #fff;
-                        font-weight: bold;
-                        transition: 0.3s;
-                        &:hover {
-                            color: var(--primary);
-                        }
-                    }
-                }
-            }
-            .group-login-language {
-                display: flex;
-                align-items: center;
-                .group-login-register {
+                align-self: center;
+                justify-content: space-between;
+                width: 100%;
+                padding: 30px 0;
+                ul.menu-options {
                     display: flex;
-                    align-self: center;
-                    span {
-                        cursor: pointer;
-                        display: block;
-                        font-weight: bold;
-                    }
-                    .btn {
-                        padding: 6px 18px;
-                    }
-                    #btnRegister {
-                        margin-right: 10px;
-                        border-radius: 15px;
-                        color: #fff;
-                        transition: 0.3s;
-                        &:hover {
-                            color: var(--primary);
-                        }
-                    }
-                    #btnLogin {
-                        border-radius: 15px;
-                        background-color: #fff;
-                        color: black;
-                        transition: 0.3s;
-                        &:hover {
+                    align-items: center;
+                    li {
+                        padding: 0 20px;
+                        span {
+                            cursor: pointer;
+                            display: block;
+                            font-size: 18px;
                             color: #fff;
-                            background-color: var(--primary);
+                            font-weight: bold;
+                            transition: 0.3s;
+                            &:hover {
+                                color: var(--primary);
+                            }
                         }
                     }
                 }
-                .language {
-                    cursor: pointer;
-                    color: #fff;
-                    border: 1px solid #fff;
-                    border-radius: 15px;
-                    padding: 4px 12px;
-                    margin-left: 10px;
-                    transition: 0.3s;
-                    &:hover {
-                        border: 1px solid var(--primary);
-                        i,
+                .group-login-language {
+                    display: flex;
+                    align-items: center;
+                    .group-login-register {
+                        display: flex;
+                        align-self: center;
                         span {
-                            color: var(--primary);
+                            cursor: pointer;
+                            display: block;
+                            font-weight: bold;
+                        }
+                        .btn {
+                            padding: 6px 18px;
+                        }
+                        #btnRegister {
+                            margin-right: 10px;
+                            border-radius: 15px;
+                            color: #fff;
+                            transition: 0.3s;
+                            &:hover {
+                                color: var(--primary);
+                            }
+                        }
+                        #btnLogin {
+                            border-radius: 15px;
+                            background-color: #fff;
+                            color: black;
+                            transition: 0.3s;
+                            &:hover {
+                                color: #fff;
+                                background-color: var(--primary);
+                            }
                         }
                     }
-                    span {
-                        display: inline-block;
+                    .language {
+                        cursor: pointer;
+                        color: #fff;
+                        border: 1px solid #fff;
+                        border-radius: 15px;
+                        padding: 4px 12px;
+                        margin-left: 10px;
+                        transition: 0.3s;
+                        &:hover {
+                            border: 1px solid var(--primary);
+                            i,
+                            span {
+                                color: var(--primary);
+                            }
+                        }
+                        span {
+                            display: inline-block;
+                        }
                     }
                 }
             }
         }
-        .title {
+
+        .h1-text-shadow {
+            opacity: 0;
             position: absolute;
-            top: 50%;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            text-align: center;
+            line-height: 90vh;
+            font-family: "Urbanist";
+            font-style: normal;
+            font-weight: bold;
+            font-size: 20rem;
+            text-shadow: -1px -1px 0 #fff, 1px -1px 0 #fff, -1px 1px 0 #fff, 1px 1px 0 #fff;
+            animation: 2s text-comein forwards;
+            animation-delay: 1s;
+        }
+
+        .h1-text-title {
+            opacity: 0;
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            text-align: center;
+            line-height: 90vh;
+            font-family: "Urbanist";
+            font-style: normal;
+            font-weight: bold;
+            font-size: 20rem;
+            background: url(https://cdn.discordapp.com/attachments/1089123119668658206/1091207896345354320/46195.png)
+                no-repeat center;
+            background-size: 100%;
+            color: transparent;
+            background-clip: text;
+            -webkit-background-clip: text;
+            animation: 2s text-comein forwards;
+            animation-delay: 1s;
+        }
+
+        .slogan {
+            display: block;
+            position: absolute;
+            top: 60%;
             left: 50%;
             transform: translate(-50%, -50%);
-            color: #fff;
-            text-align: center;
-            h1 {
-                font-size: 95px;
-                animation: 5s cinematicInOut ease-in-out forwards;
-            }
             p {
-                font-size: 24px;
-                animation: 5s anim-lineUp ease-out forwards;
+                opacity: 0;
+                color: #fff;
+                font-size: 34px;
+                font-weight: bold;
+                animation: 3s anim-lineUp ease-out forwards;
+                animation-delay: 1s;
             }
         }
     }
@@ -149,8 +193,8 @@ section {
 .no2-page {
     width: 100%;
     height: 100vh;
-    background: url(https://cdn.discordapp.com/attachments/1089123119668658206/1091230578399002624/son-doong-1920x1080-vietnam-cave-4k-16681.png) no-repeat
-        center/cover;
+    background: url(https://cdn.discordapp.com/attachments/1089123119668658206/1091230578399002624/son-doong-1920x1080-vietnam-cave-4k-16681.png)
+        no-repeat center/cover;
     box-shadow: 0px 0px 1000px 500px rgba(0, 0, 0, 0.5) inset;
     .content {
         position: relative;
@@ -172,7 +216,8 @@ section {
                 padding: 20px;
                 box-sizing: border-box;
                 background-color: #fff;
-                .left-content, .right-content {
+                .left-content,
+                .right-content {
                     width: 50%;
                     height: 80%;
                 }
@@ -216,99 +261,168 @@ section {
     }
 }
 
+// .no3-page {
+//     width: 100%;
+//     height: 100vh;
+//     background-color: #fff;
+//     .content {
+//         position: relative;
+//         z-index: 2;
+//         width: 100%;
+//         height: 100%;
+//         .container {
+//             position: relative;
+//             height: 100%;
+//             .content-screen {
+//                 position: absolute;
+//                 top: 50%;
+//                 left: 50%;
+//                 transform: translate(-50%, -50%);
+//                 width: 100%;
+//                 height: 85%;
+//                 padding: 40px;
+//                 box-sizing: border-box;
+//                 background-color: #fff;
+//                 .group-content {
+//                     width: 100%;
+//                     &:nth-child(1) {
+//                         height: 60%;
+//                     }
+//                     &:nth-child(2) {
+//                         height: 40%;
+//                     }
+//                     span.header-title {
+//                         display: block;
+//                         font-size: 28px;
+//                         font-weight: bold;
+//                         margin-bottom: 20px;
+//                     }
+//                     .items {
+//                         display: flex;
+//                         align-items: center;
+//                         width: 100%;
+//                         height: 80%;
+//                         &.no1 {
+//                             .item {
+//                                 width: calc(100% / 3);
+//                             }
+//                         }
+//                         &.no2 {
+//                             .item {
+//                                 width: calc(100% / 4);
+//                             }
+//                         }
+//                         .item {
+//                             height: 100%;
+//                             padding: 20px;
+//                             box-sizing: border-box;
+//                             .item-box {
+//                                 width: 100%;
+//                                 height: 100%;
+//                                 border-radius: 20px;
+//                                 .img {
+//                                     cursor: pointer;
+//                                     position: relative;
+//                                     width: 100%;
+//                                     height: 90%;
+//                                     border-radius: 20px;
+//                                     overflow: hidden;
+//                                     &:hover {
+//                                         img {
+//                                             transform: translate(-50%, -50%) scale(1.1);
+//                                         }
+//                                     }
+//                                     img {
+//                                         display: block;
+//                                         position: absolute;
+//                                         top: 50%;
+//                                         left: 50%;
+//                                         width: 100%;
+//                                         transform: translate(-50%, -50%);
+//                                         transition: 0.5s;
+//                                     }
+//                                 }
+//                                 span {
+//                                     display: block;
+//                                     width: 100%;
+//                                     text-align: center;
+//                                     margin-top: 8px;
+//                                     font-size: 20px;
+//                                     font-weight: bold;
+//                                     color: black;
+//                                 }
+//                             }
+//                         }
+//                     }
+//                 }
+//             }
+//         }
+//     }
+// }
+
 .no3-page {
     width: 100%;
-    height: 100vh;
-    background: url(https://cdn.discordapp.com/attachments/1089123119668658206/1091230684749762560/950377.png) no-repeat
-        center/cover;
-    box-shadow: 0px 0px 1000px 500px rgba(0, 0, 0, 0.5) inset;
-    .content {
-        position: relative;
-        z-index: 2;
-        width: 100%;
-        height: 100%;
-        .container {
-            position: relative;
-            height: 100%;
-            .content-screen {
-                position: absolute;
-                top: 50%;
-                left: 50%;
-                transform: translate(-50%, -50%);
+    background-color: #fff;
+    padding: 150px 0;
+    .container {
+        .group-content {
+            width: 100%;
+            .header-title {
+                margin-bottom: 30px;
+                .big-title {
+                    font-family: 'Urbanist';
+                    font-style: normal;
+                    font-weight: 700;
+                    font-size: 48px;
+                    color: black;
+                }
+                .details-title {
+                    font-family: 'Urbanist';
+                    font-style: normal;
+                    font-weight: 500;
+                    font-size: 24px;
+                    line-height: 29px;
+                    color: #404040;
+                }
+            }
+            .body-content {
                 width: 100%;
-                height: 85%;
-                padding: 40px;
-                box-sizing: border-box;
-                background-color: #fff;
-                .group-content {
+                .items {
+                    display: flex;
+                    align-items: center;
                     width: 100%;
-                    &:nth-child(1) {
-                        height: 60%;
-                    }
-                    &:nth-child(2) {
-                        height: 40%;
-                    }
-                    span.header-title {
-                        display: block;
-                        font-size: 28px;
-                        font-weight: bold;
-                        margin-bottom: 20px;
-                    }
-                    .items {
-                        display: flex;
-                        align-items: center;
-                        width: 100%;
-                        height: 80%;
-                        &.no1 {
-                            .item {
-                                width: calc(100% / 3);
-                            }
-                        }
-                        &.no2 {
-                            .item {
-                                width: calc(100% / 4);
-                            }
-                        }
-                        .item {
-                            
+                    height: 400px;
+                    .item {
+                        width: calc(100% / 3);
+                        padding: 0 10px;
+                        height: 100%;
+                        box-sizing: border-box;
+                        .item-box {
+                            width: 100%;
                             height: 100%;
-                            padding: 20px;
-                            box-sizing: border-box;
-                            .item-box {
+                            .item-img {
+                                position: relative;
                                 width: 100%;
-                                height: 100%;
+                                height: 90%;
                                 border-radius: 20px;
-                                .img {
-                                    cursor: pointer;
-                                    position: relative;
-                                    width: 100%;
-                                    height: 90%;
-                                    border-radius: 20px;
-                                    overflow: hidden;
-                                    &:hover {
-                                        img {
-                                            transform: translate(-50%, -50%) scale(1.1);
-                                        }
-                                    }
-                                    img {
-                                        display: block;
-                                        position: absolute;
-                                        top: 50%;
-                                        left: 50%;
-                                        width: 100%;
-                                        transform: translate(-50%, -50%);
-                                        transition: 0.5s;
-                                    }
-                                }
-                                span {
+                                overflow: hidden;
+                                img {
+                                    position: absolute;
+                                    top: 50%;
+                                    left: 50%;
+                                    transform: translate(-50%, -50%);
                                     display: block;
                                     width: 100%;
-                                    text-align: center;
-                                    margin-top: 8px;
-                                    font-size: 20px;
-                                    font-weight: bold;
-                                    color: black;
                                 }
+                            }
+                            .name-of-img {
+                                font-family: 'Urbanist';
+                                font-style: normal;
+                                font-weight: 700;
+                                font-size: 24px;
+                                line-height: 43px;
+                                text-align: center;
+                                color: black;
                             }
                         }
                     }
@@ -336,15 +450,13 @@ section {
     }
 }
 
-@keyframes cinematicInOut {
-    0% {
-        text-shadow: 0 0 1em white;
+@keyframes text-comein {
+    from {
         opacity: 0;
-        margin-left: -0.5em;
+        transform: scale(1.2);
     }
-    25% {
-        text-shadow: 0 0 0 white;
+    to {
         opacity: 1;
-        margin-left: 0;
+        transform: scale(1);
     }
 }
