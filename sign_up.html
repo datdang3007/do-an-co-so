@@ -23,7 +23,7 @@
       rel="stylesheet"
     />
     <!-- CSS -->
-    <link rel="stylesheet" href="/dist/css/sign_in.css" />
+    <link rel="stylesheet" href="/dist/css/sign_up.css" />
     <!-- ICON -->
     <link
       rel="icon"
@@ -35,43 +35,66 @@
   <body>
     <div class="bg-blur"></div>
     <div class="content">
-        <div class="left-content">
-            <img src="https://cdn.discordapp.com/attachments/1089123119668658206/1092006099907006515/pic.jpg" alt="">
-        </div>
-        <div class="right-content">
-            <div class="form-sign-in">
-                <div class="header">
-                  <div class="title">Welcome to VivuVietNam</div>
+      <div class="left-content">
+        <img
+          src="https://cdn.discordapp.com/attachments/1089123119668658206/1092006099907006515/pic.jpg"
+          alt=""
+        />
+      </div>
+      <div class="right-content">
+        <div class="form-sign-in">
+          <div class="header">
+            <div class="title">Welcome to VivuVietNam</div>
 
-                  <div class="changing-to-register">
-                    you want to create a new account?
-                    <a href="#">Sign Up</a>
-                  </div>
-                </div>
-
-                <div class="body">
-                  <form action="">
-                    <div class="group-input">
-                      <input type="text" name="inputLogin" id="inputLogin" placeholder="Email or Phone">
-                    </div>
-
-                    <div class="group-input">
-                      <input type="password" name="inputPassword" id="inputPassword" placeholder="Enter your password">
-                    </div>
-
-                    <div class="tick-option">
-                      <div class="group-checkbox">
-                        <input type="checkbox" id="checkboxRemember" name="checkboxRemember">
-                        <label for="checkboxRemember">Remember me</label>
-                      </div>
-                      <a href="#">Forgot Password</a>
-                    </div>
-
-                    <button id="btnSignIn"><i class="fa-solid fa-shield"></i> Sign In</button>
-                  </form>
-                </div>
+            <div class="changing-to-register">
+              you already have an account?
+              <a href="#">Sign In</a>
             </div>
+          </div>
+
+          <div class="body">
+            <form action="">
+              <div class="group-input">
+                <input
+                  type="text"
+                  name="inputLogin"
+                  id="inputLogin"
+                  placeholder="Email or Phone"
+                />
+              </div>
+
+              <div class="group-input">
+                <input
+                  type="text"
+                  name="inputEmail"
+                  id="inputEmail"
+                  placeholder="Enter your email"
+                />
+              </div>
+
+              <div class="group-input">
+                <input
+                  type="password"
+                  name="inputPassword"
+                  id="inputPassword"
+                  placeholder="Enter your password"
+                />
+              </div>
+
+              <div class="group-input">
+                <input
+                  type="password"
+                  name="inputPasswordTwo"
+                  id="inputPasswordTwo"
+                  placeholder="Enter your confirm password"
+                />
+              </div>
+
+              <button id="btnContinue">Continue <i class="fa-solid fa-arrow-right"></i></button>
+            </form>
+          </div>
         </div>
+      </div>
     </div>
   </body>
 
@@ -87,5 +110,5 @@
   <!-- AOS -->
   <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
   <!-- JS -->
-  <script src="/dist/js/home.js"></script>
+  <!-- <script src="/dist/js/home.js"></script> -->
 </html>
