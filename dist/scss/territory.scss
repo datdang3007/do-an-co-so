@@ -1,0 +1,369 @@
+@import "reset.scss";
+@import "footer.scss";
+
+body {
+    background-color: black;
+    // font-family: "Roboto", sans-serif;
+    font-family: "Urbanist";
+}
+
+.container {
+    width: 80%;
+    margin: 0 auto;
+}
+
+section {
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.reveal {
+    position: relative;
+    transform: translateY(150px);
+    opacity: 0;
+    transition: 1s all ease;
+}
+
+.reveal.active {
+    transform: translateY(0);
+    opacity: 1;
+}
+
+.no1-page {
+    width: 100%;
+    height: 100vh;
+    background: url(https://cdn.discordapp.com/attachments/1089123119668658206/1091253516120637516/Hinh-anh-nen-Ha-Noi.png)
+        no-repeat center/cover;
+    box-shadow: 0px 0px 1000px 500px rgba(0, 0, 0, 0.5) inset;
+    overflow: hidden;
+    .content {
+        width: 100%;
+        height: 100%;
+        .container {
+            position: relative;
+            z-index: 2;
+            .header {
+                display: flex;
+                align-self: center;
+                justify-content: space-between;
+                width: 100%;
+                padding: 30px 0;
+                ul.menu-options {
+                    display: flex;
+                    align-items: center;
+                    li {
+                        padding: 0 20px;
+                        a {
+                            cursor: pointer;
+                            display: block;
+                            font-size: 18px;
+                            color: #fff;
+                            font-weight: bold;
+                            transition: 0.3s;
+                            &:hover {
+                                color: #4169e1;
+                            }
+                        }
+                    }
+                }
+                .group-login-language {
+                    display: flex;
+                    align-items: center;
+                    .group-login-register {
+                        display: flex;
+                        align-self: center;
+                        a {
+                            cursor: pointer;
+                            display: block;
+                            font-weight: bold;
+                        }
+                        .btn {
+                            padding: 6px 18px;
+                        }
+                        #btnRegister {
+                            margin-right: 10px;
+                            border-radius: 15px;
+                            color: #fff;
+                            transition: 0.3s;
+                            &:hover {
+                                color: #4169e1;
+                            }
+                        }
+                        #btnLogin {
+                            border-radius: 15px;
+                            background-color: #fff;
+                            color: black;
+                            transition: 0.3s;
+                            &:hover {
+                                color: #fff;
+                                background-color: #4169e1;
+                            }
+                        }
+                    }
+                    .language {
+                        cursor: pointer;
+                        color: #fff;
+                        border: 1px solid #fff;
+                        border-radius: 15px;
+                        padding: 4px 12px;
+                        margin-left: 10px;
+                        transition: 0.3s;
+                        &:hover {
+                            border: 1px solid #4169e1;
+                            i,
+                            span {
+                                color: #4169e1;
+                            }
+                        }
+                        span {
+                            display: inline-block;
+                        }
+                    }
+                }
+            }
+        }
+
+        .h1-text-shadow {
+            opacity: 0;
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            text-align: center;
+            line-height: 90vh;
+            font-style: normal;
+            font-weight: bold;
+            font-size: 12rem;
+            text-shadow: -1px -1px 0 #fff, 1px -1px 0 #fff, -1px 1px 0 #fff, 1px 1px 0 #fff;
+            animation: 2s text-comein forwards;
+            animation-delay: 1s;
+        }
+
+        .h1-text-title {
+            opacity: 0;
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            text-align: center;
+            line-height: 90vh;
+            font-style: normal;
+            font-weight: bold;
+            font-size: 12rem;
+            background: url(https://cdn.discordapp.com/attachments/1089123119668658206/1091253516120637516/Hinh-anh-nen-Ha-Noi.png)
+                no-repeat center;
+            background-size: 100%;
+            color: transparent;
+            background-clip: text;
+            -webkit-background-clip: text;
+            animation: 2s text-comein forwards;
+            animation-delay: 1s;
+        }
+
+        .slogan {
+            display: block;
+            position: absolute;
+            top: 57%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            p {
+                opacity: 0;
+                color: #fff;
+                font-size: 34px;
+                font-weight: bold;
+                animation: 3s anim-lineUp ease-out forwards;
+                animation-delay: 1s;
+            }
+        }
+    }
+}
+
+.no2-page {
+    width: 100%;
+    padding: 80px 0;
+    background-color: #f4f4f4;
+    .container {
+        h1 {
+            text-align: center;
+            font-family: "Urbanist";
+            font-weight: 700;
+            font-size: 4rem;
+            color: #4169e1;
+        }
+        p {
+            display: block;
+            width: 50%;
+            padding: 30px 0;
+            margin: 0 auto;
+            text-align: center;
+            font-family: "Urbanist";
+            font-weight: normal;
+            font-size: 1.35rem;
+            color: #000000;
+        }
+    }
+}
+
+.no3-page {
+    width: 100%;
+    padding: 80px 0;
+    background-color: #fff;
+    .container {
+        .header-title {
+            position: relative;
+            margin-bottom: 30px;
+            .big-title {
+                font-style: normal;
+                font-weight: 700;
+                font-size: 48px;
+                color: black;
+            }
+            .details-title {
+                font-style: normal;
+                font-size: 24px;
+                line-height: 29px;
+                color: #404040;
+            }
+            .group-input {
+                position: absolute;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                right: 0;
+                bottom: 0;
+                #inputSearchCity {
+                    width: 300px;
+                    padding: 8px 12px;
+                    border: 1px solid #ccc;
+                    box-sizing: border-box;
+                    font-size: 18px;
+                    &:focus {
+                        border: 1px solid #4169e1;
+                    }
+                }
+                label {
+                    cursor: pointer;
+                    display: inline-block;
+                    width: 56px;
+                    padding: 9px 0px;
+                    box-sizing: border-box;
+                    background-color: #4169e1;
+                    text-align: center;
+                    i {
+                        color: #fff;
+                        font-size: 20px;
+                        transform: rotate(90deg);
+                    }
+                }
+            }
+        }
+        .body-content {
+            width: 100%;
+            .items {
+                display: flex;
+                flex-wrap: wrap;
+                width: 100%;
+                .item {
+                    width: calc(100% / 5);
+                    height: 300px;
+                    padding: 10px;
+                    box-sizing: border-box;
+                    .item-box {
+                        width: 100%;
+                        height: 100%;
+                        .img {
+                            cursor: pointer;
+                            position: relative;
+                            width: 100%;
+                            height: 85%;
+                            border-radius: 12px;
+                            overflow: hidden;
+                            img {
+                                position: absolute;
+                                top: 50%;
+                                left: 50%;
+                                transform: translate(-50%, -50%);
+                                width: 110%;
+                            }
+                        }
+                        .group-text {
+                            display: flex;
+                            align-items: center;
+                            justify-content: space-between;
+                            height: 15%;
+                            padding: 0 10px;
+                            .name-of-territory {
+                                color: #5b5b5b;
+                            }
+                            .name-of-city {
+                                cursor: pointer;
+                                font-style: normal;
+                                font-size: 22px;
+                                font-weight: bold;
+                                text-align: center;
+                                color: black;
+                                text-align: left;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        #pagination {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            width: 240px;
+            margin: 40px auto 0;
+            #prev-btn,
+            #next-btn {
+                cursor: pointer;
+                padding: 8px 12px;
+                &:hover {
+                    color: #fff;
+                    background-color: #4169e1;
+                }
+            }
+            #prev-btn[disabled="disabled"],
+            #next-btn[disabled="disabled"] {
+                &:hover {
+                    cursor: not-allowed;
+                }
+            }
+        }
+    }
+}
+
+// ANIMATION FOR TEXT
+@keyframes anim-lineUp {
+    0% {
+        opacity: 0;
+        transform: translateY(80%);
+    }
+    20% {
+        opacity: 0;
+    }
+    50% {
+        opacity: 1;
+        transform: translateY(0%);
+    }
+    100% {
+        opacity: 1;
+    }
+}
+
+@keyframes text-comein {
+    from {
+        opacity: 0;
+        transform: scale(1.2);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}

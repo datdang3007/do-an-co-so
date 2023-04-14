@@ -13,6 +13,20 @@ body {
     filter: blur(1px) grayscale(0.5);
 }
 
+.logo-brand {
+    cursor: pointer;
+    position: absolute;
+    width: 120px;
+    bottom: 50px;
+    background-color: #fff;
+    border-radius: 50%;
+    right: 50px;
+    img {
+        display: block;
+        width: 100%;
+    }
+}
+
 .content {
     position: absolute;
     top: 50%;
@@ -20,76 +34,55 @@ body {
     transform: translate(-50%, -50%);
     display: flex;
     align-items: center;
-    width: 60%;
-    height: 65vh;
+    width: 650px;
+    border-radius: 20px;
     box-shadow: 0 0 30px 5px rgba(0, 0, 0, 0.5);
     background-color: #fff;
     overflow: hidden;
-    .left-content {
-        position: relative;
-        width: 45%;
-        height: 100%;
-        overflow: hidden;
-        img {
-            display: block;
-            position: absolute;
-            top: 0;
-            left: 50%;
-            height: 100%;
-            transform: translateX(-50%);
-        }
-    }
-
-    .right-content {
-        position: relative;
-        width: 55%;
-        height: 100%;
-        .form-sign-in {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            width: 80%;
-            transform: translate(-50%, -50%);
-            .header {
-                margin-bottom: 60px;
-                text-align: center;
-                .title {
-                    font-family: "Urbanist";
-                    font-style: normal;
-                    font-weight: 700;
-                    font-size: 40px;
-                    color: #000000;
-                    margin-bottom: 10px;
-                }
-                .changing-to-register {
-                    font-size: 16px;
-                    color: #5b5b5b;
-                    a {
-                        color: #4169e1;
-                        text-decoration: underline;
-                    }
+    .form-sign-in {
+        width: 80%;
+        padding: 40px 0px;
+        margin: 0 auto;
+        border-radius: 20px;
+        box-sizing: border-box;
+        .header {
+            margin-bottom: 60px;
+            text-align: center;
+            .title {
+                font-family: "Urbanist";
+                font-style: normal;
+                font-weight: 700;
+                font-size: 40px;
+                color: #000000;
+                margin-bottom: 10px;
+            }
+            .changing-to-register {
+                font-size: 16px;
+                color: #5b5b5b;
+                a {
+                    color: #4169e1;
+                    text-decoration: underline;
                 }
             }
-            .body {
-                form {
-                    width: 75%;
-                    margin: 0 auto;
-                    .group-input {
-                        position: relative;
-                        width: 100%;
-                        margin-bottom: 20px;
-                        label {
-                            cursor: text;
-                            position: absolute;
-                            top: 50%;
-                            left: 10px;
-                            transform: translateY(-50%);
-                            font-size: 16px;
-                        }
-                        input {
+        }
+        .body {
+            form {
+                width: 100%;
+                margin: 0 auto;
+                .group-input-name {
+                    display: flex;
+                    align-items: flex-start;
+                    justify-content: space-between;
+                    position: relative;
+                    width: 100%;
+                    margin-bottom: 20px;
+                    .group-input-first-name {
+                        width: 35%;
+                        .first-name {
                             width: 100%;
                             border: 0px solid transparent;
                             padding: 10px;
+                            box-sizing: border-box;
                             border-bottom: 1px solid #ccc;
                             font-size: 16px;
                             transition: 0.3s;
@@ -98,41 +91,99 @@ body {
                                 border-bottom: 1px solid #4169e1;
                             }
                         }
+                        p {
+                            color: #721c24;
+                            background-color: #f8d7da;
+                            border-color: #f5c6cb;
+                            padding: 6px 12px;
+                            margin-top: 4px;
+                            font-size: 14px;
+                        }
                     }
-                    .tick-option {
-                        display: flex;
-                        align-items: center;
-                        justify-content: space-between;
-                        form {
-                            .checkbox {
-                                display: flex;
-                                align-items: flex-end;
-                                input {
-                                    box-sizing: border-box;
-                                    border: 1px solid #000000;
-                                    border-radius: 4px;
-                                }
+                    .group-input-last-name {
+                        width: 60%;
+                        .last-name {
+                            width: 100%;
+                            border: 0px solid transparent;
+                            padding: 10px;
+                            box-sizing: border-box;
+                            border-bottom: 1px solid #ccc;
+                            font-size: 16px;
+                            transition: 0.3s;
+                            &:focus {
+                                color: black;
+                                border-bottom: 1px solid #4169e1;
                             }
                         }
-                        a {
-                            color: #4169e1;
-                            text-decoration: underline;
+                        p {
+                            color: #721c24;
+                            background-color: #f8d7da;
+                            border-color: #f5c6cb;
+                            padding: 6px 12px;
+                            margin-top: 4px;
+                            font-size: 14px;
                         }
                     }
-                    #btnContinue {
-                        cursor: pointer;
-                        display: block;
-                        margin: 60px auto 0;
+                }
+                .group-input {
+                    position: relative;
+                    width: 100%;
+                    margin-bottom: 20px;
+                    input {
                         width: 100%;
-                        font-size: 16px;
-                        color: #fff;
                         border: 0px solid transparent;
-                        background-color: #4169e1;
-                        padding: 16px 0;
-                        border-radius: 45px;
-                        font-style: normal;
-                        font-weight: bold;
+                        padding: 10px;
+                        box-sizing: border-box;
+                        border-bottom: 1px solid #ccc;
+                        font-size: 16px;
+                        transition: 0.3s;
+                        &:focus {
+                            color: black;
+                            border-bottom: 1px solid #4169e1;
+                        }
                     }
+                    p {
+                        color: #721c24;
+                        background-color: #f8d7da;
+                        border-color: #f5c6cb;
+                        padding: 6px 12px;
+                        margin-top: 4px;
+                        font-size: 14px;
+                    }
+                }
+                .tick-option {
+                    display: flex;
+                    align-items: center;
+                    justify-content: space-between;
+                    form {
+                        .checkbox {
+                            display: flex;
+                            align-items: flex-end;
+                            input {
+                                box-sizing: border-box;
+                                border: 1px solid #000000;
+                                border-radius: 4px;
+                            }
+                        }
+                    }
+                    a {
+                        color: #4169e1;
+                        text-decoration: underline;
+                    }
+                }
+                #btnSignUp {
+                    cursor: pointer;
+                    display: block;
+                    margin: 60px auto 0;
+                    width: 100%;
+                    font-size: 16px;
+                    color: #fff;
+                    border: 0px solid transparent;
+                    background-color: #4169e1;
+                    padding: 16px 0;
+                    border-radius: 45px;
+                    font-style: normal;
+                    font-weight: bold;
                 }
             }
         }

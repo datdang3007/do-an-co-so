@@ -40,6 +40,21 @@ body {
           filter: blur(1px) grayscale(0.5);
 }
 
+.logo-brand {
+  cursor: pointer;
+  position: absolute;
+  width: 120px;
+  bottom: 50px;
+  background-color: #fff;
+  border-radius: 50%;
+  right: 50px;
+}
+
+.logo-brand img {
+  display: block;
+  width: 100%;
+}
+
 .content {
   position: absolute;
   top: 50%;
@@ -52,53 +67,35 @@ body {
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
-  width: 60%;
-  height: 65vh;
+  width: 650px;
+  height: 520px;
+  border-radius: 20px;
   -webkit-box-shadow: 0 0 30px 5px rgba(0, 0, 0, 0.5);
           box-shadow: 0 0 30px 5px rgba(0, 0, 0, 0.5);
   background-color: #fff;
   overflow: hidden;
 }
 
-.content .left-content {
-  position: relative;
-  width: 45%;
-  height: 100%;
-  overflow: hidden;
-}
-
-.content .left-content img {
-  display: block;
-  position: absolute;
-  top: 0;
-  left: 50%;
-  height: 100%;
-  -webkit-transform: translateX(-50%);
-          transform: translateX(-50%);
-}
-
-.content .right-content {
-  position: relative;
-  width: 55%;
-  height: 100%;
-}
-
-.content .right-content .form-sign-in {
+.content .form-sign-in {
   position: absolute;
   top: 50%;
   left: 50%;
   width: 80%;
+  padding: 40px 10px;
+  border-radius: 20px;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
   -webkit-transform: translate(-50%, -50%);
           transform: translate(-50%, -50%);
 }
 
-.content .right-content .form-sign-in .header {
+.content .form-sign-in .header {
   margin-bottom: 60px;
   text-align: center;
 }
 
-.content .right-content .form-sign-in .header .title {
-  font-family: 'Urbanist';
+.content .form-sign-in .header .title {
+  font-family: "Urbanist";
   font-style: normal;
   font-weight: 700;
   font-size: 40px;
@@ -106,28 +103,28 @@ body {
   margin-bottom: 10px;
 }
 
-.content .right-content .form-sign-in .header .changing-to-register {
+.content .form-sign-in .header .changing-to-register {
   font-size: 16px;
-  color: #5B5B5B;
+  color: #5b5b5b;
 }
 
-.content .right-content .form-sign-in .header .changing-to-register a {
-  color: #4169E1;
+.content .form-sign-in .header .changing-to-register a {
+  color: #4169e1;
   text-decoration: underline;
 }
 
-.content .right-content .form-sign-in .body form {
-  width: 75%;
+.content .form-sign-in .body form {
+  width: 100%;
   margin: 0 auto;
 }
 
-.content .right-content .form-sign-in .body form .group-input {
+.content .form-sign-in .body form .group-input {
   position: relative;
   width: 100%;
   margin-bottom: 20px;
 }
 
-.content .right-content .form-sign-in .body form .group-input label {
+.content .form-sign-in .body form .group-input label {
   cursor: text;
   position: absolute;
   top: 50%;
@@ -137,22 +134,24 @@ body {
   font-size: 16px;
 }
 
-.content .right-content .form-sign-in .body form .group-input input {
+.content .form-sign-in .body form .group-input input {
   width: 100%;
   border: 0px solid transparent;
   padding: 10px;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
   border-bottom: 1px solid #ccc;
   font-size: 16px;
   -webkit-transition: 0.3s;
   transition: 0.3s;
 }
 
-.content .right-content .form-sign-in .body form .group-input input:focus {
+.content .form-sign-in .body form .group-input input:focus {
   color: black;
-  border-bottom: 1px solid #4169E1;
+  border-bottom: 1px solid #4169e1;
 }
 
-.content .right-content .form-sign-in .body form .tick-option {
+.content .form-sign-in .body form .tick-option {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -164,7 +163,7 @@ body {
           justify-content: space-between;
 }
 
-.content .right-content .form-sign-in .body form .tick-option form .checkbox {
+.content .form-sign-in .body form .tick-option form .checkbox {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -173,19 +172,19 @@ body {
           align-items: flex-end;
 }
 
-.content .right-content .form-sign-in .body form .tick-option form .checkbox input {
+.content .form-sign-in .body form .tick-option form .checkbox input {
   -webkit-box-sizing: border-box;
           box-sizing: border-box;
   border: 1px solid #000000;
   border-radius: 4px;
 }
 
-.content .right-content .form-sign-in .body form .tick-option a {
-  color: #4169E1;
+.content .form-sign-in .body form .tick-option a {
+  color: #4169e1;
   text-decoration: underline;
 }
 
-.content .right-content .form-sign-in .body form #btnSignIn {
+.content .form-sign-in .body form #btnSignIn {
   cursor: pointer;
   display: block;
   margin: 60px auto 0;
@@ -193,7 +192,7 @@ body {
   font-size: 16px;
   color: #fff;
   border: 0px solid transparent;
-  background-color: #4169E1;
+  background-color: #4169e1;
   padding: 16px 0;
   border-radius: 45px;
   font-style: normal;

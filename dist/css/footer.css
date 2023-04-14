@@ -1,10 +1,10 @@
-.footer {
-  margin-top: 40px;
+footer {
   width: 100%;
-  background-color: black;
+  height: 400px;
+  background: #4169e1;
 }
 
-.footer .container .footer-box {
+footer .container .footer-box {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -15,16 +15,18 @@
   padding: 25px 40px;
 }
 
-.footer .container .footer-box img.logo-brand {
+footer .container .footer-box img.logo-brand {
+  display: block;
   width: 10%;
   margin-right: 20px;
+  border-radius: 50%;
 }
 
-.footer .container .footer-box .nav {
+footer .container .footer-box .nav {
   width: 90%;
 }
 
-.footer .container .footer-box .nav ul.ul-list {
+footer .container .footer-box .nav ul.ul-list {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -35,29 +37,29 @@
       justify-content: space-around;
 }
 
-.footer .container .footer-box .nav ul.ul-list li.li-list ul.dropdown-list li {
+footer .container .footer-box .nav ul.ul-list li.li-list ul.dropdown-list li {
   padding: 5px 0;
 }
 
-.footer .container .footer-box .nav ul.ul-list li.li-list ul.dropdown-list li span {
+footer .container .footer-box .nav ul.ul-list li.li-list ul.dropdown-list li span {
   font-size: 16px;
 }
 
-.footer .container .footer-box .nav ul.ul-list li.li-list ul.dropdown-list li span.header-dropdown {
+footer .container .footer-box .nav ul.ul-list li.li-list ul.dropdown-list li span.header-dropdown {
   color: #0cc0df;
   font-weight: bold;
 }
 
-.footer .container .footer-box .nav ul.ul-list li.li-list ul.dropdown-list li span.option-dropdown {
+footer .container .footer-box .nav ul.ul-list li.li-list ul.dropdown-list li span.option-dropdown {
   cursor: pointer;
   color: #fff;
 }
 
-.footer .container .footer-box .nav ul.ul-list li.li-list ul.dropdown-list li span.option-dropdown:hover {
+footer .container .footer-box .nav ul.ul-list li.li-list ul.dropdown-list li span.option-dropdown:hover {
   color: #0cc0df;
 }
 
-.footer .container .footer-box .nav ul.ul-list li.li-list ul.dropdown-list li span.option-owner {
+footer .container .footer-box .nav ul.ul-list li.li-list ul.dropdown-list li span.option-owner {
   color: #fff;
 }
 /*# sourceMappingURL=footer.css.map */

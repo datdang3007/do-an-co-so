@@ -132,7 +132,7 @@ section {
 .no1-page {
   width: 100%;
   height: 100vh;
-  background: url(https://cdn.discordapp.com/attachments/1089123119668658206/1091207896345354320/46195.png) no-repeat center/cover;
+  background: url(https://cdn.discordapp.com/attachments/1089123119668658206/1091253516120637516/Hinh-anh-nen-Ha-Noi.png) no-repeat center/cover;
   -webkit-box-shadow: 0px 0px 1000px 500px rgba(0, 0, 0, 0.5) inset;
           box-shadow: 0px 0px 1000px 500px rgba(0, 0, 0, 0.5) inset;
   overflow: hidden;
@@ -275,7 +275,7 @@ section {
   line-height: 90vh;
   font-style: normal;
   font-weight: bold;
-  font-size: 20rem;
+  font-size: 12rem;
   text-shadow: -1px -1px 0 #fff, 1px -1px 0 #fff, -1px 1px 0 #fff, 1px 1px 0 #fff;
   -webkit-animation: 2s text-comein forwards;
           animation: 2s text-comein forwards;
@@ -294,8 +294,8 @@ section {
   line-height: 90vh;
   font-style: normal;
   font-weight: bold;
-  font-size: 20rem;
-  background: url(https://cdn.discordapp.com/attachments/1089123119668658206/1091207896345354320/46195.png) no-repeat center;
+  font-size: 12rem;
+  background: url(https://cdn.discordapp.com/attachments/1089123119668658206/1091253516120637516/Hinh-anh-nen-Ha-Noi.png) no-repeat center;
   background-size: 100%;
   color: transparent;
   background-clip: text;
@@ -309,7 +309,7 @@ section {
 .no1-page .content .slogan {
   display: block;
   position: absolute;
-  top: 60%;
+  top: 57%;
   left: 50%;
   -webkit-transform: translate(-50%, -50%);
           transform: translate(-50%, -50%);
@@ -328,241 +328,79 @@ section {
 
 .no2-page {
   width: 100%;
-  height: 100vh;
-  background: url(https://cdn.discordapp.com/attachments/1089123119668658206/1091230578399002624/son-doong-1920x1080-vietnam-cave-4k-16681.png) no-repeat center/cover;
-  -webkit-box-shadow: 0px 0px 1000px 500px rgba(0, 0, 0, 0.5) inset;
-          box-shadow: 0px 0px 1000px 500px rgba(0, 0, 0, 0.5) inset;
+  padding: 80px 0;
+  background-color: #f4f4f4;
 }
 
-.no2-page .content {
-  position: relative;
-  z-index: 2;
-  width: 100%;
-  height: 100%;
+.no2-page .container h1 {
+  text-align: center;
+  font-family: "Urbanist";
+  font-weight: 700;
+  font-size: 4rem;
+  color: #4169e1;
 }
 
-.no2-page .content .container {
-  position: relative;
-  height: 100%;
-}
-
-.no2-page .content .container .content-box {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  -webkit-transform: translate(-50%, -50%);
-          transform: translate(-50%, -50%);
-  width: 100%;
-  height: 80%;
-  padding: 20px;
-  -webkit-box-sizing: border-box;
-          box-sizing: border-box;
-  background-color: #fff;
-}
-
-.no2-page .content .container .content-box .left-content,
-.no2-page .content .container .content-box .right-content {
+.no2-page .container p {
+  display: block;
   width: 50%;
-  height: 80%;
-}
-
-.no2-page .content .container .content-box .left-content {
-  position: relative;
-}
-
-.no2-page .content .container .content-box .left-content .header-content-title {
-  display: block;
-  font-size: 28px;
-  font-weight: bold;
-  margin-bottom: 20px;
-}
-
-.no2-page .content .container .content-box .left-content .content-title {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  -webkit-transform: translate(-50%, -50%);
-          transform: translate(-50%, -50%);
-  width: 80%;
-  font-size: 23px;
-  color: black;
-}
-
-.no2-page .content .container .content-box .right-content {
-  position: relative;
-}
-
-.no2-page .content .container .content-box .right-content .img {
-  position: relative;
-  width: 90%;
-  height: 100%;
-  overflow: hidden;
-}
-
-.no2-page .content .container .content-box .right-content .img img {
-  position: absolute;
-  display: block;
-  top: 50%;
-  left: 50%;
-  height: 110%;
-  -webkit-transform: translate(-50%, -50%);
-          transform: translate(-50%, -50%);
+  padding: 30px 0;
+  margin: 0 auto;
+  text-align: center;
+  font-family: "Urbanist";
+  font-weight: normal;
+  font-size: 1.35rem;
+  color: #000000;
 }
 
 .no3-page {
   width: 100%;
+  padding: 80px 0;
   background-color: #fff;
-  padding: 150px 0 0;
 }
 
-.no3-page .container .group-content {
-  margin-top: 150px;
+.no3-page .container .regions-in-the-territory {
   width: 100%;
 }
 
-.no3-page .container .group-content:first-child {
-  margin-top: 0;
-}
-
-.no3-page .container .group-content .header-title {
+.no3-page .container .regions-in-the-territory .header-title {
   position: relative;
   margin-bottom: 30px;
 }
 
-.no3-page .container .group-content .header-title .big-title {
+.no3-page .container .regions-in-the-territory .header-title .big-title {
   font-style: normal;
   font-weight: 700;
   font-size: 48px;
   color: black;
 }
 
-.no3-page .container .group-content .header-title .details-title {
+.no3-page .container .regions-in-the-territory .header-title .details-title {
   font-style: normal;
   font-size: 24px;
   line-height: 29px;
   color: #404040;
 }
 
-.no3-page .container .group-content .body-content {
+.no3-page .container .regions-in-the-territory .body-content {
   width: 100%;
-}
-
-.no3-page .container .group-content .body-content .items {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
-  width: 100%;
-}
-
-.no3-page .container .group-content .body-content .items .item {
-  -webkit-box-sizing: border-box;
-          box-sizing: border-box;
-}
-
-.no3-page .container .group-content .body-content .items .item .item-box {
-  width: 100%;
-  height: 100%;
-}
-
-.no3-page .container .group-content .body-content .items .item .item-box .item-img {
-  cursor: pointer;
-  position: relative;
-  width: 100%;
-  height: 90%;
-  border-radius: 20px;
-  overflow: hidden;
-}
-
-.no3-page .container .group-content .body-content .items .item .item-box .item-img:hover img {
-  -webkit-transform: translate(-50%, -50%) scale(1.1);
-          transform: translate(-50%, -50%) scale(1.1);
-}
-
-.no3-page .container .group-content .body-content .items .item .item-box .item-img img {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  -webkit-transform: translate(-50%, -50%);
-          transform: translate(-50%, -50%);
-  display: block;
-  width: 100%;
-  -webkit-transition: 0.4s;
-  transition: 0.4s;
-}
-
-.no3-page .container .group-content .body-content .items .item .item-box .address-of-img {
-  color: #5b5b5b;
-  margin-top: 15px;
-}
-
-.no3-page .container .group-content .body-content .items .item .item-box .name-of-img {
-  font-style: normal;
-  font-size: 22px;
-  font-weight: bold;
-  line-height: 43px;
-  text-align: center;
-  color: black;
-}
-
-.no3-page .container .regions-in-vietnam .body-content {
-  width: 100%;
-}
-
-.no3-page .container .regions-in-vietnam .body-content .items {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
-  width: 100%;
-}
-
-.no3-page .container .regions-in-vietnam .body-content .items .item {
-  width: calc(100% / 3);
-  padding: 0 10px;
-  height: 400px;
-}
-
-.no3-page .container .regions-in-the-territory .header-title .view-all-destination {
-  position: absolute;
-  top: 70%;
-  right: 0;
-  -webkit-transform: translateY(-50%);
-          transform: translateY(-50%);
-  font-style: normal;
-  font-size: 18px;
-  padding: 8px 16px;
-  border: 1px solid #4169e1;
-  border-radius: 30px;
-  color: #4169e1;
-  -webkit-transition: 0.3s;
-  transition: 0.3s;
-}
-
-.no3-page .container .regions-in-the-territory .header-title .view-all-destination:hover {
-  color: #fff;
-  background-color: #4169e1;
 }
 
 .no3-page .container .regions-in-the-territory .body-content .items {
-  -ms-flex-wrap: wrap;
-      flex-wrap: wrap;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  width: 100%;
 }
 
 .no3-page .container .regions-in-the-territory .body-content .items .item {
   width: calc(100% / 4);
   padding: 10px;
   height: 400px;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
 }
 
 .no3-page .container .regions-in-the-territory .body-content .items .item .item-box {
@@ -596,162 +434,193 @@ section {
   transition: 0.4s;
 }
 
+.no3-page .container .regions-in-the-territory .body-content .items .item .item-box .address-of-img {
+  color: #5b5b5b;
+  margin-top: 15px;
+}
+
 .no3-page .container .regions-in-the-territory .body-content .items .item .item-box .name-of-img {
+  font-style: normal;
+  font-size: 22px;
+  font-weight: bold;
+  line-height: 43px;
+  text-align: center;
+  color: black;
   text-align: left;
 }
 
-.no3-page .container .top-travel-stories .header-title .view-all-stories {
-  position: absolute;
-  top: 70%;
-  right: 0;
-  -webkit-transform: translateY(-50%);
-          transform: translateY(-50%);
+.no4-page {
+  width: 100%;
+  padding: 80px 0;
+  background-color: #fff;
+}
+
+.no4-page .container .header-title {
+  position: relative;
+  margin-bottom: 30px;
+}
+
+.no4-page .container .header-title .big-title {
   font-style: normal;
+  font-weight: 700;
+  font-size: 48px;
+  color: black;
+}
+
+.no4-page .container .header-title .details-title {
+  font-style: normal;
+  font-size: 24px;
+  line-height: 29px;
+  color: #404040;
+}
+
+.no4-page .container .header-title .group-input {
+  position: absolute;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  right: 0;
+  bottom: 0;
+}
+
+.no4-page .container .header-title .group-input #inputSearchCity {
+  width: 300px;
+  padding: 8px 12px;
+  border: 1px solid #ccc;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
   font-size: 18px;
-  padding: 8px 16px;
+}
+
+.no4-page .container .header-title .group-input #inputSearchCity:focus {
   border: 1px solid #4169e1;
-  border-radius: 30px;
-  color: #4169e1;
-  -webkit-transition: 0.3s;
-  transition: 0.3s;
 }
 
-.no3-page .container .top-travel-stories .header-title .view-all-stories:hover {
-  color: #fff;
+.no4-page .container .header-title .group-input label {
+  cursor: pointer;
+  display: inline-block;
+  width: 56px;
+  padding: 9px 0px;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
   background-color: #4169e1;
+  text-align: center;
 }
 
-.no3-page .container .top-travel-stories .body-content {
+.no4-page .container .header-title .group-input label i {
+  color: #fff;
+  font-size: 20px;
+  -webkit-transform: rotate(90deg);
+          transform: rotate(90deg);
+}
+
+.no4-page .container .body-content {
   width: 100%;
 }
 
-.no3-page .container .top-travel-stories .body-content .items {
+.no4-page .container .body-content .items {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
   -ms-flex-wrap: wrap;
       flex-wrap: wrap;
+  width: 100%;
 }
 
-.no3-page .container .top-travel-stories .body-content .items .item {
-  width: calc(100% / 3);
-  height: 660px;
-  padding: 0 10px 60px;
+.no4-page .container .body-content .items .item {
+  width: calc(100% / 5);
+  height: 300px;
+  padding: 10px;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
 }
 
-.no3-page .container .top-travel-stories .body-content .items .item .item-box {
+.no4-page .container .body-content .items .item .item-box {
   width: 100%;
   height: 100%;
-  -webkit-box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.3);
-          box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.3);
-  border-radius: 20px;
 }
 
-.no3-page .container .top-travel-stories .body-content .items .item .item-box .item-img {
+.no4-page .container .body-content .items .item .item-box .img {
   cursor: pointer;
   position: relative;
   width: 100%;
-  height: 60%;
-  border-bottom-left-radius: 0px;
-  border-bottom-right-radius: 0px;
+  height: 85%;
+  border-radius: 12px;
   overflow: hidden;
 }
 
-.no3-page .container .top-travel-stories .body-content .items .item .item-box .group-details-post {
-  width: 100%;
-  height: 40%;
-  padding: 0 10px;
-  -webkit-box-sizing: border-box;
-          box-sizing: border-box;
-  overflow: hidden;
+.no4-page .container .body-content .items .item .item-box .img img {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  -webkit-transform: translate(-50%, -50%);
+          transform: translate(-50%, -50%);
+  width: 110%;
 }
 
-.no3-page .container .top-travel-stories .body-content .items .item .item-box .group-details-post .group-address-and-date {
+.no4-page .container .body-content .items .item .item-box .group-text {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
-  -webkit-box-align: end;
-      -ms-flex-align: end;
-          align-items: flex-end;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
   -webkit-box-pack: justify;
       -ms-flex-pack: justify;
           justify-content: space-between;
-  width: 100%;
-  height: 20%;
-  overflow: hidden;
+  height: 15%;
+  padding: 0 10px;
 }
 
-.no3-page .container .top-travel-stories .body-content .items .item .item-box .group-details-post .group-address-and-date span {
-  font-size: 20px;
-  font-weight: 500;
-  font-style: normal;
+.no4-page .container .body-content .items .item .item-box .group-text .name-of-territory {
   color: #5b5b5b;
 }
 
-.no3-page .container .top-travel-stories .body-content .items .item .item-box .group-details-post .group-address-and-date .address {
-  width: 40%;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: clip;
+.no4-page .container .body-content .items .item .item-box .group-text .name-of-city {
+  cursor: pointer;
+  font-style: normal;
+  font-size: 22px;
+  font-weight: bold;
+  text-align: center;
+  color: black;
+  text-align: left;
 }
 
-.no3-page .container .top-travel-stories .body-content .items .item .item-box .group-details-post .group-address-and-date .date {
-  width: 40%;
+.no4-page .container #pagination {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
-  -ms-flex-item-align: end;
-      align-self: flex-end;
-  -webkit-box-pack: end;
-      -ms-flex-pack: end;
-          justify-content: flex-end;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: clip;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  width: 240px;
+  margin: 40px auto 0;
 }
 
-.no3-page .container .top-travel-stories .body-content .items .item .item-box .group-details-post .group-address-and-date .date span {
-  font-size: 16px;
-}
-
-.no3-page .container .top-travel-stories .body-content .items .item .item-box .group-details-post .group-address-and-date .date .dot {
-  display: block;
-  width: 6.5px;
-  height: 6.5px;
-  border-radius: 50%;
-  margin: 6.5px 8px;
-  background-color: #5b5b5b;
-}
-
-.no3-page .container .top-travel-stories .body-content .items .item .item-box .group-details-post .detail-title {
-  font-style: normal;
-  font-weight: 700;
-  font-size: 24px;
-  color: #000000;
-  margin: 10px 0;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: clip;
-}
-
-.no3-page .container .top-travel-stories .body-content .items .item .item-box .group-details-post .detail-content {
-  height: 40%;
-  font-style: normal;
-  font-weight: 500;
-  font-size: 17px;
-  color: #000000;
-}
-
-.no3-page .container .top-travel-stories .body-content .items .item .item-box .group-details-post .btn-view-post {
+.no4-page .container #pagination #prev-btn,
+.no4-page .container #pagination #next-btn {
   cursor: pointer;
-  height: 20%;
-  color: #4169e1;
+  padding: 8px 12px;
 }
 
-.no3-page .container .top-travel-stories .body-content .items .item .item-box .group-details-post .btn-view-post i {
-  margin-left: 6px;
-  -webkit-transform: rotate(-45deg);
-          transform: rotate(-45deg);
+.no4-page .container #pagination #prev-btn:hover,
+.no4-page .container #pagination #next-btn:hover {
+  color: #fff;
+  background-color: #4169e1;
+}
+
+.no4-page .container #pagination #prev-btn[disabled="disabled"]:hover,
+.no4-page .container #pagination #next-btn[disabled="disabled"]:hover {
+  cursor: not-allowed;
 }
 
 @-webkit-keyframes anim-lineUp {
@@ -817,4 +686,4 @@ section {
             transform: scale(1);
   }
 }
-/*# sourceMappingURL=home.css.map */
+/*# sourceMappingURL=region.css.map */
