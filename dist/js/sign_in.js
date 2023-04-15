@@ -1,35 +1,101 @@
-// let username = $('#inputLogin').val();
-// let password = $('#inputPassword').val();
+function isEmail(email) {
+    var regex = /^([a-zA-Z0-9_.+-])+\@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+    return regex.test(email);
+}
 
-$("#btnSignIn").click((e) => {
-    e.preventDefault();
+function unsendElementAlert(ele) {
+    if ($(ele).find('#alert-msg').length == 1) {
+        $(ele).find('#alert-msg').remove();
+    }
+}
 
-    const data = {
-        username: "Dang Tien Dat",
-        email: "dat1awdwadwadwad",
-        admin: 0,
-    };
-    Register(data).then(data => {
-        console.log(data);
+function sendElementAlert(ele, val) {
+    if ($(ele).find('#alert-msg').length == 1) {
+        $(ele).find('#alert-msg').remove();
+    }
+    
+    if ($(ele).find('#alert-msg').length == 0) {
+        $(ele).append(`<p id="alert-msg">${val}</p>`);
+    }
+}
+
+function clearAlertInput() {
+    let groupInput = document.querySelectorAll('#inputCheck');
+    groupInput.forEach(ele => {
+        unsendElementAlert(ele);
     });
+}
 
-    // AlertRegister(data);
-});
-
-async function Register(data) {
-    let test = await fetch("http://localhost:5000/api/register", {
+async function checkExistsEmail(email) {
+    let duplicate = await fetch("http://localhost:5000/api/checkExistsEmail", {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
         },
-        body: JSON.stringify(data),
+        body: JSON.stringify({email: email}),
     })
     .then((data) => data.json())
-    return test
+    return duplicate
 }
 
-// async function AlertRegister(data) {
-//     Register(data).then(dt => {
-//         alert(dt);
-//     });
-// }
+async function checkExistsPhone(phone) {
+    let duplicate = await fetch("http://localhost:5000/api/checkExistsPhone", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify({phone: phone}),
+    })
+    .then((data) => data.json())
+    return duplicate
+}
+
+$('#btnSignIn').click(e => {
+    e.preventDefault();
+    let emailOrPhone = $('#inputEmailOrPhone').val();
+    let password = $('#inputPassword').val();
+
+    console.log(emailOrPhone, password);
+    if (emailOrPhone != "" && password != "") {
+        clearAlertInput();
+        if (isEmail(emailOrPhone)) {
+            checkExistsEmail(emailOrPhone).then(data => {
+                let dataUser = data;
+                if (dataUser.data == null) {
+                    sendElementAlert($('#inputEmailOrPhone').parent(), `Email has not been registered!`);
+                } else {
+                    if (dataUser.data.password != password) {
+                        sendElementAlert($('#inputPassword').parent(), `Invalid password!`);
+                    } else {
+                        window.location = '/home.html'
+                    }
+                }
+            });
+        } else {
+            checkExistsPhone(emailOrPhone).then(data => {
+                let dataUser = data;
+                if (dataUser.data == null) {
+                    sendElementAlert($('#inputEmailOrPhone').parent(), `Phone has not been registered!`);
+                } else {
+                    if (dataUser.data.password != password) {
+                        sendElementAlert($('#inputPassword').parent(), `Invalid password!`);
+                    } else {
+                        window.location = '/home.html'
+                    }
+                }
+            });
+        }
+    } else {
+        if (emailOrPhone == "") {
+            sendElementAlert($('#inputEmailOrPhone').parent(), `can't empty!`);
+        } else {
+            unsendElementAlert($('#inputEmailOrPhone').parent())
+        }
+
+        if (password == "") {
+            sendElementAlert($('#inputPassword').parent(), `can't empty!`);
+        } else {
+            unsendElementAlert($('#inputPassword').parent())
+        }
+    }
+});

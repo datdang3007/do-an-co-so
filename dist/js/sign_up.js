@@ -102,7 +102,7 @@ async function Register(data) {
 }
 
 async function checkDuplicateEmail(email) {
-    let duplicate = await fetch("http://localhost:5000/api/checkDuplicateEmail", {
+    let duplicate = await fetch("http://localhost:5000/api/checkExistsEmail", {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
@@ -114,7 +114,7 @@ async function checkDuplicateEmail(email) {
 }
 
 async function checkDuplicatePhone(phone) {
-    let duplicate = await fetch("http://localhost:5000/api/checkDuplicatePhone", {
+    let duplicate = await fetch("http://localhost:5000/api/checkExistsPhone", {
         method: "POST",
         headers: {
             "Content-Type": "application/json",

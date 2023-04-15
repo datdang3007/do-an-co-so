@@ -48,6 +48,7 @@ body {
   background-color: #fff;
   border-radius: 50%;
   right: 50px;
+  font-family: 'Times New Roman', Times, serif;
 }
 
 .logo-brand img {
@@ -68,7 +69,6 @@ body {
       -ms-flex-align: center;
           align-items: center;
   width: 650px;
-  height: 520px;
   border-radius: 20px;
   -webkit-box-shadow: 0 0 30px 5px rgba(0, 0, 0, 0.5);
           box-shadow: 0 0 30px 5px rgba(0, 0, 0, 0.5);
@@ -77,16 +77,12 @@ body {
 }
 
 .content .form-sign-in {
-  position: absolute;
-  top: 50%;
-  left: 50%;
   width: 80%;
-  padding: 40px 10px;
+  padding: 40px 0px;
+  margin: 0 auto;
   border-radius: 20px;
   -webkit-box-sizing: border-box;
           box-sizing: border-box;
-  -webkit-transform: translate(-50%, -50%);
-          transform: translate(-50%, -50%);
 }
 
 .content .form-sign-in .header {
@@ -124,16 +120,6 @@ body {
   margin-bottom: 20px;
 }
 
-.content .form-sign-in .body form .group-input label {
-  cursor: text;
-  position: absolute;
-  top: 50%;
-  left: 10px;
-  -webkit-transform: translateY(-50%);
-          transform: translateY(-50%);
-  font-size: 16px;
-}
-
 .content .form-sign-in .body form .group-input input {
   width: 100%;
   border: 0px solid transparent;
@@ -149,6 +135,15 @@ body {
 .content .form-sign-in .body form .group-input input:focus {
   color: black;
   border-bottom: 1px solid #4169e1;
+}
+
+.content .form-sign-in .body form .group-input p {
+  color: #721c24;
+  background-color: #f8d7da;
+  border-color: #f5c6cb;
+  padding: 6px 12px;
+  margin-top: 4px;
+  font-size: 14px;
 }
 
 .content .form-sign-in .body form .tick-option {
