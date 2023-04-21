@@ -54,8 +54,6 @@ $('#btnSignIn').click(e => {
     e.preventDefault();
     let emailOrPhone = $('#inputEmailOrPhone').val();
     let password = $('#inputPassword').val();
-
-    console.log(emailOrPhone, password);
     if (emailOrPhone != "" && password != "") {
         clearAlertInput();
         if (isEmail(emailOrPhone)) {
@@ -67,7 +65,13 @@ $('#btnSignIn').click(e => {
                     if (dataUser.data.password != password) {
                         sendElementAlert($('#inputPassword').parent(), `Invalid password!`);
                     } else {
-                        window.location = '/home.html'
+                        if (dataUser.data.admin == 0) {
+                            window.location = '/home.html';
+                        } else if (dataUser.data.admin == 1) {
+                            window.location = '/admin.html/permission=1';
+                        } else if (dataUser.data.admin == 2) {
+                            window.location = '/admin.html/permission=2';
+                        }
                     }
                 }
             });

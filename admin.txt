@@ -1,0 +1,96 @@
+<div class="left-content">
+    <div class="body">
+        <div class="options">
+            <span class="title">Thống Kê</span>
+            <div class="option">
+                <div class="option-box active">
+                    <i class="fa-solid fa-layer-group"></i>
+                    <span>Thống Kê</span>
+                    <i class="fa-solid fa-caret-right"></i>
+                </div>
+            </div>
+        </div>
+
+        <div class="options">
+            <span class="title">Bài Viết</span>
+            <div class="option">
+                <div class="option-box">
+                    <i class="fa-solid fa-layer-group"></i>
+                    <span>Bài Quảng Cáo</span>
+                    <i class="fa-solid fa-caret-right"></i>
+                </div>
+
+                <div class="option-box">
+                    <i class="fa-solid fa-layer-group"></i>
+                    <span>Bài Chưa Duyệt</span>
+                    <i class="fa-solid fa-caret-right"></i>
+                </div>
+            </div>
+        </div>
+
+        <div class="options">
+            <span class="title">Người Dùng</span>
+            <div class="option">
+                <div class="option-box">
+                    <i class="fa-solid fa-layer-group"></i>
+                    <span>Danh Sách Reviewer</span>
+                    <i class="fa-solid fa-caret-right"></i>
+                </div>
+            </div>
+        </div>
+
+        <div class="options">
+            <span class="title">Dữ Liệu Các Trang</span>
+            <div class="option">
+                <div class="option-box">
+                    <i class="fa-solid fa-layer-group"></i>
+                    <span>Tổng Hợp</span>
+                    <i class="fa-solid fa-caret-right"></i>
+                </div>
+
+                <div class="option-box">
+                    <i class="fa-solid fa-layer-group"></i>
+                    <span>Miền</span>
+                    <i class="fa-solid fa-caret-right"></i>
+                </div>
+                
+                <div class="option-box">
+                    <i class="fa-solid fa-layer-group"></i>
+                    <span>Vùng</span>
+                    <i class="fa-solid fa-caret-right"></i>
+                </div>
+
+                <div class="option-box">
+                    <i class="fa-solid fa-layer-group"></i>
+                    <span>Tỉnh Thành</span>
+                    <i class="fa-solid fa-caret-right"></i>
+                </div>
+
+                <div class="option-box">
+                    <i class="fa-solid fa-layer-group"></i>
+                    <span>Địa Điểm</span>
+                    <i class="fa-solid fa-caret-right"></i>
+                </div>
+
+                <div class="option-box">
+                    <i class="fa-solid fa-layer-group"></i>
+                    <span>Dịch Vụ</span>
+                    <i class="fa-solid fa-caret-right"></i>
+                </div>
+
+                <div class="option-box">
+                    <i class="fa-solid fa-layer-group"></i>
+                    <span>Kho Ảnh</span>
+                    <i class="fa-solid fa-caret-right"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="footer flex-center">
+        <div class="group-button">
+            <span>Log out</span>
+            <i class="fa-solid fa-right-from-bracket"></i>
+        </div>
+    </div>
+</div>
