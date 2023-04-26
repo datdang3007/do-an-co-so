@@ -34,7 +34,7 @@
                 <div class="options">
                     <span class="title">Statistics</span>
                     <div class="option">
-                        <div class="option-box">
+                        <div class="option-box active" data-category="statistics">
                             <i class="fa-solid fa-layer-group"></i>
                             <span>Statistics</span>
                             <i class="fa-solid fa-caret-right"></i>
@@ -45,13 +45,13 @@
                 <div class="options">
                     <span class="title">Posts</span>
                     <div class="option">
-                        <div class="option-box">
+                        <div class="option-box" data-category="advertisements">
                             <i class="fa-sharp fa-solid fa-bookmark"></i>
                             <span>Advertisements</span>
                             <i class="fa-solid fa-caret-right"></i>
                         </div>
 
-                        <div class="option-box">
+                        <div class="option-box" data-category="posts">
                             <i class="fa-solid fa-envelope"></i>
                             <span>Unapproved Posts</span>
                             <i class="fa-solid fa-caret-right"></i>
@@ -62,7 +62,7 @@
                 <div class="options">
                     <span class="title">Users</span>
                     <div class="option">
-                        <div class="option-box">
+                        <div class="option-box" data-category="reviewers">
                             <i class="fa-solid fa-list"></i>
                             <span>List of Reviewers</span>
                             <i class="fa-solid fa-caret-right"></i>
@@ -73,38 +73,38 @@
                 <div class="options">
                     <span class="title">Data of Pages</span>
                     <div class="option">
-                        <div class="option-box active">
+                        <div class="option-box" data-category="region">
                             <i class="fa-solid fa-earth-americas"></i>
                             <span>Region</span>
                             <i class="fa-solid fa-caret-right"></i>
                         </div>
                         
-                        <div class="option-box">
+                        <div class="option-box" data-category="territory">
                             <i class="fa-solid fa-map-location-dot"></i>
                             <span>Territory</span>
                             <i class="fa-solid fa-caret-right"></i>
                         </div>
 
-                        <div class="option-box">
+                        <div class="option-box" data-category="province">
                             <i class="fa-solid fa-location-dot"></i>
                             <span>Province</span>
                             <i class="fa-solid fa-caret-right"></i>
                         </div>
 
-                        <div class="option-box">
+                        <div class="option-box" data-category="place">
                             
                             <i class="fa-solid fa-map-pin"></i>
                             <span>Place</span>
                             <i class="fa-solid fa-caret-right"></i>
                         </div>
 
-                        <div class="option-box">
+                        <div class="option-box" data-category="service">
                             <i class="fa-solid fa-bell-concierge"></i>
                             <span>Service</span>
                             <i class="fa-solid fa-caret-right"></i>
                         </div>
 
-                        <div class="option-box">
+                        <div class="option-box" data-category="photo">
                             <i class="fa-solid fa-image"></i>
                             <span>Photo</span>
                             <i class="fa-solid fa-caret-right"></i>
@@ -209,8 +209,17 @@
                 <div class="group-text-and-button">
                     <span class="title">Regions</span>
                     <div class="group-button">
-                        <span class="button"><i class="fa-solid fa-plus"></i> Add New</span>
+                        <span class="button" id="btnAddNew"><i class="fa-solid fa-plus"></i> Add New</span>
                     </div>
+                </div>
+            </div>
+
+            <div class="error-empty">
+                <div class="box">
+                    <div class="img">
+                        <img src="https://cdn.discordapp.com/attachments/1085804453246009374/1098783512649285642/error_empty.png" alt="">
+                    </div>
+                    <span class="error-text">Error Empty!</span>
                 </div>
             </div>
 
@@ -277,16 +286,25 @@
             </div> -->
 
             <!-- ### Territory ### -->
-            <div class="header">
+            <!-- <div class="header">
                 <div class="group-text-and-button">
                     <span class="title">Territorys</span>
                     <div class="group-button">
                         <span class="button"><i class="fa-solid fa-plus"></i> Add New</span>
                     </div>
                 </div>
-            </div>
+            </div> -->
 
-            <div class="Territorys">
+            <!-- <div class="error-empty">
+                <div class="box">
+                    <div class="img">
+                        <img src="https://cdn.discordapp.com/attachments/1085804453246009374/1098783512649285642/error_empty.png" alt="">
+                    </div>
+                    <span class="error-text">Error Empty!</span>
+                </div>
+            </div> -->
+
+            <!-- <div class="Territorys">
                 <div class="territory">
                     <div class="territory-box">
                         <div class="territory-img">
@@ -306,10 +324,286 @@
                         </div>
                     </div>  
                 </div>
-            </div>
+            </div> -->
 
             <!-- ### Province ### -->
+            <!-- <div class="header">
+                <div class="group-text-and-input">
+                    <span class="title">Provinces</span>
+                    <form>
+                        <input type="text" id="inputProvince" placeholder="Enter the province">
+                        <label for="inputProvince"><i class="fa-solid fa-magnifying-glass"></i></label>
+                        <div class="group-button">
+                            <span class="button"><i class="fa-solid fa-plus"></i> Add New</span>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <div class="Provinces">
+                <table class="header-table">
+                    <tr>
+                        <td>Name</td>
+                        <td>Region</td>
+                        <td>Territory</td>
+                        <td>Action</td>
+                    </tr>
+                </table>
+
+                <div class="province-list">
+                    <table class="value-table">
+                        <tr>
+                            <td class="image-name">
+                                <div class="group-content">
+                                    <img src="https://f55-zpg-r.zdn.vn/589863397397808120/f2e55c877254ae0af745.jpg" alt="">
+                                    <span>Ha Long</span>
+                                </div>
+                            </td>
+                            <td>THE NORTHERN</td>
+                            <td>THE NORTHERN</td>
+                            <td class="actions">
+                                <div class="action-buttons">
+                                    <span id="btnEdit">Edit</span>
+                                    <span id="btnDetails">Details</span>
+                                    <span id="btnDelete">Delete</span>
+                                </div>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div> -->
+
+            <!-- ### Place ### -->
+            <!-- <div class="header">
+                <div class="group-text-and-input">
+                    <span class="title">Places</span>
+                    <form>
+                        <input type="text" id="inputPlace" placeholder="Enter the place">
+                        <label for="inputPlace"><i class="fa-solid fa-magnifying-glass"></i></label>
+                        <div class="group-button">
+                            <span class="button" id="btnAddNew" data-category="place"><i class="fa-solid fa-plus"></i> Add New</span>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <div class="Places">
+                <table class="header-table">
+                    <tr>
+                        <td>Name</td>
+                        <td>Region</td>
+                        <td>Territory</td>
+                        <td>Province</td>
+                        <td>Action</td>
+                    </tr>
+                </table>
+
+                <div class="place-list">
+                    <table class="value-table">
+                        <tr>
+                            <td class="image-name">
+                                <div class="group-content">
+                                    <img src="https://f55-zpg-r.zdn.vn/589863397397808120/f2e55c877254ae0af745.jpg" alt="">
+                                    <span>Ha Long</span>
+                                </div>
+                            </td>
+                            <td>THE NORTHERN</td>
+                            <td>THE NORTHERN</td>
+                            <td>THE NORTHERN</td>
+                            <td class="actions">
+                                <div class="action-buttons">
+                                    <span id="btnEdit">Edit</span>
+                                    <span id="btnDetails">Details</span>
+                                    <span id="btnDelete">Delete</span>
+                                </div>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div> -->
+        </div>
+
+        <div class="addnew-view">
+            <!-- <div class="addnew-box">
+                <span id="btnClose"><i class="fa-solid fa-xmark"></i></span>
+                <div class="title">Add New Region</div>
+                <form>
+                    <div class="group-input">
+                        <label for="inputName">Name</label>
+                        <input class="label-input" type="text" id="inputName" name="inputName" placeholder="The Northern">
+                    </div>
+                    <div class="group-input">
+                        <label for="inputSlogan">Slogan</label>
+                        <input class="label-input" type="text" id="inputSlogan" name="inputSlogan" placeholder="A land of rich cultural and historical experiences">
+                    </div>
+                    <div class="group-input">
+                        <label for="inputOverview">Overview</label>
+                        <input class="label-input" type="text" id="inputOverview" name="inputOverview" placeholder="Croatia is a fun destination with a wide range...">
+                    </div>
+                    <div class="group-input">
+                        <label for="inputImageURL">Image URL</label>
+                        <input class="label-input" type="text" id="inputImageURL" name="inputImageURL" placeholder="https://cdn.discordapp.com/halong_bay.png">
+                    </div>
+                    <span id="btnAddNew">Add New</span>
+                </form>
+            </div> -->
+
+            <!-- <div class="addnew-box">
+                <span id="btnClose"><i class="fa-solid fa-xmark"></i></span>
+                <div class="title">Add New Territory</div>
+                <form>
+                    <div class="group-input">
+                        <label for="inputName">Name</label>
+                        <input class="label-input" type="text" id="inputName" name="inputName" placeholder="The Northwest">
+                    </div>
+                    <div class="group-input">
+                        <label for="inputSlogan">Slogan</label>
+                        <input class="label-input" type="text" id="inputSlogan" name="inputSlogan" placeholder="A land of rich cultural and historical experiences">
+                    </div>
+                    <div class="group-combobox">
+                        <span class="label">Region</span>
+                        <select class="label-combobox" name="cb-region">
+                            <option value="north">North</option>
+                            <option value="central">Central</option>
+                            <option value="south central">South Central</option>
+                        </select>
+                    </div>
+                    <div class="group-input">
+                        <label for="inputOverview">Overview</label>
+                        <input class="label-input" type="text" id="inputOverview" name="inputOverview" placeholder="Northwest is an area located in the northwest of Vietnam...">
+                    </div>
+                    <div class="group-input">
+                        <label for="inputImageURL">Image URL</label>
+                        <input class="label-input" type="text" id="inputImageURL" name="inputImageURL" placeholder="https://cdn.discordapp.com/halong_bay.png">
+                    </div>
+                    <span id="btnAddNew">Add New</span>
+                </form>
+            </div> -->
+
+            <!-- <div class="addnew-box">
+                <span id="btnClose"><i class="fa-solid fa-xmark"></i></span>
+                <div class="title">Add New Province</div>
+                <form>
+                    <div class="group-input">
+                        <label for="inputName">Name</label>
+                        <input class="label-input" type="text" id="inputName" name="inputName" placeholder="The Northwest">
+                    </div>
+                    <div class="group-two-element">
+                        <div class="group-combobox">
+                            <span class="label">Region</span>
+                            <select class="label-combobox" name="cb-region">
+                                <option value="north">North</option>
+                                <option value="central">Central</option>
+                                <option value="south central">South Central</option>
+                            </select>
+                        </div>
+                        <div class="group-combobox">
+                            <span class="label">Territory</span>
+                            <select class="label-combobox" name="cb-territory">
+                                <option value="north">North</option>
+                                <option value="central">Central</option>
+                                <option value="south central">South Central</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="group-input">
+                        <label for="inputOverview">Overview</label>
+                        <input class="label-input" type="text" id="inputOverview" name="inputOverview" placeholder="Northwest is an area located in the northwest of Vietnam...">
+                    </div>
+                    <div class="group-input">
+                        <label for="inputImageURL">Image URL</label>
+                        <input class="label-input" type="text" id="inputImageURL" name="inputImageURL" placeholder="https://cdn.discordapp.com/halong_bay.png">
+                    </div>
+                    <span id="btnAddNew">
+                        <i class="fa-solid fa-plus"></i>
+                        Add New
+                    </span>
+                </form>
+            </div> -->
+
+            <!-- PLACE -->
             
+            <!-- <div class="addnew-box">
+                <span id="btnClose"><i class="fa-solid fa-xmark"></i></span>
+                <div class="title">Add New Place</div>
+                <form>
+                    <div class="group-input">
+                        <label for="inputName">Name</label>
+                        <input class="label-input" type="text" id="inputName" name="inputName" placeholder="Ha Long">
+                    </div>
+                    <div class="group-input">
+                        <label for="inputContent">Overview</label>
+                        <input class="label-input" type="input" id="inputContent" name="inputContent" placeholder="Enter the amount of content">
+                    </div>
+                    <div class="group-three-element">
+                        <div class="group-combobox">
+                            <span class="label">Region</span>
+                            <select class="label-combobox" name="cb-region">
+                                <option value="north">North</option>
+                                <option value="central">Central</option>
+                                <option value="south central">South Central</option>
+                            </select>
+                        </div>
+                        <div class="group-combobox">
+                            <span class="label">Territory</span>
+                            <select class="label-combobox" name="cb-territory">
+                                <option value="north">North</option>
+                                <option value="central">Central</option>
+                                <option value="south central">South Central</option>
+                            </select>
+                        </div>
+                        <div class="group-combobox">
+                            <span class="label">Province</span>
+                            <select class="label-combobox" name="cb-province">
+                                <option value="north">North</option>
+                                <option value="central">Central</option>
+                                <option value="south central">South Central</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="group-input">
+                        <label for="inputOverview">Overview</label>
+                        <input class="label-input" type="text" id="inputOverview" name="inputOverview" placeholder="Northwest is an area located in the northwest of Vietnam...">
+                    </div>
+                    <div class="group-input">
+                        <label for="inputImageURL">Image URL</label>
+                        <input class="label-input" type="text" id="inputImageURL" name="inputImageURL" placeholder="https://cdn.discordapp.com/halong_bay.png">
+                    </div>
+                    <span id="btnContinue">
+                        Continue
+                        <i class="fa-solid fa-arrow-right"></i>
+                    </span>
+                </form>
+            </div> -->
+
+            <!-- <div class="addnew-box">
+                <span id="btnBack"><i class="fa-solid fa-arrow-right"></i></span>
+                <span id="btnClose"><i class="fa-solid fa-xmark"></i></span>
+                <div class="title">Enter Place Content</div>
+                <form>
+                    <div class="group-combobox">
+                        <span class="label">Content Index</span>
+                        <select class="label-combobox" name="cb-index">
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3 central">3</option>
+                        </select>
+                    </div>
+                    <div class="group-input">
+                        <label for="inputText">Text</label>
+                        <input class="label-input" type="text" id="inputText" name="inputText" placeholder="Northwest is an area located in the northwest of Vietnam...">
+                    </div>
+                    <div class="group-input">
+                        <label for="inputImageURL">Image URL</label>
+                        <input class="label-input" type="text" id="inputImageURL" name="inputImageURL" placeholder="https://cdn.discordapp.com/halong_bay.png">
+                    </div>
+                    <span id="btnContinue">
+                        Continue
+                        <i class="fa-solid fa-arrow-right"></i>
+                    </span>
+                </form>
+            </div> -->
+
         </div>
     </div>
   </body>

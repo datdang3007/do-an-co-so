@@ -68,9 +68,9 @@ $('#btnSignIn').click(e => {
                         if (dataUser.data.admin == 0) {
                             window.location = '/home.html';
                         } else if (dataUser.data.admin == 1) {
-                            window.location = '/admin.html/permission=1';
+                            window.location = '/admin.html?permission=1';
                         } else if (dataUser.data.admin == 2) {
-                            window.location = '/admin.html/permission=2';
+                            window.location = '/admin.html?permission=2';
                         }
                     }
                 }
