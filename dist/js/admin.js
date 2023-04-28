@@ -98,6 +98,38 @@ async function addNewProvince(data) {
     return info
 }
 
+// #PLACE:
+async function getPlaceByID(id) {
+    let place = await fetch("http://localhost:5000/api/getPlaceByID", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ID: id}),
+    })
+    .then((data) => data.json())
+    return place
+}
+
+async function getPlaces() {
+    let allPlaces = await fetch("http://localhost:5000/api/getPlace", {
+        method: "GET",
+    }).then((data) => data.json());
+    return allPlaces.data
+}
+
+async function addNewPlace(data) {
+    let info = await fetch("http://localhost:5000/api/newPlace", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+    })
+    .then((data) => data.json())
+    return info
+}
+
 //----------------------------------------//
 //----------- ### FUNCTION ### -----------//
 //----------------------------------------//
@@ -157,20 +189,21 @@ function checkTerritoryInputEmpty() {
 }
 
 function checkProvinceInputEmpty() {
+    let dataID = $('#cb-territory').val();
     let name = $('#inputName').val();
-    let slogan = $('#inputSlogan').val();
-    let regionID = $('#cb-region').val();
-    let territoryID = $('#cb-territory').val();
     let overview = $('#inputOverview').val();
     let imageURL = $('#inputImageURL').val();
 
-    if (name == "" || slogan == "" || regionID == "" || territoryID == "" || overview == "" || imageURL == "") {
+    if (name == "" || dataID == "" || overview == "" || imageURL == "") {
         alert('cannot be empty!')
         return null
     } else {
+        let dataIDClean = dataID.split(',');
+        let territoryID = dataIDClean[0];
+        let regionID = dataIDClean[1];
+
         data = {
             name: name,
-            slogan: slogan,
             territoryID: territoryID,
             regionID: regionID,
             image: imageURL,
@@ -219,11 +252,310 @@ function eventButtonAddNew() {
                     renderRightContent('province');
                 }, 400);
             }
-        } else if (category == 'place') {
-
         }
     });
 }
+
+function randomString(length, specialWord) {
+    let result = specialWord || ``;
+    const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+    const charactersLength = characters.length;
+    let counter = 0;
+    while (counter < length) {
+      result += characters.charAt(Math.floor(Math.random() * charactersLength));
+      counter += 1;
+    }
+    return result;
+}
+
+function randomCommentID() {
+    return new Promise((resolve, reject) => {
+        let dataPlaces = getPlaces();
+        let listID = []
+        let randomID = randomString(4, 'CMT-');
+        dataPlaces.then(data => {
+            for (const [index, place] of Object.entries(data)) {
+                listID.push(place.commentID);
+            }
+            
+            while (listID.includes(randomID)) {
+                randomID = randomString(8);
+            }
+            resolve(randomID);
+        })
+    });
+};
+
+function randomImageID() {
+    return new Promise((resolve, reject) => {
+        let dataPlaces = getPlaces();
+        let listID = []
+        let randomID = randomString(4, 'IMG-');
+        dataPlaces.then(data => {
+            for (const [index, place] of Object.entries(data)) {
+                listID.push(place.imageID);
+            }
+            
+            while (listID.includes(randomID)) {
+                randomID = randomString(8);
+            }
+            resolve(randomID);
+        })
+    });
+};
+
+function checkPlaceInputEmpty() {
+    return new Promise((resolve, reject) => {
+        let dataID = $('#cb-province').val();
+        let amountContent = $('#inputContent').val();
+        let name = $('#inputName').val();
+        let overview = $('#inputOverview').val();
+        let imageURL = $('#inputImageURL').val();
+
+        if (name == "" || dataID == "" || amountContent == ""  || overview == "" || imageURL == "") {
+            alert('cannot be empty!');
+            resolve(null)
+        } else {
+            let dataIDClean = dataID.split(',');
+            let provinceID = dataIDClean[0];
+            let territoryID = dataIDClean[1];
+            let regionID = dataIDClean[2];
+            randomCommentID().then((result) => {
+                let commentID = result;
+                randomImageID().then((result2) => {
+                    let imageID = result2;
+
+                    let data = {
+                        name: name,
+                        provinceID: provinceID,
+                        territoryID: territoryID,
+                        regionID: regionID,
+                        image: imageURL,
+                        overview: overview,
+                        service: false,
+                        imageID: imageID,
+                        likeArray: [],
+                        commentID: commentID,
+                    }
+            
+                    let dataCallBack = {
+                        data: data,
+                        amount: amountContent
+                    }
+                    
+                    resolve(dataCallBack)
+                }).catch((error2) => {
+                    resolve(null)
+                    console.log(error2);
+                });
+            }).catch((error) => {
+                resolve(null)
+                console.log(error);
+            });
+        }
+    });
+}
+
+function eventButtonBackAddNewPLace(dataBackup) {
+    $('#btnBack').click(() => {
+        $('.addnew-box').addClass('fadeout');
+        setTimeout(() => {
+            let dataProvinces = getProvinces();
+            dataProvinces.then(dataProvince => {
+                if (dataProvince.length > 0) {
+                    var addNewBox = `
+                        <div class="addnew-box fadein">
+                            <span id="btnClose"><i class="fa-solid fa-xmark"></i></span>
+                            <div class="title">Add New Place</div>
+                            <form>
+                                <div class="group-input">
+                                    <label for="inputName">Name</label>
+                                    <input class="label-input" type="text" id="inputName" name="inputName" placeholder="Ha Long">
+                                </div>
+                                <div class="group-input">
+                                    <label for="inputContent">Amount of Content</label>
+                                    <input class="label-input" type="number" id="inputContent" name="inputContent" placeholder="Enter the amount of content">
+                                </div>
+                                <div class="group-combobox">
+                                    <span class="label">Province</span>
+                                    <select class="label-combobox" name="cb-province" id="cb-province"></select>
+                                </div>
+                                <div class="group-input">
+                                    <label for="inputOverview">Overview</label>
+                                    <input class="label-input" type="text" id="inputOverview" name="inputOverview" placeholder="Northwest is an area located in the northwest of Vietnam...">
+                                </div>
+                                <div class="group-input">
+                                    <label for="inputImageURL">Image URL</label>
+                                    <input class="label-input" type="text" id="inputImageURL" name="inputImageURL" placeholder="https://cdn.discordapp.com/halong_bay.png">
+                                </div>
+                                <span id="btnContinue">
+                                    Continue
+                                    <i class="fa-solid fa-arrow-right"></i>
+                                </span>
+                            </form>
+                        </div>
+                    `;
+                    $('.addnew-view').html(addNewBox);
+                    let CBProvince = ``;
+                    for (const [index, province] of Object.entries(dataProvince)) {
+                        let dataID = `${province._id},${province.territoryID},${province.regionID}`;
+                        CBProvince += `<option value="${dataID}">${province.name}</option>`;
+                    }
+                    $('#cb-province').html(CBProvince);
+                    eventCloseAddNewContent();
+                    eventButtonContinue();
+
+                    let provinceBackup = `${dataBackup.data.provinceID},${dataBackup.data.territoryID},${dataBackup.data.regionID}`;
+                    $('#cb-province').val(provinceBackup).change();
+                    $('#inputContent').val(dataBackup.amount);
+                    $('#inputName').val(dataBackup.data.name);
+                    $('#inputOverview').val(dataBackup.data.overview);
+                    $('#inputImageURL').val(dataBackup.data.image);
+                    setTimeout(() => {
+                        $('.addnew-box').removeClass('fadein');
+                    }, 1000);
+                } else {
+                    alert('cannot add new place when province is empty!');
+                }
+            });
+        }, 1000);
+    });
+}
+
+function changeToContentForm(dataCallBack) {
+    let amountContent = dataCallBack.amount;
+    let data = dataCallBack.data;
+    if (amountContent > 0) {
+        $('.addnew-box').addClass('fadeout');
+        setTimeout(() => {
+            var addNewBox = `
+                <div class="addnew-box fadein">
+                    <span id="btnBack"><i class="fa-solid fa-arrow-right"></i></span>
+                    <span id="btnClose"><i class="fa-solid fa-xmark"></i></span>
+                    <div class="title">Enter Place Content</div>
+                    <form>
+                        <div class="group-combobox">
+                            <span class="label">Content Index</span>
+                            <select class="label-combobox" name="cb-index" id="cb-index"></select>
+                        </div>
+                        <div class="group-input">
+                            <label for="inputText">Text</label>
+                            <input class="label-input" type="text" id="inputText" name="inputText" placeholder="Northwest is an area located in the northwest of Vietnam...">
+                        </div>
+                        <div class="group-input">
+                            <label for="inputImageURL">Image URL</label>
+                            <input class="label-input" type="text" id="inputImageURL" name="inputImageURL" placeholder="https://cdn.discordapp.com/halong_bay.png">
+                        </div>
+                        <span id="btnAdd">
+                            <i class="fa-solid fa-plus"></i>
+                            Add New
+                        </span>
+                    </form>
+                </div>
+            `;
+            $('.addnew-view').html(addNewBox);
+            eventCloseAddNewContent();
+            eventButtonBackAddNewPLace(dataCallBack);
+
+            let dataContent = []
+            let CBIndex = ``;
+            for (let i = 1 ; i <= amountContent; i++) {
+                CBIndex += `<option value="${i}">${i}</option>`
+                dataContent[i-1] = {
+                    text: "",
+                    image: ""
+                }
+            }
+            var indexContentSelect = 0
+            $('#cb-index').html(CBIndex);
+            $('#cb-index').on('change', () => {
+                dataContent[indexContentSelect].text = $('#inputText').val();
+                dataContent[indexContentSelect].image = $('#inputImageURL').val();
+                indexContentSelect = $('#cb-index').val() - 1;
+                let dataContentOnIndex = dataContent[indexContentSelect];
+                $('#inputText').val(dataContentOnIndex.text)
+                $('#inputImageURL').val(dataContentOnIndex.image);
+            });
+
+            $('#btnAdd').click(() => {
+                dataContent[indexContentSelect].text = $('#inputText').val();
+                dataContent[indexContentSelect].image = $('#inputImageURL').val();
+                let canAdd = true;
+                let listIndexEmpty = [];
+                for (const [index, val] of Object.entries(dataContent)) {
+                    if (val.text == "" || val.image == "") {
+                        canAdd = false;
+                        listIndexEmpty.push(Number(index)+1)
+                    }
+                };
+
+                if (canAdd) {
+                    let dataUpload = {
+                        name: data.name,
+                        provinceID: data.provinceID,
+                        territoryID: data.territoryID,
+                        regionID: data.regionID,
+                        image: data.image,
+                        overview: data.overview,
+                        service: false,
+                        content: dataContent,
+                        imageID: data.imageID,
+                        likeArray: [],
+                        commentID: data.commentID,
+                    }
+                    console.log(data.image);
+                    console.log(dataUpload);
+                    addNewPlace(dataUpload).then(dataAPI => {
+                        console.log(dataAPI);
+                    });
+                    closeAddNewView();
+                    alert('success added new place!');
+                    setTimeout(() => {
+                        renderRightContent('place');
+                    }, 400);
+                } else {
+                    alert(`content at index [${listIndexEmpty.join(',')}] is error!`);
+                }
+            })
+            setTimeout(() => {
+                $('.addnew-box').removeClass('fadein');
+            }, 1000);
+        }, 1000);
+    } else if (amountContent == 0) {
+        let dataUpload = {
+            name: data.name,
+            provinceID: data.provinceID,
+            territoryID: data.territoryID,
+            regionID: data.regionID,
+            image: data.imageURL,
+            overview: data.overview,
+            service: false,
+            content: null,
+            imageID: data.imageID,
+            likeArray: [],
+            commentID: data.commentID,
+        }
+        addNewPlace(dataUpload).then(dataAPI => {
+            console.log(dataAPI);
+        });
+        closeAddNewView();
+        alert('success added new place!');
+        setTimeout(() => {
+            renderRightContent('place');
+        }, 400);
+    }
+}
+
+function eventButtonContinue() {
+    $('#btnContinue').click(() => {
+        checkPlaceInputEmpty().then((result) => {
+            console.log(result);
+            if (result != null) changeToContentForm(result);
+        }).catch((error) => {
+            console.log(error);
+        });
+    });
+};
 
 function addEventForButtonAddNew() {
     let groupButton = document.querySelectorAll('#btnAddNew');
@@ -309,130 +641,105 @@ function addEventForButtonAddNew() {
                     }
                 });
             } else if (category == 'province') {
-                let dataRegions = getRegions();
-                dataRegions.then(dataRegion => {
-                    let dataTerritorys = getTerritorys();
-                    dataTerritorys.then(dataTerritory => {
-                        if (dataRegion.length > 0 && dataTerritory.length > 0) {
-                            var addNewBox = `
-                                <div class="addnew-box">
-                                    <span id="btnClose"><i class="fa-solid fa-xmark"></i></span>
-                                    <div class="title">Add New Province</div>
-                                    <form>
-                                        <div class="group-input">
-                                            <label for="inputName">Name</label>
-                                            <input class="label-input" type="text" id="inputName" name="inputName" placeholder="The Northwest">
-                                        </div>
-                                        <div class="group-two-element">
-                                            <div class="group-combobox">
-                                                <span class="label">Region</span>
-                                                <select class="label-combobox" name="cb-region" id="cb-region"></select>
-                                            </div>
-                                            <div class="group-combobox">
-                                                <span class="label">Territory</span>
-                                                <select class="label-combobox" name="cb-territory" id="cb-territory"></select>
-                                            </div>
-                                        </div>
-                                        <div class="group-input">
-                                            <label for="inputOverview">Overview</label>
-                                            <input class="label-input" type="text" id="inputOverview" name="inputOverview" placeholder="Northwest is an area located in the northwest of Vietnam...">
-                                        </div>
-                                        <div class="group-input">
-                                            <label for="inputImageURL">Image URL</label>
-                                            <input class="label-input" type="text" id="inputImageURL" name="inputImageURL" placeholder="https://cdn.discordapp.com/halong_bay.png">
-                                        </div>
-                                        <span id="btnAdd" data-category="${category}">
-                                            <i class="fa-solid fa-plus"></i>
-                                            Add New
-                                        </span>
-                                    </form>
-                                </div>
-                            `;
-                            $('.addnew-view').html(addNewBox);
-    
-                            let CBRegion = ``;
-                            for (const [index, region] of Object.entries(dataRegion)) {
-                                CBRegion += `<option value="${region._id}">${region.name}</option>`
-                            }
-                            $('#cb-region').html(CBRegion);
+                let dataTerritorys = getTerritorys();
+                dataTerritorys.then(dataTerritory => {
+                    if (dataTerritory.length > 0) {
+                        var addNewBox = `
+                            <div class="addnew-box">
+                                <span id="btnClose"><i class="fa-solid fa-xmark"></i></span>
+                                <div class="title">Add New Province</div>
+                                <form>
+                                    <div class="group-input">
+                                        <label for="inputName">Name</label>
+                                        <input class="label-input" type="text" id="inputName" name="inputName" placeholder="The Northwest">
+                                    </div>
+                                    <div class="group-combobox">
+                                        <span class="label">Territory</span>
+                                        <select class="label-combobox" name="cb-territory" id="cb-territory"></select>
+                                    </div>
+                                    <div class="group-input">
+                                        <label for="inputOverview">Overview</label>
+                                        <input class="label-input" type="text" id="inputOverview" name="inputOverview" placeholder="Northwest is an area located in the northwest of Vietnam...">
+                                    </div>
+                                    <div class="group-input">
+                                        <label for="inputImageURL">Image URL</label>
+                                        <input class="label-input" type="text" id="inputImageURL" name="inputImageURL" placeholder="https://cdn.discordapp.com/halong_bay.png">
+                                    </div>
+                                    <span id="btnAdd" data-category="${category}">
+                                        <i class="fa-solid fa-plus"></i>
+                                        Add New
+                                    </span>
+                                </form>
+                            </div>
+                        `;
+                        $('.addnew-view').html(addNewBox);
 
-                            let CBTerritory = ``;
-                            for (const [index, territory] of Object.entries(dataTerritory)) {
-                                CBTerritory += `<option value="${territory._id}">${territory.name}</option>`
-                            }
-                            $('#cb-territory').html(CBTerritory);
-    
-                            $('.addnew-view').css('display','block');
-                            eventCloseAddNewContent();
-                            eventButtonAddNew();
-                        } else {
-                            if (dataRegion.length == 0) {
-                                alert('cannot add new province when region is empty!');
-                            } else if (dataTerritory.length == 0) {
-                                alert('cannot add new province when territory is empty!');
-                            }
+                        let CBTerritory = ``;
+                        for (const [index, territory] of Object.entries(dataTerritory)) {
+                            let dataID = `${territory._id},${territory.regionID}`;
+                            CBTerritory += `<option value="${dataID}">${territory.name}</option>`
                         }
-                    });
-                    
+                        $('#cb-territory').html(CBTerritory);
+
+                        $('.addnew-view').css('display','block');
+                        eventCloseAddNewContent();
+                        eventButtonAddNew();
+                    } else {
+                        alert('cannot add new province when territory is empty!');
+                    }
                 });
             } else if (category == 'place') {
-                var addNewBox = `
-                    <div class="addnew-box">
-                        <span id="btnClose"><i class="fa-solid fa-xmark"></i></span>
-                        <div class="title">Add New Place</div>
-                        <form>
-                            <div class="group-input">
-                                <label for="inputName">Name</label>
-                                <input class="label-input" type="text" id="inputName" name="inputName" placeholder="Ha Long">
+                let dataProvinces = getProvinces();
+                dataProvinces.then(dataProvince => {
+                    if (dataProvince.length > 0) {
+                        var addNewBox = `
+                            <div class="addnew-box">
+                                <span id="btnClose"><i class="fa-solid fa-xmark"></i></span>
+                                <div class="title">Add New Place</div>
+                                <form>
+                                    <div class="group-input">
+                                        <label for="inputName">Name</label>
+                                        <input class="label-input" type="text" id="inputName" name="inputName" placeholder="Ha Long">
+                                    </div>
+                                    <div class="group-input">
+                                        <label for="inputContent">Amount of Content</label>
+                                        <input class="label-input" type="number" id="inputContent" name="inputContent" placeholder="Enter the amount of content">
+                                    </div>
+                                    <div class="group-combobox">
+                                        <span class="label">Province</span>
+                                        <select class="label-combobox" name="cb-province" id="cb-province"></select>
+                                    </div>
+                                    <div class="group-input">
+                                        <label for="inputOverview">Overview</label>
+                                        <input class="label-input" type="text" id="inputOverview" name="inputOverview" placeholder="Northwest is an area located in the northwest of Vietnam...">
+                                    </div>
+                                    <div class="group-input">
+                                        <label for="inputImageURL">Image URL</label>
+                                        <input class="label-input" type="text" id="inputImageURL" name="inputImageURL" placeholder="https://cdn.discordapp.com/halong_bay.png">
+                                    </div>
+                                    <span id="btnContinue">
+                                        Continue
+                                        <i class="fa-solid fa-arrow-right"></i>
+                                    </span>
+                                </form>
                             </div>
-                            <div class="group-input">
-                                <label for="inputContent">Overview</label>
-                                <input class="label-input" type="input" id="inputContent" name="inputContent" placeholder="Enter the amount of content">
-                            </div>
-                            <div class="group-three-element">
-                                <div class="group-combobox">
-                                    <span class="label">Region</span>
-                                    <select class="label-combobox" name="cb-region">
-                                        <option value="north">North</option>
-                                        <option value="central">Central</option>
-                                        <option value="south central">South Central</option>
-                                    </select>
-                                </div>
-                                <div class="group-combobox">
-                                    <span class="label">Territory</span>
-                                    <select class="label-combobox" name="cb-territory">
-                                        <option value="north">North</option>
-                                        <option value="central">Central</option>
-                                        <option value="south central">South Central</option>
-                                    </select>
-                                </div>
-                                <div class="group-combobox">
-                                    <span class="label">Province</span>
-                                    <select class="label-combobox" name="cb-province">
-                                        <option value="north">North</option>
-                                        <option value="central">Central</option>
-                                        <option value="south central">South Central</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="group-input">
-                                <label for="inputOverview">Overview</label>
-                                <input class="label-input" type="text" id="inputOverview" name="inputOverview" placeholder="Northwest is an area located in the northwest of Vietnam...">
-                            </div>
-                            <div class="group-input">
-                                <label for="inputImageURL">Image URL</label>
-                                <input class="label-input" type="text" id="inputImageURL" name="inputImageURL" placeholder="https://cdn.discordapp.com/halong_bay.png">
-                            </div>
-                            <span id="btnContinue">
-                                Continue
-                                <i class="fa-solid fa-arrow-right"></i>
-                            </span>
-                        </form>
-                    </div>
-                `;
-                $('.addnew-view').html(addNewBox);
-                $('.addnew-view').css('display','block');
-                eventCloseAddNewContent();
+                        `;
+                        $('.addnew-view').html(addNewBox);
+
+                        let CBProvince = ``;
+                        for (const [index, province] of Object.entries(dataProvince)) {
+                            let dataID = `${province._id},${province.territoryID},${province.regionID}`;
+                            CBProvince += `<option value="${dataID}">${province.name}</option>`
+                        }
+                        $('#cb-province').html(CBProvince);
+
+                        $('.addnew-view').css('display','block');
+                        eventCloseAddNewContent();
+                        eventButtonContinue();
+                    } else {
+                        alert('cannot add new place when province is empty!');
+                    }
+                });
             }
         });
     })
@@ -826,57 +1133,78 @@ function renderRightContent(category) {
             };
         });
     } else if (category == "place") {
-        let rightContent = `
-            <div class="header">
-                <div class="group-text-and-input">
-                    <span class="title">Places</span>
-                    <form>
-                        <input type="text" id="inputPlace" placeholder="Enter the place">
-                        <label for="inputPlace"><i class="fa-solid fa-magnifying-glass"></i></label>
-                        <div class="group-button">
-                            <span class="button" id="btnAddNew" data-category="place"><i class="fa-solid fa-plus"></i> Add New</span>
-                        </div>
-                    </form>
+        let dataPlaces = getPlaces();
+        dataPlaces.then(data => {
+            let rightContent = `
+                <div class="header">
+                    <div class="group-text-and-input">
+                        <span class="title">Places</span>
+                        <form>
+                            <input type="text" id="inputPlace" placeholder="Enter the place">
+                            <label for="inputPlace"><i class="fa-solid fa-magnifying-glass"></i></label>
+                            <div class="group-button">
+                                <span class="button" id="btnAddNew" data-category="place"><i class="fa-solid fa-plus"></i> Add New</span>
+                            </div>
+                        </form>
+                    </div>
                 </div>
-            </div>
 
-            <div class="Places">
-                <table class="header-table">
-                    <tr>
-                        <td>Name</td>
-                        <td>Region</td>
-                        <td>Territory</td>
-                        <td>Province</td>
-                        <td>Action</td>
-                    </tr>
-                </table>
-
-                <div class="place-list">
-                    <table class="value-table">
+                <div class="Places">
+                    <table class="header-table">
                         <tr>
-                            <td class="image-name">
-                                <div class="group-content">
-                                    <img src="https://f55-zpg-r.zdn.vn/589863397397808120/f2e55c877254ae0af745.jpg" alt="">
-                                    <span>Ha Long</span>
-                                </div>
-                            </td>
-                            <td>THE NORTHERN</td>
-                            <td>THE NORTHERN</td>
-                            <td>THE NORTHERN</td>
-                            <td class="actions">
-                                <div class="action-buttons">
-                                    <span id="btnEdit">Edit</span>
-                                    <span id="btnDetails">Details</span>
-                                    <span id="btnDelete">Delete</span>
-                                </div>
-                            </td>
+                            <td>Name</td>
+                            <td>Region</td>
+                            <td>Territory</td>
+                            <td>Province</td>
+                            <td>Action</td>
                         </tr>
                     </table>
+
+                    <div class="place-list">
+                        <table class="value-table"></table>
+                    </div>
                 </div>
-            </div>
-        `
-        $('.right-content').html(rightContent);
-        addEventForButtonAddNew();
+            `
+            $('.right-content').html(rightContent);
+            addEventForButtonAddNew();
+
+            if (data.length > 0) {
+                $('.error-empty').remove();
+                let Places = ``;
+                for (const [index, place] of Object.entries(data)) {
+                    getRegionByID(place.regionID).then(dataRegion => {
+                        let regionName = dataRegion.data.name;
+                        getTerritoryByID(place.territoryID).then(dataTerritory => {
+                            let territoryName = dataTerritory.data.name;
+                            getProvinceByID(place.provinceID).then(dataProvince => {
+                                let provinceName = dataProvince.data.name;
+                                Places += `
+                                    <tr>
+                                        <td class="image-name">
+                                        <div class="group-content">
+                                            <img src="${place.image}" alt="">
+                                            <span>${place.name}</span>
+                                        </div>
+                                        </td>
+                                        <td>${regionName}</td>
+                                        <td>${territoryName}</td>
+                                        <td>${provinceName}</td>
+                                        <td class="actions">
+                                            <div class="action-buttons">
+                                                <span id="btnEdit">Edit</span>
+                                                <span id="btnDetails">Details</span>
+                                                <span id="btnDelete">Delete</span>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                `;
+                                $('.value-table').html(Places);
+                            });
+                        });
+                    });
+                };
+            };
+        });
     } else if (category == "service") {
         let rightContent = `
         
@@ -904,7 +1232,14 @@ function renderRightContent(category) {
 
 $(document).ready(function () {
     setupOptionBoxEvent();
-    renderRightContent('statistics');
+    // renderRightContent('statistics');
+    renderRightContent('place');
     // renderRightContent('province');
+
+    // let data = {
+    //     amount: 3,
+    //     data: null
+    // }
+    // changeToContentForm(data);
     labelInputFocus();
 });

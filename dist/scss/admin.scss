@@ -11,7 +11,8 @@ body {
     align-items: center;
 }
 
-::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
+::placeholder {
+    /* Chrome, Firefox, Opera, Safari 10.1+ */
     color: #aaa;
 }
 
@@ -708,7 +709,7 @@ body {
             }
             .header-table {
                 border-collapse: collapse;
-                width: 100%;
+                width: 98.8%;
                 margin-bottom: 15px;
                 td {
                     font-size: 20px;
@@ -798,6 +799,12 @@ body {
             box-sizing: border-box;
             overflow: hidden;
             padding: 40px;
+            &.fadeout {
+                animation: FadeOut 1s forwards;
+            }
+            &.fadein {
+                animation: FadeIn 1s forwards;
+            }
             #btnBack {
                 cursor: pointer;
                 position: absolute;
@@ -874,48 +881,6 @@ body {
                         }
                     }
                 }
-                .group-two-element {
-                    display: flex;
-                    align-items: center;
-                    justify-content: space-between;
-                    .group-combobox {
-                        width: calc(550px / 2);
-                        box-sizing: border-box;
-                        &:first-child {
-                            padding-right: 5px;
-                        }
-                        &:last-child {
-                            padding-left: 5px;
-                        }
-                        select {
-                            width: 100%;
-                            border-radius: 7px;
-                        }
-                    }
-                }
-                .group-three-element {
-                    display: flex;
-                    align-items: center;
-                    justify-content: space-between;
-                    .group-combobox {
-                        width: calc(550px / 3);
-                        box-sizing: border-box;
-                        &:first-child {
-                            padding-right: 5px;
-                        }
-                        &:nth-child(2) {
-                            padding: 0 2.5px;
-                        }
-                        &:last-child {
-                            padding-left: 5px;
-                        }
-                        select {
-                            width: 100%;
-                            border-radius: 6px;
-                            margin: 0 auto;
-                        }
-                    }
-                }
                 .group-combobox {
                     position: relative;
                     width: 100%;
@@ -949,7 +914,8 @@ body {
                         }
                     }
                 }
-                #btnAdd, #btnContinue {
+                #btnAdd,
+                #btnContinue {
                     cursor: pointer;
                     width: 100%;
                     box-sizing: border-box;
@@ -964,5 +930,27 @@ body {
                 }
             }
         }
+    }
+}
+
+@keyframes FadeOut {
+    from {
+        opacity: 1;
+        transform: translate(-50%, -50%);
+    }
+    to {
+        opacity: 0;
+        transform: translate(calc(-50% - 100px), -50%);
+    }
+}
+
+@keyframes FadeIn {
+    from {
+        opacity: 0;
+        transform: translate(calc(-50% + 100px), -50%);
+    }
+    to {
+        opacity: 1;
+        transform: translate(-50%, -50%);
     }
 }
