@@ -1232,8 +1232,8 @@ function renderRightContent(category) {
 
 $(document).ready(function () {
     setupOptionBoxEvent();
-    // renderRightContent('statistics');
-    renderRightContent('place');
+    renderRightContent('statistics');
+    // renderRightContent('place');
     // renderRightContent('province');
 
     // let data = {
