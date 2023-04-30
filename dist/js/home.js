@@ -51,6 +51,14 @@ async function getAllPlaceByTerritoryID(id) {
     return allPlaceInTerritory
 }
 
+async function getPlaceForHomePage() {
+    let result = await fetch("http://localhost:5000/api/getPlaceForHomePage", {
+        method: "GET",
+    })
+    .then((data) => data.json())
+    return result
+}
+
 //----------------------------------------//
 //----------- ### FUNCTION ### -----------//
 //----------------------------------------//
@@ -99,51 +107,42 @@ function renderTerritory() {
     let dataTerritorys = getTerritorys();
     dataTerritorys.then(data => {
         if (data.length > 0) {
-            let Territorys = `
-                <div class="header-title">
-                    <span class="big-title">Regions in the territory</span>
-                    <p class="details-title">
-                        Here are some of the most visited places in 2023
-                    </p>
-                </div>
-                <div class="body-content">
-                    <div class="items">
-            `;
-
-            for (const [index, territory] of Object.entries(data)) {
-                getAllPlaceByTerritoryID(territory._id).then(dataPlace => {
-                    if (dataPlace.success && dataPlace.data.length > 0) {
-                        let dataRandomPlace = dataPlace.data[getRandomNumberTypeInt(0, dataPlace.data.length-1)];
-                        let placeName = dataRandomPlace.name;
-                        let provinceOfPlace = dataRandomPlace.provinceID;
-                        getProvinceByID(provinceOfPlace).then(dataProvince => {
-                            if (dataProvince.success && dataProvince.data.length > 0) {
-                                let provinceName = dataProvince.data.name;
-                                Territorys += `
-                                    <div class="item">
-                                        <div class="item-box">
-                                            <div class="item-img">
-                                            <img
-                                                src="${territory.image}"
-                                                alt=""
-                                            />
-                                            </div>
-                                            <div class="address-of-img">Capetown, South Africa</div>
-                                            <div class="name-of-img">${territory.name}</div>
-                                        </div>
-                                    </div>
-                                `;
-                            };
-                        });
-                    }
-                });
-            };
-
-            Territorys += `
+            getPlaceForHomePage().then(dataPlace => {
+                const dataPlaceResult = dataPlace.data;
+                let Territorys = `
+                    <div class="header-title">
+                        <span class="big-title">Regions in the territory</span>
+                        <p class="details-title">
+                            Here are some of the most visited places in 2023
+                        </p>
                     </div>
-                </div>
-            `;
-            $('.regions-in-the-territory').html(Territorys);
+                    <div class="body-content">
+                        <div class="items">
+                `;
+                
+                for (const [index, Place] of Object.entries(dataPlaceResult)) {
+                    Territorys += `
+                            <div class="item">
+                                <div class="item-box">
+                                    <div class="item-img">
+                                    <img
+                                        src="${Place.image}"
+                                        alt=""
+                                    />
+                                    </div>
+                                    <div class="address-of-img">${Place.name}, ${Place.provinceName}</div>
+                                    <div class="name-of-img">${Place.territoryName}</div>
+                                </div>
+                            </div>
+                    `;
+                };
+
+                Territorys += `
+                        </div>
+                    </div>
+                `;
+                $('.regions-in-the-territory').html(Territorys);
+            });
         }
     });
 
@@ -373,10 +372,12 @@ function renderPage() {
             </div>
         </footer>
     `;
+    $('body').html(base);
 
+    // RENDER:
     renderRegion();
     renderTerritory();
-    $('body').html(base);
+    renderPosts();
 }
 
 $(document).ready(function () {

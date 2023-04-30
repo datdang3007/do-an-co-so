@@ -622,7 +622,7 @@ section {
   -webkit-transform: translate(-50%, -50%);
           transform: translate(-50%, -50%);
   display: block;
-  width: 120%;
+  width: 140%;
   -webkit-transition: 0.4s;
   transition: 0.4s;
 }
