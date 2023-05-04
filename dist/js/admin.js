@@ -4,7 +4,7 @@
 
 // #REGIONS:
 async function getRegionByID(id) {
-    let region = await fetch("http://localhost:5000/api/getRegionByID", {
+    let region = await fetch("http://localhost:8000/api/getRegionByID", {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
@@ -16,14 +16,14 @@ async function getRegionByID(id) {
 }
 
 async function getRegions() {
-    let allRegions = await fetch("http://localhost:5000/api/getRegion", {
+    let allRegions = await fetch("http://localhost:8000/api/getRegion", {
         method: "GET",
     }).then((data) => data.json());
     return allRegions.data
 }
 
 async function addNewRegion(data) {
-    let info = await fetch("http://localhost:5000/api/newRegion", {
+    let info = await fetch("http://localhost:8000/api/newRegion", {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
@@ -36,7 +36,7 @@ async function addNewRegion(data) {
 
 // #TERRITORYS:
 async function getTerritoryByID(id) {
-    let territory = await fetch("http://localhost:5000/api/getTerritoryByID", {
+    let territory = await fetch("http://localhost:8000/api/getTerritoryByID", {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
@@ -48,14 +48,14 @@ async function getTerritoryByID(id) {
 }
 
 async function getTerritorys() {
-    let allTerritorys = await fetch("http://localhost:5000/api/getTerritory", {
+    let allTerritorys = await fetch("http://localhost:8000/api/getTerritory", {
         method: "GET",
     }).then((data) => data.json());
     return allTerritorys.data
 }
 
 async function addNewTerritory(data) {
-    let info = await fetch("http://localhost:5000/api/newTerritory", {
+    let info = await fetch("http://localhost:8000/api/newTerritory", {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
@@ -68,7 +68,7 @@ async function addNewTerritory(data) {
 
 // #PROVINCES:
 async function getProvinceByID(id) {
-    let province = await fetch("http://localhost:5000/api/getProvinceByID", {
+    let province = await fetch("http://localhost:8000/api/getProvinceByID", {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
@@ -80,14 +80,14 @@ async function getProvinceByID(id) {
 }
 
 async function getProvinces() {
-    let allProvinces = await fetch("http://localhost:5000/api/getProvince", {
+    let allProvinces = await fetch("http://localhost:8000/api/getProvince", {
         method: "GET",
     }).then((data) => data.json());
     return allProvinces.data
 }
 
 async function addNewProvince(data) {
-    let info = await fetch("http://localhost:5000/api/addProvince", {
+    let info = await fetch("http://localhost:8000/api/addProvince", {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
@@ -100,7 +100,7 @@ async function addNewProvince(data) {
 
 // #PLACE:
 async function getPlaceByID(id) {
-    let place = await fetch("http://localhost:5000/api/getPlaceByID", {
+    let place = await fetch("http://localhost:8000/api/getPlaceByID", {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
@@ -112,14 +112,14 @@ async function getPlaceByID(id) {
 }
 
 async function getPlaces() {
-    let allPlaces = await fetch("http://localhost:5000/api/getPlace", {
+    let allPlaces = await fetch("http://localhost:8000/api/getPlace", {
         method: "GET",
     }).then((data) => data.json());
     return allPlaces.data
 }
 
 async function addNewPlace(data) {
-    let info = await fetch("http://localhost:5000/api/newPlace", {
+    let info = await fetch("http://localhost:8000/api/newPlace", {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
@@ -1233,13 +1233,5 @@ function renderRightContent(category) {
 $(document).ready(function () {
     setupOptionBoxEvent();
     renderRightContent('statistics');
-    // renderRightContent('place');
-    // renderRightContent('province');
-
-    // let data = {
-    //     amount: 3,
-    //     data: null
-    // }
-    // changeToContentForm(data);
     labelInputFocus();
 });
