@@ -4,30 +4,30 @@
 
 // #REGIONS:
 async function getRegionByID(id) {
-  let region = await fetch("http://localhost:8000/api/getRegionByID", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
+    let region = await fetch("http://localhost:8000/api/getRegionByID", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+        },
     body: JSON.stringify({ ID: id }),
   }).then((data) => data.json());
   return region;
 }
 
 async function getRegions() {
-  let allRegions = await fetch("http://localhost:8000/api/getRegion", {
-    method: "GET",
-  }).then((data) => data.json());
+    let allRegions = await fetch("http://localhost:8000/api/getRegion", {
+        method: "GET",
+    }).then((data) => data.json());
   return allRegions.data;
 }
 
 async function addNewRegion(data) {
-  let info = await fetch("http://localhost:8000/api/newRegion", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(data),
+    let info = await fetch("http://localhost:8000/api/newRegion", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
   }).then((data) => data.json());
   return info;
 }
@@ -45,30 +45,30 @@ async function editRegion(data) {
 
 // #TERRITORYS:
 async function getTerritoryByID(id) {
-  let territory = await fetch("http://localhost:8000/api/getTerritoryByID", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
+    let territory = await fetch("http://localhost:8000/api/getTerritoryByID", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+        },
     body: JSON.stringify({ ID: id }),
   }).then((data) => data.json());
   return territory;
 }
 
 async function getTerritorys() {
-  let allTerritorys = await fetch("http://localhost:8000/api/getTerritory", {
-    method: "GET",
-  }).then((data) => data.json());
+    let allTerritorys = await fetch("http://localhost:8000/api/getTerritory", {
+        method: "GET",
+    }).then((data) => data.json());
   return allTerritorys.data;
 }
 
 async function addNewTerritory(data) {
-  let info = await fetch("http://localhost:8000/api/newTerritory", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(data),
+    let info = await fetch("http://localhost:8000/api/newTerritory", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
   }).then((data) => data.json());
   return info;
 }
@@ -86,30 +86,30 @@ async function editTerritory(data) {
 
 // #PROVINCES:
 async function getProvinceByID(id) {
-  let province = await fetch("http://localhost:8000/api/getProvinceByID", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
+    let province = await fetch("http://localhost:8000/api/getProvinceByID", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+        },
     body: JSON.stringify({ ID: id }),
   }).then((data) => data.json());
   return province;
 }
 
 async function getProvinces() {
-  let allProvinces = await fetch("http://localhost:8000/api/getProvince", {
-    method: "GET",
-  }).then((data) => data.json());
+    let allProvinces = await fetch("http://localhost:8000/api/getProvince", {
+        method: "GET",
+    }).then((data) => data.json());
   return allProvinces.data;
 }
 
 async function addNewProvince(data) {
-  let info = await fetch("http://localhost:8000/api/addProvince", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(data),
+    let info = await fetch("http://localhost:8000/api/addProvince", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
   }).then((data) => data.json());
   return info;
 }
@@ -127,30 +127,30 @@ async function editProvince(data) {
 
 // #PLACE:
 async function getPlaceByID(id) {
-  let place = await fetch("http://localhost:8000/api/getPlaceByID", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
+    let place = await fetch("http://localhost:8000/api/getPlaceByID", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+        },
     body: JSON.stringify({ ID: id }),
   }).then((data) => data.json());
   return place;
 }
 
 async function getPlaces() {
-  let allPlaces = await fetch("http://localhost:8000/api/getPlace", {
-    method: "GET",
-  }).then((data) => data.json());
+    let allPlaces = await fetch("http://localhost:8000/api/getPlace", {
+        method: "GET",
+    }).then((data) => data.json());
   return allPlaces.data;
 }
 
 async function addNewPlace(data) {
-  let info = await fetch("http://localhost:8000/api/newPlace", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(data),
+    let info = await fetch("http://localhost:8000/api/newPlace", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
   }).then((data) => data.json());
   return info;
 }
@@ -1553,15 +1553,7 @@ function renderRightContent(category) {
 // });
 
 $(document).ready(function () {
-  setupOptionBoxEvent();
-  renderRightContent("statistics");
-  // renderRightContent('place');
-  // renderRightContent('province');
-
-  // let data = {
-  //     amount: 3,
-  //     data: null
-  // }
-  // changeToContentForm(data);
-  labelInputFocus();
+    setupOptionBoxEvent();
+    renderRightContent('statistics');
+    labelInputFocus();
 });
