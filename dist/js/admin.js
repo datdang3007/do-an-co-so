@@ -1114,6 +1114,12 @@ function setupOptionBoxEvent() {
   });
 }
 
+function setEventButtonLogout() {
+  $('#btnLogout').click(() => {
+    window.location = "/sign_in.html";
+  });
+};
+
 // #RIGHT CONTENT EVENT:
 
 function renderRightContent(category) {
@@ -1554,6 +1560,7 @@ function renderRightContent(category) {
 
 $(document).ready(function () {
     setupOptionBoxEvent();
+    setEventButtonLogout();
     renderRightContent('statistics');
     labelInputFocus();
 });
