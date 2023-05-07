@@ -90,7 +90,7 @@ function checkEmptyInput() {
 };
 
 async function Register(data) {
-    let accounInfo = await fetch("http://localhost:5000/api/register", {
+    let accounInfo = await fetch("http://localhost:8000/api/register", {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
@@ -102,7 +102,7 @@ async function Register(data) {
 }
 
 async function checkDuplicateEmail(email) {
-    let duplicate = await fetch("http://localhost:5000/api/checkExistsEmail", {
+    let duplicate = await fetch("http://localhost:8000/api/checkExistsEmail", {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
@@ -114,7 +114,7 @@ async function checkDuplicateEmail(email) {
 }
 
 async function checkDuplicatePhone(phone) {
-    let duplicate = await fetch("http://localhost:5000/api/checkExistsPhone", {
+    let duplicate = await fetch("http://localhost:8000/api/checkExistsPhone", {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
@@ -201,7 +201,7 @@ $(document).ready(function () {
 });
 
 // async function APIgetUser() {
-//     let allUser = await fetch("http://localhost:5000/api/getuser")
+//     let allUser = await fetch("http://localhost:8000/api/getuser")
 //         .then(response => response.json())
 //         .then(data => console.log(data))
 //         .catch(error => console.error(error));

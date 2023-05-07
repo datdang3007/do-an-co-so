@@ -4,367 +4,409 @@
 
 // #REGIONS:
 async function getRegionByID(id) {
-    let region = await fetch("http://localhost:5000/api/getRegionByID", {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ID: id}),
-    })
-    .then((data) => data.json())
-    return region
+  let region = await fetch("http://localhost:8000/api/getRegionByID", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ ID: id }),
+  }).then((data) => data.json());
+  return region;
 }
 
 async function getRegions() {
-    let allRegions = await fetch("http://localhost:5000/api/getRegion", {
-        method: "GET",
-    }).then((data) => data.json());
-    return allRegions.data
+  let allRegions = await fetch("http://localhost:8000/api/getRegion", {
+    method: "GET",
+  }).then((data) => data.json());
+  return allRegions.data;
 }
 
 async function addNewRegion(data) {
-    let info = await fetch("http://localhost:5000/api/newRegion", {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json",
-        },
-        body: JSON.stringify(data),
-    })
-    .then((data) => data.json())
-    return info
+  let info = await fetch("http://localhost:8000/api/newRegion", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(data),
+  }).then((data) => data.json());
+  return info;
+}
+
+async function editRegion(data) {
+  let result = await fetch("http://localhost:8000/api/editRegion", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(data),
+  }).then((data) => data.json());
+  return result.success;
 }
 
 // #TERRITORYS:
 async function getTerritoryByID(id) {
-    let territory = await fetch("http://localhost:5000/api/getTerritoryByID", {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ID: id}),
-    })
-    .then((data) => data.json())
-    return territory
+  let territory = await fetch("http://localhost:8000/api/getTerritoryByID", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ ID: id }),
+  }).then((data) => data.json());
+  return territory;
 }
 
 async function getTerritorys() {
-    let allTerritorys = await fetch("http://localhost:5000/api/getTerritory", {
-        method: "GET",
-    }).then((data) => data.json());
-    return allTerritorys.data
+  let allTerritorys = await fetch("http://localhost:8000/api/getTerritory", {
+    method: "GET",
+  }).then((data) => data.json());
+  return allTerritorys.data;
 }
 
 async function addNewTerritory(data) {
-    let info = await fetch("http://localhost:5000/api/newTerritory", {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json",
-        },
-        body: JSON.stringify(data),
-    })
-    .then((data) => data.json())
-    return info
+  let info = await fetch("http://localhost:8000/api/newTerritory", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(data),
+  }).then((data) => data.json());
+  return info;
+}
+
+async function editTerritory(data) {
+  let result = await fetch("http://localhost:8000/api/editTerritory", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(data),
+  }).then((data) => data.json());
+  return result.success;
 }
 
 // #PROVINCES:
 async function getProvinceByID(id) {
-    let province = await fetch("http://localhost:5000/api/getProvinceByID", {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ID: id}),
-    })
-    .then((data) => data.json())
-    return province
+  let province = await fetch("http://localhost:8000/api/getProvinceByID", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ ID: id }),
+  }).then((data) => data.json());
+  return province;
 }
 
 async function getProvinces() {
-    let allProvinces = await fetch("http://localhost:5000/api/getProvince", {
-        method: "GET",
-    }).then((data) => data.json());
-    return allProvinces.data
+  let allProvinces = await fetch("http://localhost:8000/api/getProvince", {
+    method: "GET",
+  }).then((data) => data.json());
+  return allProvinces.data;
 }
 
 async function addNewProvince(data) {
-    let info = await fetch("http://localhost:5000/api/addProvince", {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json",
-        },
-        body: JSON.stringify(data),
-    })
-    .then((data) => data.json())
-    return info
+  let info = await fetch("http://localhost:8000/api/addProvince", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(data),
+  }).then((data) => data.json());
+  return info;
+}
+
+async function editProvince(data) {
+  let result = await fetch("http://localhost:8000/api/editProvince", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(data),
+  }).then((data) => data.json());
+  return result.success;
 }
 
 // #PLACE:
 async function getPlaceByID(id) {
-    let place = await fetch("http://localhost:5000/api/getPlaceByID", {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ID: id}),
-    })
-    .then((data) => data.json())
-    return place
+  let place = await fetch("http://localhost:8000/api/getPlaceByID", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ ID: id }),
+  }).then((data) => data.json());
+  return place;
 }
 
 async function getPlaces() {
-    let allPlaces = await fetch("http://localhost:5000/api/getPlace", {
-        method: "GET",
-    }).then((data) => data.json());
-    return allPlaces.data
+  let allPlaces = await fetch("http://localhost:8000/api/getPlace", {
+    method: "GET",
+  }).then((data) => data.json());
+  return allPlaces.data;
 }
 
 async function addNewPlace(data) {
-    let info = await fetch("http://localhost:5000/api/newPlace", {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json",
-        },
-        body: JSON.stringify(data),
-    })
-    .then((data) => data.json())
-    return info
+  let info = await fetch("http://localhost:8000/api/newPlace", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(data),
+  }).then((data) => data.json());
+  return info;
 }
 
 //----------------------------------------//
 //----------- ### FUNCTION ### -----------//
 //----------------------------------------//
 
-// #ADD NEW BOX EVENT
-
-function closeAddNewView() {
-    $('.addnew-view').css('display','none');
+function closeBoxPlus() {
+  $(".box-plus-view").css("display", "none");
 }
 
-function eventCloseAddNewContent() {
-    $('#btnClose').click(() => {
-        closeAddNewView();
-    });
-}
-
-function checkRegionInputEmpty() {
-    let name = $('#inputName').val();
-    let slogan = $('#inputSlogan').val();
-    let overview = $('#inputOverview').val();
-    let imageURL = $('#inputImageURL').val();
-
-    if (name == "" || slogan == "" || overview == "" || imageURL == "") {
-        alert('cannot be empty!')
-        return null
-    } else {
-        data = {
-            name: name,
-            slogan: slogan,
-            image: imageURL,
-            overview: overview
-        }
-        return data
-    }
-}
-
-function checkTerritoryInputEmpty() {
-    let name = $('#inputName').val();
-    let slogan = $('#inputSlogan').val();
-    let regionID = $('#cb-region').val();
-    let overview = $('#inputOverview').val();
-    let imageURL = $('#inputImageURL').val();
-
-    if (name == "" || slogan == "" || regionID == "" || overview == "" || imageURL == "") {
-        alert('cannot be empty!')
-        return null
-    } else {
-        data = {
-            name: name,
-            slogan: slogan,
-            regionID: regionID,
-            image: imageURL,
-            overview: overview
-        }
-        return data
-    }
-}
-
-function checkProvinceInputEmpty() {
-    let dataID = $('#cb-territory').val();
-    let name = $('#inputName').val();
-    let overview = $('#inputOverview').val();
-    let imageURL = $('#inputImageURL').val();
-
-    if (name == "" || dataID == "" || overview == "" || imageURL == "") {
-        alert('cannot be empty!')
-        return null
-    } else {
-        let dataIDClean = dataID.split(',');
-        let territoryID = dataIDClean[0];
-        let regionID = dataIDClean[1];
-
-        data = {
-            name: name,
-            territoryID: territoryID,
-            regionID: regionID,
-            image: imageURL,
-            overview: overview
-        }
-        return data
-    }
-}
-
-function eventButtonAddNew() {
-    $('#btnAdd').click(() => {
-        let category = $('#btnAdd').data().category;
-        if (category == 'region') {
-            let data = checkRegionInputEmpty();
-            if (data != null) {
-                addNewRegion(data).then(data => {
-                    console.log(data);
-                });
-                closeAddNewView();
-                alert('success added new region!');
-                setTimeout(() => {
-                    renderRightContent('region');
-                }, 400);
-            }
-        } else if (category == 'territory') {
-            let data = checkTerritoryInputEmpty();
-            if (data != null) {
-                addNewTerritory(data).then(data => {
-                    console.log(data);
-                });
-                closeAddNewView();
-                alert('success added new territory!');
-                setTimeout(() => {
-                    renderRightContent('territory');
-                }, 400);
-            }
-        } else if (category == 'province') {
-            let data = checkProvinceInputEmpty();
-            if (data != null) {
-                addNewProvince(data).then(data => {
-                    console.log(data);
-                });
-                closeAddNewView();
-                alert('success added new province!');
-                setTimeout(() => {
-                    renderRightContent('province');
-                }, 400);
-            }
-        }
-    });
+function eventCloseBoxPlusContent() {
+  $("#btnClose").click(() => {
+    closeBoxPlus();
+  });
 }
 
 function randomString(length, specialWord) {
-    let result = specialWord || ``;
-    const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-    const charactersLength = characters.length;
-    let counter = 0;
-    while (counter < length) {
-      result += characters.charAt(Math.floor(Math.random() * charactersLength));
-      counter += 1;
-    }
-    return result;
+  let result = specialWord || ``;
+  const characters =
+    "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+  const charactersLength = characters.length;
+  let counter = 0;
+  while (counter < length) {
+    result += characters.charAt(Math.floor(Math.random() * charactersLength));
+    counter += 1;
+  }
+  return result;
 }
 
+// #ADD NEW BOX EVENT
+
 function randomCommentID() {
-    return new Promise((resolve, reject) => {
-        let dataPlaces = getPlaces();
-        let listID = []
-        let randomID = randomString(4, 'CMT-');
-        dataPlaces.then(data => {
-            for (const [index, place] of Object.entries(data)) {
-                listID.push(place.commentID);
-            }
-            
-            while (listID.includes(randomID)) {
-                randomID = randomString(8);
-            }
-            resolve(randomID);
-        })
+  return new Promise((resolve, reject) => {
+    let dataPlaces = getPlaces();
+    let listID = [];
+    let randomID = randomString(4, "CMT-");
+    dataPlaces.then((data) => {
+      for (const [index, place] of Object.entries(data)) {
+        listID.push(place.commentID);
+      }
+
+      while (listID.includes(randomID)) {
+        randomID = randomString(8);
+      }
+      resolve(randomID);
     });
-};
+  });
+}
 
 function randomImageID() {
-    return new Promise((resolve, reject) => {
-        let dataPlaces = getPlaces();
-        let listID = []
-        let randomID = randomString(4, 'IMG-');
-        dataPlaces.then(data => {
-            for (const [index, place] of Object.entries(data)) {
-                listID.push(place.imageID);
-            }
-            
-            while (listID.includes(randomID)) {
-                randomID = randomString(8);
-            }
-            resolve(randomID);
-        })
+  return new Promise((resolve, reject) => {
+    let dataPlaces = getPlaces();
+    let listID = [];
+    let randomID = randomString(4, "IMG-");
+    dataPlaces.then((data) => {
+      for (const [index, place] of Object.entries(data)) {
+        listID.push(place.imageID);
+      }
+
+      while (listID.includes(randomID)) {
+        randomID = randomString(8);
+      }
+      resolve(randomID);
     });
-};
+  });
+}
+
+function checkRegionInputEmpty() {
+  let name = $("#inputName").val();
+  let slogan = $("#inputSlogan").val();
+  let overview = $("#inputOverview").val();
+  let imageURL = $("#inputImageURL").val();
+
+  if (name == "" || slogan == "" || overview == "" || imageURL == "") {
+    alert("cannot be empty!");
+    return null;
+  } else {
+    data = {
+      name: name,
+      slogan: slogan,
+      image: imageURL,
+      overview: overview,
+    };
+    return data;
+  }
+}
+
+function checkTerritoryInputEmpty() {
+  let name = $("#inputName").val();
+  let slogan = $("#inputSlogan").val();
+  let regionID = $("#cb-region").val();
+  let overview = $("#inputOverview").val();
+  let imageURL = $("#inputImageURL").val();
+
+  if (
+    name == "" ||
+    slogan == "" ||
+    regionID == "" ||
+    overview == "" ||
+    imageURL == ""
+  ) {
+    alert("cannot be empty!");
+    return null;
+  } else {
+    data = {
+      name: name,
+      slogan: slogan,
+      regionID: regionID,
+      image: imageURL,
+      overview: overview,
+    };
+    return data;
+  }
+}
+
+function checkProvinceInputEmpty() {
+  let dataID = $("#cb-territory").val();
+  let name = $("#inputName").val();
+  let overview = $("#inputOverview").val();
+  let imageURL = $("#inputImageURL").val();
+
+  if (name == "" || dataID == "" || overview == "" || imageURL == "") {
+    alert("cannot be empty!");
+    return null;
+  } else {
+    let dataIDClean = dataID.split(",");
+    let territoryID = dataIDClean[0];
+    let regionID = dataIDClean[1];
+
+    data = {
+      name: name,
+      territoryID: territoryID,
+      regionID: regionID,
+      image: imageURL,
+      overview: overview,
+    };
+    return data;
+  }
+}
+
+function eventButtonAddNew() {
+  $("#btnAdd").click(() => {
+    let category = $("#btnAdd").data().category;
+    if (category == "region") {
+      let data = checkRegionInputEmpty();
+      if (data != null) {
+        addNewRegion(data).then((data) => {
+          console.log(data);
+        });
+        closeBoxPlus();
+        alert("success added new region!");
+        setTimeout(() => {
+          renderRightContent("region");
+        }, 400);
+      }
+    } else if (category == "territory") {
+      let data = checkTerritoryInputEmpty();
+      if (data != null) {
+        addNewTerritory(data).then((data) => {
+          console.log(data);
+        });
+        closeBoxPlus();
+        alert("success added new territory!");
+        setTimeout(() => {
+          renderRightContent("territory");
+        }, 400);
+      }
+    } else if (category == "province") {
+      let data = checkProvinceInputEmpty();
+      if (data != null) {
+        addNewProvince(data).then((data) => {
+          console.log(data);
+        });
+        closeBoxPlus();
+        alert("success added new province!");
+        setTimeout(() => {
+          renderRightContent("province");
+        }, 400);
+      }
+    }
+  });
+}
 
 function checkPlaceInputEmpty() {
-    return new Promise((resolve, reject) => {
-        let dataID = $('#cb-province').val();
-        let amountContent = $('#inputContent').val();
-        let name = $('#inputName').val();
-        let overview = $('#inputOverview').val();
-        let imageURL = $('#inputImageURL').val();
+  return new Promise((resolve, reject) => {
+    let dataID = $("#cb-province").val();
+    let amountContent = $("#inputContent").val();
+    let name = $("#inputName").val();
+    let overview = $("#inputOverview").val();
+    let imageURL = $("#inputImageURL").val();
 
-        if (name == "" || dataID == "" || amountContent == ""  || overview == "" || imageURL == "") {
-            alert('cannot be empty!');
-            resolve(null)
-        } else {
-            let dataIDClean = dataID.split(',');
-            let provinceID = dataIDClean[0];
-            let territoryID = dataIDClean[1];
-            let regionID = dataIDClean[2];
-            randomCommentID().then((result) => {
-                let commentID = result;
-                randomImageID().then((result2) => {
-                    let imageID = result2;
+    if (
+      name == "" ||
+      dataID == "" ||
+      amountContent == "" ||
+      overview == "" ||
+      imageURL == ""
+    ) {
+      alert("cannot be empty!");
+      resolve(null);
+    } else {
+      let dataIDClean = dataID.split(",");
+      let provinceID = dataIDClean[0];
+      let territoryID = dataIDClean[1];
+      let regionID = dataIDClean[2];
+      randomCommentID()
+        .then((result) => {
+          let commentID = result;
+          randomImageID()
+            .then((result2) => {
+              let imageID = result2;
 
-                    let data = {
-                        name: name,
-                        provinceID: provinceID,
-                        territoryID: territoryID,
-                        regionID: regionID,
-                        image: imageURL,
-                        overview: overview,
-                        service: false,
-                        imageID: imageID,
-                        likeArray: [],
-                        commentID: commentID,
-                    }
-            
-                    let dataCallBack = {
-                        data: data,
-                        amount: amountContent
-                    }
-                    
-                    resolve(dataCallBack)
-                }).catch((error2) => {
-                    resolve(null)
-                    console.log(error2);
-                });
-            }).catch((error) => {
-                resolve(null)
-                console.log(error);
+              let data = {
+                name: name,
+                provinceID: provinceID,
+                territoryID: territoryID,
+                regionID: regionID,
+                image: imageURL,
+                overview: overview,
+                service: false,
+                imageID: imageID,
+                likeArray: [],
+                commentID: commentID,
+              };
+
+              let dataCallBack = {
+                data: data,
+                amount: amountContent,
+              };
+
+              resolve(dataCallBack);
+            })
+            .catch((error2) => {
+              resolve(null);
+              console.log(error2);
             });
-        }
-    });
+        })
+        .catch((error) => {
+          resolve(null);
+          console.log(error);
+        });
+    }
+  });
 }
 
 function eventButtonBackAddNewPLace(dataBackup) {
-    $('#btnBack').click(() => {
-        $('.addnew-box').addClass('fadeout');
-        setTimeout(() => {
-            let dataProvinces = getProvinces();
-            dataProvinces.then(dataProvince => {
-                if (dataProvince.length > 0) {
-                    var addNewBox = `
-                        <div class="addnew-box fadein">
+  $("#btnBack").click(() => {
+    $(".box-plus-box").addClass("fadeout");
+    setTimeout(() => {
+      let dataProvinces = getProvinces();
+      dataProvinces.then((dataProvince) => {
+        if (dataProvince.length > 0) {
+          var addNewBox = `
+                        <div class="box-plus-box fadein">
                             <span id="btnClose"><i class="fa-solid fa-xmark"></i></span>
                             <div class="title">Add New Place</div>
                             <form>
@@ -395,41 +437,41 @@ function eventButtonBackAddNewPLace(dataBackup) {
                             </form>
                         </div>
                     `;
-                    $('.addnew-view').html(addNewBox);
-                    let CBProvince = ``;
-                    for (const [index, province] of Object.entries(dataProvince)) {
-                        let dataID = `${province._id},${province.territoryID},${province.regionID}`;
-                        CBProvince += `<option value="${dataID}">${province.name}</option>`;
-                    }
-                    $('#cb-province').html(CBProvince);
-                    eventCloseAddNewContent();
-                    eventButtonContinue();
+          $(".box-plus-view").html(addNewBox);
+          let CBProvince = ``;
+          for (const [index, province] of Object.entries(dataProvince)) {
+            let dataID = `${province._id},${province.territoryID},${province.regionID}`;
+            CBProvince += `<option value="${dataID}">${province.name}</option>`;
+          }
+          $("#cb-province").html(CBProvince);
+          eventCloseBoxPlusContent();
+          eventButtonContinue();
 
-                    let provinceBackup = `${dataBackup.data.provinceID},${dataBackup.data.territoryID},${dataBackup.data.regionID}`;
-                    $('#cb-province').val(provinceBackup).change();
-                    $('#inputContent').val(dataBackup.amount);
-                    $('#inputName').val(dataBackup.data.name);
-                    $('#inputOverview').val(dataBackup.data.overview);
-                    $('#inputImageURL').val(dataBackup.data.image);
-                    setTimeout(() => {
-                        $('.addnew-box').removeClass('fadein');
-                    }, 1000);
-                } else {
-                    alert('cannot add new place when province is empty!');
-                }
-            });
-        }, 1000);
-    });
+          let provinceBackup = `${dataBackup.data.provinceID},${dataBackup.data.territoryID},${dataBackup.data.regionID}`;
+          $("#cb-province").val(provinceBackup).change();
+          $("#inputContent").val(dataBackup.amount);
+          $("#inputName").val(dataBackup.data.name);
+          $("#inputOverview").val(dataBackup.data.overview);
+          $("#inputImageURL").val(dataBackup.data.image);
+          setTimeout(() => {
+            $(".box-plus-box").removeClass("fadein");
+          }, 1000);
+        } else {
+          alert("cannot add new place when province is empty!");
+        }
+      });
+    }, 1000);
+  });
 }
 
 function changeToContentForm(dataCallBack) {
-    let amountContent = dataCallBack.amount;
-    let data = dataCallBack.data;
-    if (amountContent > 0) {
-        $('.addnew-box').addClass('fadeout');
-        setTimeout(() => {
-            var addNewBox = `
-                <div class="addnew-box fadein">
+  let amountContent = dataCallBack.amount;
+  let data = dataCallBack.data;
+  if (amountContent > 0) {
+    $(".box-plus-box").addClass("fadeout");
+    setTimeout(() => {
+      var addNewBox = `
+                <div class="box-plus-box fadein">
                     <span id="btnBack"><i class="fa-solid fa-arrow-right"></i></span>
                     <span id="btnClose"><i class="fa-solid fa-xmark"></i></span>
                     <div class="title">Enter Place Content</div>
@@ -453,118 +495,120 @@ function changeToContentForm(dataCallBack) {
                     </form>
                 </div>
             `;
-            $('.addnew-view').html(addNewBox);
-            eventCloseAddNewContent();
-            eventButtonBackAddNewPLace(dataCallBack);
+      $(".box-plus-view").html(addNewBox);
+      eventCloseBoxPlusContent();
+      eventButtonBackAddNewPLace(dataCallBack);
 
-            let dataContent = []
-            let CBIndex = ``;
-            for (let i = 1 ; i <= amountContent; i++) {
-                CBIndex += `<option value="${i}">${i}</option>`
-                dataContent[i-1] = {
-                    text: "",
-                    image: ""
-                }
-            }
-            var indexContentSelect = 0
-            $('#cb-index').html(CBIndex);
-            $('#cb-index').on('change', () => {
-                dataContent[indexContentSelect].text = $('#inputText').val();
-                dataContent[indexContentSelect].image = $('#inputImageURL').val();
-                indexContentSelect = $('#cb-index').val() - 1;
-                let dataContentOnIndex = dataContent[indexContentSelect];
-                $('#inputText').val(dataContentOnIndex.text)
-                $('#inputImageURL').val(dataContentOnIndex.image);
-            });
+      let dataContent = [];
+      let CBIndex = ``;
+      for (let i = 1; i <= amountContent; i++) {
+        CBIndex += `<option value="${i}">${i}</option>`;
+        dataContent[i - 1] = {
+          text: "",
+          image: "",
+        };
+      }
+      var indexContentSelect = 0;
+      $("#cb-index").html(CBIndex);
+      $("#cb-index").on("change", () => {
+        dataContent[indexContentSelect].text = $("#inputText").val();
+        dataContent[indexContentSelect].image = $("#inputImageURL").val();
+        indexContentSelect = $("#cb-index").val() - 1;
+        let dataContentOnIndex = dataContent[indexContentSelect];
+        $("#inputText").val(dataContentOnIndex.text);
+        $("#inputImageURL").val(dataContentOnIndex.image);
+      });
 
-            $('#btnAdd').click(() => {
-                dataContent[indexContentSelect].text = $('#inputText').val();
-                dataContent[indexContentSelect].image = $('#inputImageURL').val();
-                let canAdd = true;
-                let listIndexEmpty = [];
-                for (const [index, val] of Object.entries(dataContent)) {
-                    if (val.text == "" || val.image == "") {
-                        canAdd = false;
-                        listIndexEmpty.push(Number(index)+1)
-                    }
-                };
+      $("#btnAdd").click(() => {
+        dataContent[indexContentSelect].text = $("#inputText").val();
+        dataContent[indexContentSelect].image = $("#inputImageURL").val();
+        let canAdd = true;
+        let listIndexEmpty = [];
+        for (const [index, val] of Object.entries(dataContent)) {
+          if (val.text == "" || val.image == "") {
+            canAdd = false;
+            listIndexEmpty.push(Number(index) + 1);
+          }
+        }
 
-                if (canAdd) {
-                    let dataUpload = {
-                        name: data.name,
-                        provinceID: data.provinceID,
-                        territoryID: data.territoryID,
-                        regionID: data.regionID,
-                        image: data.image,
-                        overview: data.overview,
-                        service: false,
-                        content: dataContent,
-                        imageID: data.imageID,
-                        likeArray: [],
-                        commentID: data.commentID,
-                    }
-                    console.log(data.image);
-                    console.log(dataUpload);
-                    addNewPlace(dataUpload).then(dataAPI => {
-                        console.log(dataAPI);
-                    });
-                    closeAddNewView();
-                    alert('success added new place!');
-                    setTimeout(() => {
-                        renderRightContent('place');
-                    }, 400);
-                } else {
-                    alert(`content at index [${listIndexEmpty.join(',')}] is error!`);
-                }
-            })
-            setTimeout(() => {
-                $('.addnew-box').removeClass('fadein');
-            }, 1000);
-        }, 1000);
-    } else if (amountContent == 0) {
-        let dataUpload = {
+        if (canAdd) {
+          let dataUpload = {
             name: data.name,
             provinceID: data.provinceID,
             territoryID: data.territoryID,
             regionID: data.regionID,
-            image: data.imageURL,
+            image: data.image,
             overview: data.overview,
             service: false,
-            content: null,
+            content: dataContent,
             imageID: data.imageID,
             likeArray: [],
             commentID: data.commentID,
-        }
-        addNewPlace(dataUpload).then(dataAPI => {
+          };
+          console.log(data.image);
+          console.log(dataUpload);
+          addNewPlace(dataUpload).then((dataAPI) => {
             console.log(dataAPI);
-        });
-        closeAddNewView();
-        alert('success added new place!');
-        setTimeout(() => {
-            renderRightContent('place');
-        }, 400);
-    }
+          });
+          closeBoxPlus();
+          alert("success added new place!");
+          setTimeout(() => {
+            renderRightContent("place");
+          }, 400);
+        } else {
+          alert(`content at index [${listIndexEmpty.join(",")}] is error!`);
+        }
+      });
+      setTimeout(() => {
+        $(".box-plus-box").removeClass("fadein");
+      }, 1000);
+    }, 1000);
+  } else if (amountContent == 0) {
+    let dataUpload = {
+      name: data.name,
+      provinceID: data.provinceID,
+      territoryID: data.territoryID,
+      regionID: data.regionID,
+      image: data.imageURL,
+      overview: data.overview,
+      service: false,
+      content: null,
+      imageID: data.imageID,
+      likeArray: [],
+      commentID: data.commentID,
+    };
+    addNewPlace(dataUpload).then((dataAPI) => {
+      console.log(dataAPI);
+    });
+    closeBoxPlus();
+    alert("success added new place!");
+    setTimeout(() => {
+      renderRightContent("place");
+    }, 400);
+  }
 }
 
 function eventButtonContinue() {
-    $('#btnContinue').click(() => {
-        checkPlaceInputEmpty().then((result) => {
-            console.log(result);
-            if (result != null) changeToContentForm(result);
-        }).catch((error) => {
-            console.log(error);
-        });
-    });
-};
+  $("#btnContinue").click(() => {
+    checkPlaceInputEmpty()
+      .then((result) => {
+        console.log(result);
+        if (result != null) changeToContentForm(result);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  });
+}
 
 function addEventForButtonAddNew() {
-    let groupButton = document.querySelectorAll('#btnAddNew');
-    groupButton.forEach(btn => {
-        $(btn).click(() => {
-            let category = $(btn).data().category;
-            if (category == 'region') {
-                var addNewBox = `
-                    <div class="addnew-box">
+  let groupButton = document.querySelectorAll("#btnAddNew");
+  groupButton.forEach((btn) => {
+    $(btn).click(() => {
+      let category = $(btn).data().category;
+      if (category == "region") {
+        var addNewBox = `
+                    <div class="box-plus-box">
                         <span id="btnClose"><i class="fa-solid fa-xmark"></i></span>
                         <div class="title">Add New Region</div>
                         <form>
@@ -588,16 +632,16 @@ function addEventForButtonAddNew() {
                         </form>
                     </div>
                 `;
-                $('.addnew-view').html(addNewBox);
-                $('.addnew-view').css('display','block');
-                eventCloseAddNewContent();
-                eventButtonAddNew();
-            } else if (category == 'territory') {
-                let dataRegions = getRegions();
-                dataRegions.then(data => {
-                    if (data.length > 0) {
-                        var addNewBox = `
-                            <div class="addnew-box">
+        $(".box-plus-view").html(addNewBox);
+        $(".box-plus-view").css("display", "block");
+        eventCloseBoxPlusContent();
+        eventButtonAddNew();
+      } else if (category == "territory") {
+        let dataRegions = getRegions();
+        dataRegions.then((data) => {
+          if (data.length > 0) {
+            var addNewBox = `
+                            <div class="box-plus-box">
                                 <span id="btnClose"><i class="fa-solid fa-xmark"></i></span>
                                 <div class="title">Add New Territory</div>
                                 <form>
@@ -625,27 +669,27 @@ function addEventForButtonAddNew() {
                                 </form>
                             </div>
                         `;
-                        $('.addnew-view').html(addNewBox);
+            $(".box-plus-view").html(addNewBox);
 
-                        let CBRegion = ``;
-                        for (const [index, region] of Object.entries(data)) {
-                            CBRegion += `<option value="${region._id}">${region.name}</option>`
-                        }
-                        $('#cb-region').html(CBRegion);
+            let CBRegion = ``;
+            for (const [index, region] of Object.entries(data)) {
+              CBRegion += `<option value="${region._id}">${region.name}</option>`;
+            }
+            $("#cb-region").html(CBRegion);
 
-                        $('.addnew-view').css('display','block');
-                        eventCloseAddNewContent();
-                        eventButtonAddNew();
-                    } else {
-                        alert('cannot add new territory when region is empty!');
-                    }
-                });
-            } else if (category == 'province') {
-                let dataTerritorys = getTerritorys();
-                dataTerritorys.then(dataTerritory => {
-                    if (dataTerritory.length > 0) {
-                        var addNewBox = `
-                            <div class="addnew-box">
+            $(".box-plus-view").css("display", "block");
+            eventCloseBoxPlusContent();
+            eventButtonAddNew();
+          } else {
+            alert("cannot add new territory when region is empty!");
+          }
+        });
+      } else if (category == "province") {
+        let dataTerritorys = getTerritorys();
+        dataTerritorys.then((dataTerritory) => {
+          if (dataTerritory.length > 0) {
+            var addNewBox = `
+                            <div class="box-plus-box">
                                 <span id="btnClose"><i class="fa-solid fa-xmark"></i></span>
                                 <div class="title">Add New Province</div>
                                 <form>
@@ -672,28 +716,28 @@ function addEventForButtonAddNew() {
                                 </form>
                             </div>
                         `;
-                        $('.addnew-view').html(addNewBox);
+            $(".box-plus-view").html(addNewBox);
 
-                        let CBTerritory = ``;
-                        for (const [index, territory] of Object.entries(dataTerritory)) {
-                            let dataID = `${territory._id},${territory.regionID}`;
-                            CBTerritory += `<option value="${dataID}">${territory.name}</option>`
-                        }
-                        $('#cb-territory').html(CBTerritory);
+            let CBTerritory = ``;
+            for (const [index, territory] of Object.entries(dataTerritory)) {
+              let dataID = `${territory._id},${territory.regionID}`;
+              CBTerritory += `<option value="${dataID}">${territory.name}</option>`;
+            }
+            $("#cb-territory").html(CBTerritory);
 
-                        $('.addnew-view').css('display','block');
-                        eventCloseAddNewContent();
-                        eventButtonAddNew();
-                    } else {
-                        alert('cannot add new province when territory is empty!');
-                    }
-                });
-            } else if (category == 'place') {
-                let dataProvinces = getProvinces();
-                dataProvinces.then(dataProvince => {
-                    if (dataProvince.length > 0) {
-                        var addNewBox = `
-                            <div class="addnew-box">
+            $(".box-plus-view").css("display", "block");
+            eventCloseBoxPlusContent();
+            eventButtonAddNew();
+          } else {
+            alert("cannot add new province when territory is empty!");
+          }
+        });
+      } else if (category == "place") {
+        let dataProvinces = getProvinces();
+        dataProvinces.then((dataProvince) => {
+          if (dataProvince.length > 0) {
+            var addNewBox = `
+                            <div class="box-plus-box">
                                 <span id="btnClose"><i class="fa-solid fa-xmark"></i></span>
                                 <div class="title">Add New Place</div>
                                 <form>
@@ -724,80 +768,357 @@ function addEventForButtonAddNew() {
                                 </form>
                             </div>
                         `;
-                        $('.addnew-view').html(addNewBox);
+            $(".box-plus-view").html(addNewBox);
 
-                        let CBProvince = ``;
-                        for (const [index, province] of Object.entries(dataProvince)) {
-                            let dataID = `${province._id},${province.territoryID},${province.regionID}`;
-                            CBProvince += `<option value="${dataID}">${province.name}</option>`
-                        }
-                        $('#cb-province').html(CBProvince);
-
-                        $('.addnew-view').css('display','block');
-                        eventCloseAddNewContent();
-                        eventButtonContinue();
-                    } else {
-                        alert('cannot add new place when province is empty!');
-                    }
-                });
+            let CBProvince = ``;
+            for (const [index, province] of Object.entries(dataProvince)) {
+              let dataID = `${province._id},${province.territoryID},${province.regionID}`;
+              CBProvince += `<option value="${dataID}">${province.name}</option>`;
             }
+            $("#cb-province").html(CBProvince);
+
+            $(".box-plus-view").css("display", "block");
+            eventCloseBoxPlusContent();
+            eventButtonContinue();
+          } else {
+            alert("cannot add new place when province is empty!");
+          }
         });
+      }
+    });
+  });
+}
+
+// #EDIT BOX EVENT
+
+function eventButtonEdit() {
+  $("#btnEventEdit").click(() => {
+    let btnData = $("#btnEventEdit").data();
+    let category = btnData.category;
+    if (category == "region") {
+      let regionID = btnData.regionid;
+      let name = $('#inputName').val();
+      let slogan = $('#inputSlogan').val();
+      let overview = $('#inputOverview').val();
+      let image = $('#inputImageURL').val();
+
+      const data = {
+        regionID,
+        name,
+        slogan,
+        image,
+        overview
+      }
+      editRegion(data).then(result => {
+        if (result) {
+          alert('edit success!');
+          closeBoxPlus();
+          setTimeout(() => {
+            renderRightContent("region");
+          }, 300);
+        } else {
+          alert('edit fail!');
+        }
+      });
+    } else if (category == "territory") {
+      let territoryID = btnData.territoryid;
+      let name = $('#inputName').val();
+      let slogan = $('#inputSlogan').val();
+      let overview = $('#inputOverview').val();
+      let image = $('#inputImageURL').val();
+      let regionID = $("#cb-region").val();
+
+      const data = {
+        territoryID,
+        name,
+        slogan,
+        regionID,
+        image,
+        overview,
+      }
+      editTerritory(data).then(result => {
+        if (result) {
+          alert('edit success!');
+          closeBoxPlus();
+          setTimeout(() => {
+            renderRightContent("territory");
+          }, 300);
+        } else {
+          alert('edit fail!');
+        }
+      });
+    } else if (category == "province") {
+      let provinceID = btnData.provinceid;
+      let name = $('#inputName').val();
+      let cbTerritorySplit = $("#cb-territory").val().split(',');
+      let territoryID = cbTerritorySplit[0];
+      let regionID = cbTerritorySplit[1];
+      let image = $('#inputImageURL').val();
+      let overview = $('#inputOverview').val();
+
+      const data = {
+        provinceID,
+        name,
+        territoryID,
+        regionID,
+        image,
+        overview,
+      }
+      editProvince(data).then(result => {
+        if (result) {
+          alert('edit success!');
+          closeBoxPlus();
+          setTimeout(() => {
+            renderRightContent("province");
+          }, 300);
+        } else {
+          alert('edit fail!');
+        }
+      });
+    } else if (category == "place") {
+      
+    }
+  });
+}
+
+function pushDataForEditInput(data, type) {
+  let name = data.name;
+  let overview = data.overview;
+  let image = data.image;
+  
+  if (type == 'region') {
+    let slogan = data.slogan;
+    $('#inputName').val(name);
+    $('#inputSlogan').val(slogan);
+    $('#inputOverview').val(overview);
+    $('#inputImageURL').val(image);
+  } else if (type == "territory") {
+    let slogan = data.slogan;
+    let cbRegion = data.regionID;
+    $('#inputName').val(name);
+    $('#inputSlogan').val(slogan);
+    $('#inputOverview').val(overview);
+    $('#inputImageURL').val(image);
+    $("#cb-region").val(cbRegion).change();
+  } else if (type == "province") {
+    let cbTerritory =  `${data.territoryID},${data.regionID}`;;
+    $('#inputName').val(name);
+    $('#inputOverview').val(overview);
+    $('#inputImageURL').val(image);
+    $("#cb-territory").val(cbTerritory).change();
+  } else if (type == "place") {
+    
+  }
+}
+
+function addEventForButtonEdit() {
+  let groupButton = document.querySelectorAll("#btnEdit");
+  groupButton.forEach(btn => {
+    $(btn).click(() => {
+      let btnData = $(btn).data();
+      let ID = btnData.id;
+      let category = btnData.category;
+      if (category == "region") {
+        getRegionByID(ID).then((dataRegion) => {
+          if (dataRegion.success) {
+            const data = dataRegion.data;
+            var editBox = `
+                      <div class="box-plus-box">
+                          <span id="btnClose"><i class="fa-solid fa-xmark"></i></span>
+                          <div class="title">Edit Region</div>
+                          <form>
+                              <div class="group-input">
+                                  <label for="inputName">Name</label>
+                                  <input class="label-input" type="text" id="inputName" name="inputName" placeholder="The Northern">
+                              </div>
+                              <div class="group-input">
+                                  <label for="inputSlogan">Slogan</label>
+                                  <input class="label-input" type="text" id="inputSlogan" name="inputSlogan" placeholder="A land of rich cultural and historical experiences">
+                              </div>
+                              <div class="group-input">
+                                  <label for="inputOverview">Overview</label>
+                                  <input class="label-input" type="text" id="inputOverview" name="inputOverview" placeholder="Croatia is a fun destination with a wide range...">
+                              </div>
+                              <div class="group-input">
+                                  <label for="inputImageURL">Image URL</label>
+                                  <input class="label-input" type="text" id="inputImageURL" name="inputImageURL" placeholder="https://cdn.discordapp.com/halong_bay.png">
+                              </div>
+                              <span id="btnEventEdit" data-category="${category}" data-regionid="${ID}">Edit</span>
+                          </form>
+                      </div>
+            `;
+            $(".box-plus-view").html(editBox);
+            $(".box-plus-view").css("display", "block");
+            eventCloseBoxPlusContent();
+            eventButtonEdit();
+            pushDataForEditInput(data, 'region');
+          };
+        });
+      } else if (category == "territory") {
+        getTerritoryByID(ID).then((dataTerritory) => {
+          if (dataTerritory.success) {
+            const data = dataTerritory.data;
+            let dataRegions = getRegions();
+            dataRegions.then((dataRegion) => {
+              if (dataRegion.length > 0) {
+                var editBox = `
+                        <div class="box-plus-box">
+                          <span id="btnClose"><i class="fa-solid fa-xmark"></i></span>
+                          <div class="title">Edit Territory</div>
+                          <form>
+                              <div class="group-input">
+                                  <label for="inputName">Name</label>
+                                  <input class="label-input" type="text" id="inputName" name="inputName" placeholder="The Northwest">
+                              </div>
+                              <div class="group-input">
+                                  <label for="inputSlogan">Slogan</label>
+                                  <input class="label-input" type="text" id="inputSlogan" name="inputSlogan" placeholder="A land of rich cultural and historical experiences">
+                              </div>
+                              <div class="group-combobox">
+                                  <span class="label">Region</span>
+                                  <select class="label-combobox" name="cb-region" id="cb-region"></select>
+                              </div>
+                              <div class="group-input">
+                                  <label for="inputOverview">Overview</label>
+                                  <input class="label-input" type="text" id="inputOverview" name="inputOverview" placeholder="Northwest is an area located in the northwest of Vietnam...">
+                              </div>
+                              <div class="group-input">
+                                  <label for="inputImageURL">Image URL</label>
+                                  <input class="label-input" type="text" id="inputImageURL" name="inputImageURL" placeholder="https://cdn.discordapp.com/halong_bay.png">
+                              </div>
+                              <span id="btnEventEdit" data-category="${category}" data-territoryid="${ID}">Edit</span>
+                          </form>
+                      </div>
+                `;
+                $(".box-plus-view").html(editBox);
+                let CBRegion = ``;
+                for (const [index, region] of Object.entries(dataRegion)) {
+                  CBRegion += `<option value="${region._id}">${region.name}</option>`;
+                }
+                $("#cb-region").html(CBRegion);
+                pushDataForEditInput(data, 'territory');
+                $(".box-plus-view").css("display", "block");
+                eventCloseBoxPlusContent();
+                eventButtonEdit();
+              } else {
+                alert("cannot edit territory when region is empty!");
+              }
+            });
+          };
+        });
+      } else if (category == "province") {
+        getProvinceByID(ID).then((dataProvince) => {
+          if (dataProvince.success) {
+            const data = dataProvince.data;
+            let dataTerritorys = getTerritorys();
+            dataTerritorys.then(dataTerritory => {
+              if (dataTerritory.length > 0) {
+                var editBox = `
+                  <div class="box-plus-box">
+                    <span id="btnClose"><i class="fa-solid fa-xmark"></i></span>
+                    <div class="title">Edit Province</div>
+                    <form>
+                        <div class="group-input">
+                            <label for="inputName">Name</label>
+                            <input class="label-input" type="text" id="inputName" name="inputName" placeholder="The Northwest">
+                        </div>
+                        <div class="group-combobox">
+                            <span class="label">Territory</span>
+                            <select class="label-combobox" name="cb-territory" id="cb-territory"></select>
+                        </div>
+                        <div class="group-input">
+                            <label for="inputOverview">Overview</label>
+                            <input class="label-input" type="text" id="inputOverview" name="inputOverview" placeholder="Northwest is an area located in the northwest of Vietnam...">
+                        </div>
+                        <div class="group-input">
+                            <label for="inputImageURL">Image URL</label>
+                            <input class="label-input" type="text" id="inputImageURL" name="inputImageURL" placeholder="https://cdn.discordapp.com/halong_bay.png">
+                        </div>
+                        <span id="btnEventEdit" data-category="${category}" data-provinceid="${ID}">Edit</span>
+                    </form>
+                  </div>
+                `;
+                $(".box-plus-view").html(editBox);
+                let CBTerritory = ``;
+                for (const [index, territory] of Object.entries(dataTerritory)) {
+                  let dataID = `${territory._id},${territory.regionID}`;
+                  CBTerritory += `<option value="${dataID}">${territory.name}</option>`;
+                }
+                $("#cb-territory").html(CBTerritory);
+                pushDataForEditInput(data, 'province');
+                $(".box-plus-view").css("display", "block");
+                eventCloseBoxPlusContent();
+                eventButtonEdit();
+              } else {
+                alert("cannot edit territory when territory is empty!");
+              };
+            });
+          };
+        });
+      } else if (category == "place") {
+        
+      }
     })
+  })
 }
 
 function labelInputFocus() {
-    let groupInput = document.querySelectorAll('.label-input');
-    groupInput.forEach(input => {
-        $(input).focus(() => {
-            let label = $(input).parent().find('label');
-            $(label).css('color','#4169e1');
-        }).focusout(() => {
-            let label = $(input).parent().find('label');
-            $(label).css('color','#777');
-        })
-    });
+  let groupInput = document.querySelectorAll(".label-input");
+  groupInput.forEach((input) => {
+    $(input)
+      .focus(() => {
+        let label = $(input).parent().find("label");
+        $(label).css("color", "#4169e1");
+      })
+      .focusout(() => {
+        let label = $(input).parent().find("label");
+        $(label).css("color", "#777");
+      });
+  });
 
-    let groupComboBox = document.querySelectorAll('.label-combobox');
-    groupComboBox.forEach(input => {
-        $(input).focus(() => {
-            let label = $(input).parent().find('.label');
-            $(label).css('color','#4169e1');
-        }).focusout(() => {
-            let label = $(input).parent().find('.label');
-            $(label).css('color','#777');
-        });
-    });
+  let groupComboBox = document.querySelectorAll(".label-combobox");
+  groupComboBox.forEach((input) => {
+    $(input)
+      .focus(() => {
+        let label = $(input).parent().find(".label");
+        $(label).css("color", "#4169e1");
+      })
+      .focusout(() => {
+        let label = $(input).parent().find(".label");
+        $(label).css("color", "#777");
+      });
+  });
 }
 
 // #OPTION BOX EVENT:
 
 function removeAllOptionBoxActive() {
-    let groupOptionBox = document.querySelectorAll(".option-box");
-    groupOptionBox.forEach(ele => {
-        $(ele).removeClass('active');
-    });
+  let groupOptionBox = document.querySelectorAll(".option-box");
+  groupOptionBox.forEach((ele) => {
+    $(ele).removeClass("active");
+  });
 }
 
 function setupOptionBoxEvent() {
-    let groupOptionBox = document.querySelectorAll(".option-box");
-    groupOptionBox.forEach(ele => {
-        $(ele).click(() => {
-            let isActive = $(ele).hasClass('active');
-            let category = $(ele).data().category;
-            if (!isActive) {
-                removeAllOptionBoxActive();
-                $(ele).addClass('active');
-                renderRightContent(category);
-            }
-        });
+  let groupOptionBox = document.querySelectorAll(".option-box");
+  groupOptionBox.forEach((ele) => {
+    $(ele).click(() => {
+      let isActive = $(ele).hasClass("active");
+      let category = $(ele).data().category;
+      if (!isActive) {
+        removeAllOptionBoxActive();
+        $(ele).addClass("active");
+        renderRightContent(category);
+      }
     });
+  });
 }
 
 // #RIGHT CONTENT EVENT:
 
 function renderRightContent(category) {
-    if (category == "statistics") {
-        let rightContent = `
+  if (category == "statistics") {
+    let rightContent = `
             <div class="header">
                 <div class="title">Statistics</div>
             </div>
@@ -875,9 +1196,9 @@ function renderRightContent(category) {
                 </div>
             </div>
         `;
-        $('.right-content').html(rightContent);
-    } else if (category == "advertisements") {
-        let rightContent = `
+    $(".right-content").html(rightContent);
+  } else if (category == "advertisements") {
+    let rightContent = `
             <div class="header">
                 <div class="title">Advertisements</div>
             </div>
@@ -933,21 +1254,21 @@ function renderRightContent(category) {
                 </div>
             </div>
         `;
-        $('.right-content').html(rightContent);
-    } else if (category == "posts") {
-        let rightContent = `
+    $(".right-content").html(rightContent);
+  } else if (category == "posts") {
+    let rightContent = `
 
-        `
-        $('.right-content').html(rightContent);
-    } else if (category == "reviewers") {
-        let rightContent = `
+    `;
+    $(".right-content").html(rightContent);
+  } else if (category == "reviewers") {
+    let rightContent = `
         
-        `
-        $('.right-content').html(rightContent);
-    } else if (category == "region") {
-        let dataRegions = getRegions();
-        dataRegions.then(data => {
-            let rightContent = `
+        `;
+    $(".right-content").html(rightContent);
+  } else if (category == "region") {
+    let dataRegions = getRegions();
+    dataRegions.then((data) => {
+      let rightContent = `
                 <div class="header">
                     <div class="group-text-and-button">
                         <span class="title">Regions</span>
@@ -966,18 +1287,15 @@ function renderRightContent(category) {
                     </div>
                 </div>
 
-                <div class="Regions">
-
-                </div>
+                <div class="Regions"></div>
             `;
-            $('.right-content').html(rightContent);
-            addEventForButtonAddNew();
-
-            if (data.length > 0) {
-                $('.error-empty').remove();
-                let Regions = ``;
-                for (const [index, region] of Object.entries(data)) {
-                    Regions += `
+      $(".right-content").html(rightContent);
+      addEventForButtonAddNew();
+      if (data.length > 0) {
+        $(".error-empty").remove();
+        let Regions = ``;
+        for (const [index, region] of Object.entries(data)) {
+          Regions += `
                         <div class="region">
                             <div class="region-box">
                                 <div class="region-img">
@@ -991,21 +1309,22 @@ function renderRightContent(category) {
                                 </div>
 
                                 <div class="region-group-event">
-                                    <span id="btnEdit">Edit</span>
-                                    <span id="btnDetails">Details</span>
-                                    <span id="btnDelete">Delete</span>
+                                    <span id="btnEdit" data-category="region" data-id="${region._id}">Edit</span>
+                                    <span id="btnDetails" data-category="region">Details</span>
+                                    <span id="btnDelete" data-category="region">Delete</span>
                                 </div>
                             </div>  
                         </div>
-                    `
-                };
-                $('.Regions').html(Regions);
-            };
-        });
-    } else if (category == "territory") {
-        let dataTerritorys = getTerritorys();
-        dataTerritorys.then(data => {
-            let rightContent = `
+                    `;
+        }
+        $(".Regions").html(Regions);
+        addEventForButtonEdit();
+      }
+    });
+  } else if (category == "territory") {
+    let dataTerritorys = getTerritorys();
+    dataTerritorys.then((data) => {
+      let rightContent = `
                 <div class="header">
                     <div class="group-text-and-button">
                         <span class="title">Territorys</span>
@@ -1028,16 +1347,16 @@ function renderRightContent(category) {
 
                 </div>
             `;
-            $('.right-content').html(rightContent);
-            addEventForButtonAddNew();
+      $(".right-content").html(rightContent);
+      addEventForButtonAddNew();
 
-            if (data.length > 0) {
-                $('.error-empty').remove();
-                let Territorys = ``;
-                for (const [index, territory] of Object.entries(data)) {
-                    getRegionByID(territory.regionID).then(dataRegion => {
-                        let regionName = dataRegion.data.name;
-                        Territorys += `
+      if (data.length > 0) {
+        $(".error-empty").remove();
+        let Territorys = ``;
+        for (const [index, territory] of Object.entries(data)) {
+          getRegionByID(territory.regionID).then((dataRegion) => {
+            let regionName = dataRegion.data.name;
+            Territorys += `
                             <div class="territory">
                                 <div class="territory-box">
                                     <div class="territory-img">
@@ -1052,22 +1371,23 @@ function renderRightContent(category) {
                                     </div>
                 
                                     <div class="territory-group-event">
-                                        <span id="btnEdit">Edit</span>
+                                        <span id="btnEdit" data-category="territory" data-id="${territory._id}">Edit</span>
                                         <span id="btnDetails">Details</span>
                                         <span id="btnDelete">Delete</span>
                                     </div>
                                 </div>  
                             </div>
-                        `
-                        $('.Territorys').html(Territorys);
-                    })
-                };
-            };
-        });
-    } else if (category == "province") {
-        let dataProvinces = getProvinces();
-        dataProvinces.then(data => {
-            let rightContent = `
+                        `;
+            $(".Territorys").html(Territorys);
+            addEventForButtonEdit();
+          });
+        }
+      }
+    });
+  } else if (category == "province") {
+    let dataProvinces = getProvinces();
+    dataProvinces.then((data) => {
+      let rightContent = `
                 <div class="header">
                     <div class="group-text-and-input">
                         <span class="title">Provinces</span>
@@ -1095,19 +1415,19 @@ function renderRightContent(category) {
                         <table class="value-table"></table>
                     </div>
                 </div>
-            `
-            $('.right-content').html(rightContent);
-            addEventForButtonAddNew();
+            `;
+      $(".right-content").html(rightContent);
+      addEventForButtonAddNew();
 
-            if (data.length > 0) {
-                $('.error-empty').remove();
-                let Provinces = ``;
-                for (const [index, province] of Object.entries(data)) {
-                    getRegionByID(province.regionID).then(dataRegion => {
-                        let regionName = dataRegion.data.name;
-                        getTerritoryByID(province.territoryID).then(dataTerritory => {
-                            let territoryName = dataTerritory.data.name;
-                            Provinces += `
+      if (data.length > 0) {
+        $(".error-empty").remove();
+        let Provinces = ``;
+        for (const [index, province] of Object.entries(data)) {
+          getRegionByID(province.regionID).then((dataRegion) => {
+            let regionName = dataRegion.data.name;
+            getTerritoryByID(province.territoryID).then((dataTerritory) => {
+              let territoryName = dataTerritory.data.name;
+              Provinces += `
                                 <tr>
                                     <td class="image-name">
                                         <div class="group-content">
@@ -1119,23 +1439,24 @@ function renderRightContent(category) {
                                     <td>${territoryName}</td>
                                     <td class="actions">
                                         <div class="action-buttons">
-                                            <span id="btnEdit">Edit</span>
+                                            <span id="btnEdit" data-category="province" data-id="${province._id}">Edit</span>
                                             <span id="btnDetails">Details</span>
                                             <span id="btnDelete">Delete</span>
                                         </div>
                                     </td>
                                 </tr>
                             `;
-                            $('.value-table').html(Provinces);
-                        });
-                    });
-                };
-            };
-        });
-    } else if (category == "place") {
-        let dataPlaces = getPlaces();
-        dataPlaces.then(data => {
-            let rightContent = `
+              $(".value-table").html(Provinces);
+              addEventForButtonEdit();
+            });
+          });
+        }
+      }
+    });
+  } else if (category == "place") {
+    let dataPlaces = getPlaces();
+    dataPlaces.then((data) => {
+      let rightContent = `
                 <div class="header">
                     <div class="group-text-and-input">
                         <span class="title">Places</span>
@@ -1164,21 +1485,21 @@ function renderRightContent(category) {
                         <table class="value-table"></table>
                     </div>
                 </div>
-            `
-            $('.right-content').html(rightContent);
-            addEventForButtonAddNew();
+            `;
+      $(".right-content").html(rightContent);
+      addEventForButtonAddNew();
 
-            if (data.length > 0) {
-                $('.error-empty').remove();
-                let Places = ``;
-                for (const [index, place] of Object.entries(data)) {
-                    getRegionByID(place.regionID).then(dataRegion => {
-                        let regionName = dataRegion.data.name;
-                        getTerritoryByID(place.territoryID).then(dataTerritory => {
-                            let territoryName = dataTerritory.data.name;
-                            getProvinceByID(place.provinceID).then(dataProvince => {
-                                let provinceName = dataProvince.data.name;
-                                Places += `
+      if (data.length > 0) {
+        $(".error-empty").remove();
+        let Places = ``;
+        for (const [index, place] of Object.entries(data)) {
+          getRegionByID(place.regionID).then((dataRegion) => {
+            let regionName = dataRegion.data.name;
+            getTerritoryByID(place.territoryID).then((dataTerritory) => {
+              let territoryName = dataTerritory.data.name;
+              getProvinceByID(place.provinceID).then((dataProvince) => {
+                let provinceName = dataProvince.data.name;
+                Places += `
                                     <tr>
                                         <td class="image-name">
                                         <div class="group-content">
@@ -1191,38 +1512,39 @@ function renderRightContent(category) {
                                         <td>${provinceName}</td>
                                         <td class="actions">
                                             <div class="action-buttons">
-                                                <span id="btnEdit">Edit</span>
+                                                <span id="btnEdit" data-category="place" data-id="${place._id}">Edit</span>
                                                 <span id="btnDetails">Details</span>
                                                 <span id="btnDelete">Delete</span>
                                             </div>
                                         </td>
                                     </tr>
                                 `;
-                                $('.value-table').html(Places);
-                            });
-                        });
-                    });
-                };
-            };
-        });
-    } else if (category == "service") {
-        let rightContent = `
-        
-        `
-        $('.right-content').html(rightContent);
-        addEventForButtonAddNew();
-    } else if (category == "photo") {
-        let rightContent = `
+                $(".value-table").html(Places);
+                addEventForButtonEdit();
+              });
+            });
+          });
+        }
+      }
+    });
+  } else if (category == "service") {
+    let rightContent = `
         
         `;
-        $('.right-content').html(rightContent);
-        addEventForButtonAddNew();
-    };
+    $(".right-content").html(rightContent);
+    addEventForButtonAddNew();
+  } else if (category == "photo") {
+    let rightContent = `
+        
+        `;
+    $(".right-content").html(rightContent);
+    addEventForButtonAddNew();
+  }
 }
 
 // #ADVERTISEMENTS:
 
-// $('#location').focus((e) => { 
+// $('#location').focus((e) => {
 //     e.preventDefault();
 //     $('.province-category').css('display','block');
 // }).focusout((e) => {
@@ -1231,15 +1553,15 @@ function renderRightContent(category) {
 // });
 
 $(document).ready(function () {
-    setupOptionBoxEvent();
-    renderRightContent('statistics');
-    // renderRightContent('place');
-    // renderRightContent('province');
+  setupOptionBoxEvent();
+  renderRightContent("statistics");
+  // renderRightContent('place');
+  // renderRightContent('province');
 
-    // let data = {
-    //     amount: 3,
-    //     data: null
-    // }
-    // changeToContentForm(data);
-    labelInputFocus();
+  // let data = {
+  //     amount: 3,
+  //     data: null
+  // }
+  // changeToContentForm(data);
+  labelInputFocus();
 });

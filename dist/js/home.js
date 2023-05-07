@@ -7,67 +7,65 @@ AOS.init();
 //------------- ### API ### --------------//
 //----------------------------------------//
 
-function getRandomNumberTypeInt(min, max) {
-    min = Math.ceil(min);
-    max = Math.floor(max);
-    return Math.floor(Math.random() * (max - min + 1)) + min;
-}
-
 async function getRegions() {
-    let allRegions = await fetch("http://localhost:5000/api/getRegion", {
-        method: "GET",
-    }).then((data) => data.json());
-    return allRegions.data
+  let allRegions = await fetch("http://localhost:8000/api/getRegion", {
+    method: "GET",
+  }).then((data) => data.json());
+  return allRegions.data;
 }
 
 async function getTerritorys() {
-    let allTerritorys = await fetch("http://localhost:5000/api/getTerritory", {
-        method: "GET",
-    }).then((data) => data.json());
-    return allTerritorys.data
+  let allTerritorys = await fetch("http://localhost:8000/api/getTerritory", {
+    method: "GET",
+  }).then((data) => data.json());
+  return allTerritorys.data;
 }
 
 async function getProvinceByID(id) {
-    let province = await fetch("http://localhost:5000/api/getProvinceByID", {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ID: id}),
-    })
-    .then((data) => data.json())
-    return province
+  let province = await fetch("http://localhost:8000/api/getProvinceByID", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ ID: id }),
+  }).then((data) => data.json());
+  return province;
 }
 
-async function getAllPlaceByTerritoryID(id) {
-    let allPlaceInTerritory = await fetch("http://localhost:5000/api/getAllPlaceByTerritoryID", {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ID: id}),
-    })
-    .then((data) => data.json())
-    return allPlaceInTerritory
-}
-
-async function getPlaceForHomePage() {
-    let result = await fetch("http://localhost:5000/api/getPlaceForHomePage", {
-        method: "GET",
-    })
-    .then((data) => data.json())
-    return result
+async function getAllPlaceForTerritory() {
+  let result = await fetch("http://localhost:8000/api/getAllPlaceForTerritory", {
+    method: "GET",
+  }).then((data) => data.json());
+  return result;
 }
 
 //----------------------------------------//
 //----------- ### FUNCTION ### -----------//
 //----------------------------------------//
 
+function getUrlParameter(sParam) {
+    var sPageURL = window.location.search.substring(1),
+      sURLVariables = sPageURL.split("&"),
+      sParameterName,
+      i;
+  
+    for (i = 0; i < sURLVariables.length; i++) {
+      sParameterName = sURLVariables[i].split("=");
+  
+      if (sParameterName[0] === sParam) {
+        return sParameterName[1] === undefined
+          ? true
+          : decodeURIComponent(sParameterName[1]);
+      }
+    }
+    return false;
+};
+
 function renderRegion() {
-    let dataRegions = getRegions();
-    dataRegions.then(data => {
-        if (data.length > 0) {
-            let Regions = `
+  let dataRegions = getRegions();
+  dataRegions.then((data) => {
+    if (data.length > 0) {
+      let Regions = `
                 <div class="header-title">
                     <span class="big-title">Regions in VietNam</span>
                     <p class="details-title">
@@ -77,12 +75,12 @@ function renderRegion() {
                 <div class="body-content">
                     <div class="items">
             `;
-            
-            for (const [index, region] of Object.entries(data)) {
-                Regions += `
+
+      for (const [index, region] of Object.entries(data)) {
+        Regions += `
                         <div class="item">
                             <div class="item-box">
-                                <div class="item-img" data-id="${region._id}">
+                                <div class="item-img item-img--region" data-id="${region._id}">
                                     <img
                                         src="${region.image}"
                                         alt=""
@@ -92,64 +90,71 @@ function renderRegion() {
                             </div>
                         </div>
                 `;
-            };
+      }
 
-            Regions += `
+      Regions += `
                     </div>
                 </div>
             `;
-            $('.regions-in-vietnam').html(Regions);
-        }
-    });
-};
+      $(".regions-in-vietnam").html(Regions);
+
+      let groupBtnRegion = document.querySelectorAll('.item-img--region');
+      groupBtnRegion.forEach(btn => {
+        $(btn).click(() => {
+            let regionID = $(btn).data().id;
+            window.location = `/region.html?regionID=${regionID}`;
+        });
+      });
+    }
+  });
+}
 
 function renderTerritory() {
-    let dataTerritorys = getTerritorys();
-    dataTerritorys.then(data => {
-        if (data.length > 0) {
-            getPlaceForHomePage().then(dataPlace => {
-                const dataPlaceResult = dataPlace.data;
-                let Territorys = `
-                    <div class="header-title">
-                        <span class="big-title">Regions in the territory</span>
-                        <p class="details-title">
-                            Here are some of the most visited places in 2023
-                        </p>
-                    </div>
-                    <div class="body-content">
-                        <div class="items">
-                `;
-                
-                for (const [index, Place] of Object.entries(dataPlaceResult)) {
-                    Territorys += `
-                            <div class="item">
-                                <div class="item-box">
-                                    <div class="item-img">
-                                    <img
-                                        src="${Place.image}"
-                                        alt=""
-                                    />
-                                    </div>
-                                    <div class="address-of-img">${Place.name}, ${Place.provinceName}</div>
-                                    <div class="name-of-img">${Place.territoryName}</div>
-                                </div>
-                            </div>
-                    `;
-                };
+  let dataTerritorys = getTerritorys();
+  dataTerritorys.then((data) => {
+    if (data.length > 0) {
+        getAllPlaceForTerritory().then((dataPlace) => {
+            const dataPlaceResult = dataPlace.data;
+            let Territorys = `
+                        <div class="header-title">
+                            <span class="big-title">Regions in the territory</span>
+                            <p class="details-title">
+                                Here are some of the most visited places in 2023
+                            </p>
+                        </div>
+                        <div class="body-content">
+                            <div class="items">
+            `;
 
+            for (const [index, Place] of Object.entries(dataPlaceResult)) {
                 Territorys += `
+                    <div class="item">
+                        <div class="item-box">
+                            <div class="item-img">
+                            <img
+                                src="${Place.image}"
+                                alt=""
+                            />
+                            </div>
+                            <div class="address-of-img">${Place.name}, ${Place.provinceName}</div>
+                            <div class="name-of-img">${Place.territoryName}</div>
                         </div>
                     </div>
                 `;
-                $('.regions-in-the-territory').html(Territorys);
-            });
-        }
-    });
+            }
 
+            Territorys += `
+                    </div>
+                </div>
+            `;
+            $(".regions-in-the-territory").html(Territorys);
+        });
+    }
+  });
 }
 
 function renderPosts() {
-    let Posts = `
+  let Posts = `
         <div class="header-title">
             <span class="big-title">Top travel stories</span>
             <p class="details-title">
@@ -198,12 +203,12 @@ function renderPosts() {
             </div>
         </div>
     `;
-    $('.top-travel-stories').html(Posts);
+  $(".top-travel-stories").html(Posts);
 }
 
 function renderPage() {
-    // HEADER:
-    let base = `
+  // HEADER:
+  let base = `
         <section>
             <div
             class="no1-page scroll-trigger"
@@ -249,8 +254,8 @@ function renderPage() {
         </section>
     `;
 
-    // OVERVIEW:
-    base += `
+  // OVERVIEW:
+  base += `
         <section>
             <div class="no2-page">
                 <div class="content">
@@ -300,8 +305,8 @@ function renderPage() {
         </section>
     `;
 
-    // BODY CONTENT:
-    base += `
+  // BODY CONTENT:
+  base += `
         <div class="no3-page">
             <div class="container">
             <div class="group-content regions-in-vietnam"></div>
@@ -312,8 +317,8 @@ function renderPage() {
         </div>
     `;
 
-    // FOOTER:
-    base += `
+  // FOOTER:
+  base += `
         <footer>
             <div class="container">
                 <div class="footer-box">
@@ -372,14 +377,14 @@ function renderPage() {
             </div>
         </footer>
     `;
-    $('body').html(base);
+  $("body").html(base);
 
-    // RENDER:
-    renderRegion();
-    renderTerritory();
-    renderPosts();
+  // RENDER:
+  renderRegion();
+  renderTerritory();
+  renderPosts();
 }
 
 $(document).ready(function () {
-    renderPage();
+  renderPage();
 });
