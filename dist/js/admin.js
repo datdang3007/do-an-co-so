@@ -1561,6 +1561,6 @@ function renderRightContent(category) {
 $(document).ready(function () {
     setupOptionBoxEvent();
     setEventButtonLogout();
-    renderRightContent('place');
+    renderRightContent('statistics');
     labelInputFocus();
 });
