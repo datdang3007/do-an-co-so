@@ -1,7 +1,8 @@
 @import "reset.scss";
 
 body {
-    font-family: "Urbanist";
+    // font-family: "Urbanist";
+    font-family: "Roboto", sans-serif;
 }
 
 .bg-blur {
@@ -49,7 +50,8 @@ body {
             margin-bottom: 60px;
             text-align: center;
             .title {
-                font-family: "Urbanist";
+                // font-family: "Urbanist";
+                font-family: "Roboto", sans-serif;
                 font-style: normal;
                 font-weight: 700;
                 font-size: 40px;

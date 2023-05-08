@@ -4,7 +4,8 @@
 body {
     background-color: black;
     // font-family: "Roboto", sans-serif;
-    font-family: "Urbanist";
+    // font-family: "Urbanist";
+    font-family: "Roboto", sans-serif;
 }
 
 .container {
@@ -214,7 +215,8 @@ section {
     .container {
         h1 {
             text-align: center;
-            font-family: "Urbanist";
+            // font-family: "Urbanist";
+            font-family: "Roboto", sans-serif;
             font-weight: 700;
             font-size: 4rem;
             color: #4169e1;
@@ -225,7 +227,8 @@ section {
             padding: 30px 0;
             margin: 0 auto;
             text-align: center;
-            font-family: "Urbanist";
+            // font-family: "Urbanist";
+            font-family: "Roboto", sans-serif;
             font-weight: normal;
             font-size: 1.35rem;
             color: #000000;
@@ -417,9 +420,10 @@ section {
             display: flex;
             align-items: center;
             justify-content: space-between;
-            width: 240px;
+            width: 340px;
             margin: 40px auto 0;
-            #btnPrev, #btnNext {
+            #btnPrev,
+            #btnNext {
                 cursor: pointer;
                 padding: 8px 12px;
             }

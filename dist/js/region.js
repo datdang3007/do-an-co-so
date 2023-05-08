@@ -216,22 +216,22 @@ function renderPage(regionID) {
                     <div class="container">
                         <div class="header">
                             <ul class="menu-options">
-                                <li><a href="home.html">Home</a></li>
-                                <li><a href="territory.html">Territory</a></li>
-                                <li><a href="#">Posts</a></li>
+                                <li><a href="home.html">Trang Chủ</a></li>
+                                <li><a href="territory.html">Vùng</a></li>
+                                <li><a href="#">Bài Viết</a></li>
                             </ul>
                             <form class="searching-form">
-                                <input type="text" placeholder="Searching...">
+                                <input type="text" placeholder="Tìm Kiếm...">
                                 <label for=""><i class="fa-solid fa-magnifying-glass"></i></label>
                             </form>
                             <div class="group-login-language">
                                 <div class="group-login-register">
-                                    <a href="sign_up.html" class="btn" id="btnRegister">Sign Up</a>
-                                    <a href="sign_in.html" class="btn" id="btnLogin">Sign In</a>
+                                    <a href="sign_up.html" class="btn" id="btnRegister">Đăng Ký</a>
+                                    <a href="sign_in.html" class="btn" id="btnLogin">Đăng Nhập</a>
                                 </div>
                                 <div class="language">
                                     <i class="fa-solid fa-earth-americas"></i>
-                                    <span>ENG</span>
+                                    <span>VN</span>
                                 </div>
                             </div>
                         </div>
@@ -255,9 +255,9 @@ function renderPage(regionID) {
             <div class="container">
                 <div class="regions-in-the-territory">
                     <div class="header-title">
-                        <span class="big-title">Regions in the territory</span>
+                        <span class="big-title">Vùng</span>
                         <p class="details-title">
-                            Here are some of the most visited places in 2023
+                            Mỗi vùng có những đặc trưng riêng về địa lý, khí hậu, văn hóa, lịch sử, kinh tế và ẩm thực
                         </p>
                     </div>
                     <div class="body-content">
@@ -273,12 +273,12 @@ function renderPage(regionID) {
             <div class="container">
                 <div class="group-city">
                     <div class="header-title">
-                        <span class="big-title">City in The Northern</span>
+                        <span class="big-title">Tỉnh Thành</span>
                         <p class="details-title">
-                        Here are the city in The Northern
+                            Mỗi tỉnh thành đều mang trong mình những nét đẹp riêng
                         </p>
                         <div class="group-input">
-                            <input type="text" id="inputSearchCity" placeholder="Enter the city">
+                            <input type="text" id="inputSearchCity" placeholder="Tìm kiếm...">
                             <label for="inputSearchCity"><i class="fa-solid fa-magnifying-glass"></i></label>
                         </div>
                     </div>
@@ -288,9 +288,9 @@ function renderPage(regionID) {
                     </div>
 
                     <div id="pagination">
-                        <button id="btnPrev">&lt; Back</button>
+                        <button id="btnPrev">&lt; Trang Trước</button>
                         <span id="pageNumber"></span>
-                        <button id="btnNext">Next &gt;</button>
+                        <button id="btnNext">Trang Sau &gt;</button>
                     </div>
                 </div>
             </div>

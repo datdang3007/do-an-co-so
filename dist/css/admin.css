@@ -28,7 +28,7 @@ input[type='number']::-webkit-inner-spin-button {
 
 body {
   background-color: #fff;
-  font-family: "Urbanist";
+  font-family: "Roboto", sans-serif;
 }
 
 .flex-center {

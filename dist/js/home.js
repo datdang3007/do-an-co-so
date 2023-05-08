@@ -67,9 +67,9 @@ function renderRegion() {
     if (data.length > 0) {
       let Regions = `
                 <div class="header-title">
-                    <span class="big-title">Regions in VietNam</span>
+                    <span class="big-title">Miền</span>
                     <p class="details-title">
-                        Making the Most of Your Travel Experience in 2023
+                        Được phân chia dựa trên địa lý, văn hóa, lịch sử và đặc điểm kinh tế
                     </p>
                 </div>
                 <div class="body-content">
@@ -117,9 +117,9 @@ function renderTerritory() {
             const dataPlaceResult = dataPlace.data;
             let Territorys = `
                         <div class="header-title">
-                            <span class="big-title">Regions in the territory</span>
+                            <span class="big-title">Vùng</span>
                             <p class="details-title">
-                                Here are some of the most visited places in 2023
+                                Mỗi vùng có những đặc trưng riêng về địa lý, khí hậu, văn hóa, lịch sử, kinh tế và ẩm thực
                             </p>
                         </div>
                         <div class="body-content">
@@ -156,9 +156,9 @@ function renderTerritory() {
 function renderPosts() {
   let Posts = `
         <div class="header-title">
-            <span class="big-title">Top travel stories</span>
+            <span class="big-title">Bài Viết</span>
             <p class="details-title">
-                Explore our latest stories from our active users
+                Cùng nhau chia sẻ vẻ đẹp của núi rừng, biển đảo
             </p>
             <a class="view-all-stories" href="#">View All Stories</a>
         </div>
@@ -221,22 +221,22 @@ function renderPage() {
                 <div class="container">
                 <div class="header">
                     <ul class="menu-options">
-                    <li><a href="region.html">Region</a></li>
-                    <li><a href="territory.html">Territory</a></li>
-                    <li><a href="#">Posts</a></li>
+                    <li><a href="region.html">Miền</a></li>
+                    <li><a href="territory.html">Vùng</a></li>
+                    <li><a href="#">Bài Viết</a></li>
                     </ul>
                     <form class="searching-form">
-                        <input type="text" placeholder="Searching...">
+                        <input type="text" placeholder="Tìm kiếm...">
                         <label for=""><i class="fa-solid fa-magnifying-glass"></i></label>
                     </form>
                     <div class="group-login-language">
                     <div class="group-login-register">
-                        <a href="sign_up.html" class="btn" id="btnRegister">Sign Up</a>
-                        <a href="sign_in.html" class="btn" id="btnLogin">Sign In</a>
+                        <a href="sign_up.html" class="btn" id="btnRegister">Đăng Ký</a>
+                        <a href="sign_in.html" class="btn" id="btnLogin">Đăng Nhập</a>
                     </div>
                     <div class="language">
                         <i class="fa-solid fa-earth-americas"></i>
-                        <span>ENG</span>
+                        <span>VN</span>
                     </div>
                     </div>
                 </div>
@@ -245,17 +245,16 @@ function renderPage() {
                 <div class="h1-text-shadow">VIETNAM</div>
                 <div class="h1-text-title">VIETNAM</div>
                 <div class="slogan">
-                <p>
-                    Whether it's the sea or the mountains, it's all in this country
-                </p>
+                    <p>
+                        Đích đến của chúng ta không phải là một vùng đất, mà là một cách nhìn mới
+                    </p>
                 </div>
             </div>
             </div>
         </section>
     `;
 
-  // OVERVIEW:
-  base += `
+    base += `
         <section>
             <div class="no2-page">
                 <div class="content">
@@ -263,30 +262,30 @@ function renderPage() {
                         <div class="content-box">
                             <div class="left-content">
                                 <div class="content-title">
-                                    <span class="header-content-title">Overview of Vietnam</span>
+                                    <span class="header-content-title">Tổng quan về Việt Nam</span>
                                     <span>
-                                    &ensp;&ensp;Vietnam is the most populous country in
-                                    Southeast Asia, located in the southeast of Asia. It has an
-                                    area of approximately 331,210 km² and is divided into 3
-                                    regions: North, Central, and South. These regions are
-                                    further divided into 8 geographical zones: Northern Midlands
-                                    and Mountains, Red River Delta, North Central Coast, South
-                                    Central Coast, Central Highlands, Northeast, Northwest, and
-                                    Mekong River Delta.
-                                    <br /><br />&ensp;&ensp;Vietnam has 63 provinces, including
-                                    5 centrally-administered cities: Hanoi, Ho Chi Minh City,
-                                    Hai Phong, Da Nang, and Can Tho. In addition, there are
-                                    other provinces that are large in scale and have many
-                                    attractive tourist destinations, such as Hue, Hoi An, Nha
-                                    Trang, Da Lat, Da Nang, Sapa, Ha Long, Phu Quoc, and Ha
-                                    Giang. <br /><br />&ensp;&ensp;With its diverse terrain,
-                                    Vietnam has many diverse and attractive tourist
-                                    destinations. Visitors can enjoy beautiful beaches, visit
-                                    historical and cultural sites, admire the beautiful mountain
-                                    scenery, or explore the unique old quarters of cities. In
-                                    addition, Vietnam is also famous for its characteristic and
-                                    diverse cuisine, which is highly regarded in the Southeast
-                                    Asia region.
+                                        &ensp;&ensp;Việt Nam là quốc gia đông dân nhất ở
+                                        Đông Nam Á, nằm ở phía đông nam của châu Á. Nó có một
+                                        diện tích khoảng 331.210 km² và được chia thành 3
+                                        khu vực: Bắc, Trung, Nam. Những khu vực này là
+                                        chia thành 8 vùng địa lý: Trung du Bắc Bộ
+                                        và miền núi, Đồng bằng sông Hồng, Bắc Trung Bộ, Nam Bộ
+                                        duyên hải miền Trung, Tây Nguyên, Đông Bắc, Tây Bắc và
+                                        Đồng bằng sông Cửu Long.
+                                        <br /><br />&ensp;&ensp;Việt Nam có 63 tỉnh thành, trong đó
+                                        5 thành phố trực thuộc Trung ương: Hà Nội, Thành phố Hồ Chí Minh,
+                                        Hải Phòng, Đà Nẵng, Cần Thơ. Ngoài ra, có
+                                        các tỉnh khác có quy mô lớn và có nhiều
+                                        các địa điểm du lịch hấp dẫn như Huế, Hội An, Nha
+                                        Trang, Đà Lạt, Đà Nẵng, Sapa, Hạ Long, Phú Quốc, Hà
+                                        Giang. <br /><br />&ensp;&ensp;Với địa hình đa dạng,
+                                        Việt Nam có nhiều điểm du lịch đa dạng và hấp dẫn
+                                        điểm đến. Du khách có thể tận hưởng những bãi biển đẹp, tham quan
+                                        di tích lịch sử văn hóa, ngắm cảnh đẹp núi non
+                                        phong cảnh, hoặc khám phá những khu phố cổ độc đáo của thành phố. Ngoài ra,
+                                        Việt Nam còn nổi tiếng với những nét đặc trưng và
+                                        ẩm thực đa dạng, được đánh giá cao ở Đông Nam Bộ
+                                        khu vực Châu Á.
                                     </span>
                                 </div>
                             </div>

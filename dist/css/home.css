@@ -93,7 +93,7 @@ footer .container .footer-box .nav ul.ul-list li.li-list ul.dropdown-list li spa
 
 body {
   background-color: black;
-  font-family: "Urbanist";
+  font-family: "Roboto", sans-serif;
 }
 
 .container {
@@ -306,7 +306,7 @@ section {
   line-height: 90vh;
   font-style: normal;
   font-weight: bold;
-  font-size: 20rem;
+  font-size: 19rem;
   text-shadow: -1px -1px 0 #fff, 1px -1px 0 #fff, -1px 1px 0 #fff, 1px 1px 0 #fff;
   -webkit-animation: 2s text-comein forwards;
           animation: 2s text-comein forwards;
@@ -325,7 +325,7 @@ section {
   line-height: 90vh;
   font-style: normal;
   font-weight: bold;
-  font-size: 20rem;
+  font-size: 19rem;
   background: url(https://cdn.discordapp.com/attachments/1089123119668658206/1091207896345354320/46195.png) no-repeat center;
   background-size: 100%;
   color: transparent;

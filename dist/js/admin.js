@@ -474,23 +474,23 @@ function changeToContentForm(dataCallBack) {
                 <div class="box-plus-box fadein">
                     <span id="btnBack"><i class="fa-solid fa-arrow-right"></i></span>
                     <span id="btnClose"><i class="fa-solid fa-xmark"></i></span>
-                    <div class="title">Enter Place Content</div>
+                    <div class="title">Chi Tiết Nội Dung</div>
                     <form>
                         <div class="group-combobox">
-                            <span class="label">Content Index</span>
+                            <span class="label">Thứ Tự</span>
                             <select class="label-combobox" name="cb-index" id="cb-index"></select>
                         </div>
                         <div class="group-input">
-                            <label for="inputText">Text</label>
-                            <input class="label-input" type="text" id="inputText" name="inputText" placeholder="Northwest is an area located in the northwest of Vietnam...">
+                            <label for="inputText">Nội Dung</label>
+                            <input class="label-input" type="text" id="inputText" name="inputText" placeholder="Nhập nội dung...">
                         </div>
                         <div class="group-input">
-                            <label for="inputImageURL">Image URL</label>
-                            <input class="label-input" type="text" id="inputImageURL" name="inputImageURL" placeholder="https://cdn.discordapp.com/halong_bay.png">
+                            <label for="inputImageURL">Link Ảnh</label>
+                            <input class="label-input" type="text" id="inputImageURL" name="inputImageURL" placeholder="Nhập link ảnh...">
                         </div>
                         <span id="btnAdd">
                             <i class="fa-solid fa-plus"></i>
-                            Add New
+                            Xác Nhận
                         </span>
                     </form>
                 </div>
@@ -610,25 +610,25 @@ function addEventForButtonAddNew() {
         var addNewBox = `
                     <div class="box-plus-box">
                         <span id="btnClose"><i class="fa-solid fa-xmark"></i></span>
-                        <div class="title">Add New Region</div>
+                        <div class="title">Thêm Miền</div>
                         <form>
                             <div class="group-input">
-                                <label for="inputName">Name</label>
-                                <input class="label-input" type="text" id="inputName" name="inputName" placeholder="The Northern">
+                                <label for="inputName">Tên</label>
+                                <input class="label-input" type="text" id="inputName" name="inputName" placeholder="Nhập tên...">
                             </div>
                             <div class="group-input">
                                 <label for="inputSlogan">Slogan</label>
-                                <input class="label-input" type="text" id="inputSlogan" name="inputSlogan" placeholder="A land of rich cultural and historical experiences">
+                                <input class="label-input" type="text" id="inputSlogan" name="inputSlogan" placeholder="Nhập slogan...">
                             </div>
                             <div class="group-input">
-                                <label for="inputOverview">Overview</label>
-                                <input class="label-input" type="text" id="inputOverview" name="inputOverview" placeholder="Croatia is a fun destination with a wide range...">
+                                <label for="inputOverview">Tổng Quan</label>
+                                <input class="label-input" type="text" id="inputOverview" name="inputOverview" placeholder="Nhập tổng quan...">
                             </div>
                             <div class="group-input">
-                                <label for="inputImageURL">Image URL</label>
-                                <input class="label-input" type="text" id="inputImageURL" name="inputImageURL" placeholder="https://cdn.discordapp.com/halong_bay.png">
+                                <label for="inputImageURL">Link Ảnh</label>
+                                <input class="label-input" type="text" id="inputImageURL" name="inputImageURL" placeholder="Nhập link ảnh...">
                             </div>
-                            <span id="btnAdd" data-category="${category}">Add New</span>
+                            <span id="btnAdd" data-category="${category}">Xác Nhận</span>
                         </form>
                     </div>
                 `;
@@ -643,27 +643,27 @@ function addEventForButtonAddNew() {
             var addNewBox = `
                             <div class="box-plus-box">
                                 <span id="btnClose"><i class="fa-solid fa-xmark"></i></span>
-                                <div class="title">Add New Territory</div>
+                                <div class="title">Thêm Vùng</div>
                                 <form>
                                     <div class="group-input">
-                                        <label for="inputName">Name</label>
-                                        <input class="label-input" type="text" id="inputName" name="inputName" placeholder="The Northwest">
+                                        <label for="inputName">Tên</label>
+                                        <input class="label-input" type="text" id="inputName" name="inputName" placeholder="Nhập tên...">
                                     </div>
                                     <div class="group-input">
                                         <label for="inputSlogan">Slogan</label>
-                                        <input class="label-input" type="text" id="inputSlogan" name="inputSlogan" placeholder="A land of rich cultural and historical experiences">
+                                        <input class="label-input" type="text" id="inputSlogan" name="inputSlogan" placeholder="Nhập slogan...">
                                     </div>
                                     <div class="group-combobox">
-                                        <span class="label">Region</span>
+                                        <span class="label">Miền</span>
                                         <select class="label-combobox" name="cb-region" id="cb-region"></select>
                                     </div>
                                     <div class="group-input">
-                                        <label for="inputOverview">Overview</label>
-                                        <input class="label-input" type="text" id="inputOverview" name="inputOverview" placeholder="Northwest is an area located in the northwest of Vietnam...">
+                                        <label for="inputOverview">Tổng Quan</label>
+                                        <input class="label-input" type="text" id="inputOverview" name="inputOverview" placeholder="Nhập tổng quan...">
                                     </div>
                                     <div class="group-input">
-                                        <label for="inputImageURL">Image URL</label>
-                                        <input class="label-input" type="text" id="inputImageURL" name="inputImageURL" placeholder="https://cdn.discordapp.com/halong_bay.png">
+                                        <label for="inputImageURL">Link Ảnh</label>
+                                        <input class="label-input" type="text" id="inputImageURL" name="inputImageURL" placeholder="Nhập link ảnh...">
                                     </div>
                                     <span id="btnAdd" data-category="${category}">Add New</span>
                                 </form>
@@ -691,27 +691,27 @@ function addEventForButtonAddNew() {
             var addNewBox = `
                             <div class="box-plus-box">
                                 <span id="btnClose"><i class="fa-solid fa-xmark"></i></span>
-                                <div class="title">Add New Province</div>
+                                <div class="title">Thêm Tỉnh Thành</div>
                                 <form>
                                     <div class="group-input">
-                                        <label for="inputName">Name</label>
-                                        <input class="label-input" type="text" id="inputName" name="inputName" placeholder="The Northwest">
+                                        <label for="inputName">Tên</label>
+                                        <input class="label-input" type="text" id="inputName" name="inputName" placeholder="Nhập tên...">
                                     </div>
                                     <div class="group-combobox">
-                                        <span class="label">Territory</span>
+                                        <span class="label">Vùng</span>
                                         <select class="label-combobox" name="cb-territory" id="cb-territory"></select>
                                     </div>
                                     <div class="group-input">
-                                        <label for="inputOverview">Overview</label>
-                                        <input class="label-input" type="text" id="inputOverview" name="inputOverview" placeholder="Northwest is an area located in the northwest of Vietnam...">
+                                        <label for="inputOverview">Tổng Quan</label>
+                                        <input class="label-input" type="text" id="inputOverview" name="inputOverview" placeholder="Nhập tổng quan...">
                                     </div>
                                     <div class="group-input">
-                                        <label for="inputImageURL">Image URL</label>
-                                        <input class="label-input" type="text" id="inputImageURL" name="inputImageURL" placeholder="https://cdn.discordapp.com/halong_bay.png">
+                                        <label for="inputImageURL">Link Ảnh</label>
+                                        <input class="label-input" type="text" id="inputImageURL" name="inputImageURL" placeholder="Nhập link ảnh...">
                                     </div>
                                     <span id="btnAdd" data-category="${category}">
                                         <i class="fa-solid fa-plus"></i>
-                                        Add New
+                                        Xác Nhận
                                     </span>
                                 </form>
                             </div>
@@ -739,30 +739,30 @@ function addEventForButtonAddNew() {
             var addNewBox = `
                             <div class="box-plus-box">
                                 <span id="btnClose"><i class="fa-solid fa-xmark"></i></span>
-                                <div class="title">Add New Place</div>
+                                <div class="title">Thêm Địa Điểm</div>
                                 <form>
                                     <div class="group-input">
-                                        <label for="inputName">Name</label>
-                                        <input class="label-input" type="text" id="inputName" name="inputName" placeholder="Ha Long">
+                                        <label for="inputName">Tên</label>
+                                        <input class="label-input" type="text" id="inputName" name="inputName" placeholder="Nhập tên...">
                                     </div>
                                     <div class="group-input">
-                                        <label for="inputContent">Amount of Content</label>
-                                        <input class="label-input" type="number" id="inputContent" name="inputContent" placeholder="Enter the amount of content">
+                                        <label for="inputContent">Nội Dung</label>
+                                        <input class="label-input" type="number" id="inputContent" name="inputContent" placeholder="Nhập số lượng nội dung...">
                                     </div>
                                     <div class="group-combobox">
-                                        <span class="label">Province</span>
+                                        <span class="label">Tỉnh Thành</span>
                                         <select class="label-combobox" name="cb-province" id="cb-province"></select>
                                     </div>
                                     <div class="group-input">
-                                        <label for="inputOverview">Overview</label>
-                                        <input class="label-input" type="text" id="inputOverview" name="inputOverview" placeholder="Northwest is an area located in the northwest of Vietnam...">
+                                        <label for="inputOverview">Tổng Quan</label>
+                                        <input class="label-input" type="text" id="inputOverview" name="inputOverview" placeholder="Nhập tổng quan...">
                                     </div>
                                     <div class="group-input">
-                                        <label for="inputImageURL">Image URL</label>
-                                        <input class="label-input" type="text" id="inputImageURL" name="inputImageURL" placeholder="https://cdn.discordapp.com/halong_bay.png">
+                                        <label for="inputImageURL">Link Ảnh</label>
+                                        <input class="label-input" type="text" id="inputImageURL" name="inputImageURL" placeholder="Nhập link ảnh...">
                                     </div>
                                     <span id="btnContinue">
-                                        Continue
+                                        Tiếp tục &ensp;
                                         <i class="fa-solid fa-arrow-right"></i>
                                     </span>
                                 </form>
@@ -1126,7 +1126,7 @@ function renderRightContent(category) {
   if (category == "statistics") {
     let rightContent = `
             <div class="header">
-                <div class="title">Statistics</div>
+                <div class="title">Thống Kê</div>
             </div>
             <div class="statistical">
                 <div class="box-statistical">
@@ -1206,7 +1206,7 @@ function renderRightContent(category) {
   } else if (category == "advertisements") {
     let rightContent = `
             <div class="header">
-                <div class="title">Advertisements</div>
+                <div class="title">Bài Quảng Cáo</div>
             </div>
             <div class="Advertisements">
                 <div class="image">
@@ -1217,19 +1217,19 @@ function renderRightContent(category) {
                 <div class="form-data">
                     <form>
                         <div class="group-input">
-                            <label for="titleOfAds">Title of your review</label>
-                            <input type="text" id="titleOfAds" placeholder="Summarize your Travel Journey">
+                            <label for="titleOfAds">Tiêu đề</label>
+                            <input type="text" id="titleOfAds" placeholder="Nhập tiêu đề...">
                         </div>
 
                         <div class="group-input">
-                            <label for="reviewAds">Your review</label>
-                            <input type="text" id="reviewAds" style="overflow-wrap: break-word;" placeholder="A detailed review of your Travel Journey. Travellers will love to know your experience">
+                            <label for="reviewAds">Nội dung</label>
+                            <input type="text" id="reviewAds" style="overflow-wrap: break-word;" placeholder="Nhập nội dung...">
                         </div>
 
                         <div class="group-double-input">
                             <div class="input-box">
-                                <label for="location">Province</label>
-                                <input type="text" id="location" placeholder="Enter the province">
+                                <label for="location">Tỉnh thành</label>
+                                <input type="text" id="location" placeholder="Nhập tỉnh thành...">
                                 <ul class="province-category">
                                     <li>ABC</li>
                                     <li>ABC</li>
@@ -1240,22 +1240,22 @@ function renderRightContent(category) {
                             </div>
 
                             <div class="input-box">
-                                <label for="date">When did you travel?</label>
-                                <input type="text" id="date" placeholder="Enter the date">
+                                <label for="date">Thời điểm du lịch</label>
+                                <input type="text" id="date" placeholder="Nhập thời gian...">
                             </div>
                         </div>
 
                         <div class="group-input">
-                            <label for="imageURL">Image URL</label>
-                            <input type="text" id="imageURL" placeholder="Enter link image url">
+                            <label for="imageURL">Link ảnh</label>
+                            <input type="text" id="imageURL" placeholder="Nhập link ảnh...">
                         </div>
 
                         <div class="group-checkbox">
                             <input type="checkbox" id="checkboxAds">
-                            <label for="checkboxAds">I certify that the information in this review is based solely on my own experiences with the product or service in question. I also attest that I have no personal or professional affiliation with the business in question and have not been given any incentives or payment from the business to write this review. I am aware that fake reviews are strictly prohibited on Tripadvisor.</label>
+                            <label for="checkboxAds">Tôi xác nhận rằng thông tin trong bài đánh giá này chỉ dựa trên trải nghiệm của riêng tôi với sản phẩm hoặc dịch vụ được đề cập. Tôi cũng xác nhận rằng tôi không có mối liên hệ cá nhân hoặc nghề nghiệp nào với doanh nghiệp được đề cập và chưa được doanh nghiệp ưu đãi hoặc thanh toán bất kỳ khoản nào để viết bài đánh giá này. Tôi biết rằng các đánh giá giả mạo bị nghiêm cấm.</label>
                         </div>
 
-                        <button id="btnSubmitAds">Submit Advertisement</button>
+                        <button id="btnSubmitAds">Đăng Quảng Cáo</button>
                     </form>
                 </div>
             </div>
@@ -1277,9 +1277,9 @@ function renderRightContent(category) {
       let rightContent = `
                 <div class="header">
                     <div class="group-text-and-button">
-                        <span class="title">Regions</span>
+                        <span class="title">Miền</span>
                         <div class="group-button">
-                            <span class="button" id="btnAddNew" data-category="region"><i class="fa-solid fa-plus"></i> Add New</span>
+                            <span class="button" id="btnAddNew" data-category="region"><i class="fa-solid fa-plus"></i> Thêm</span>
                         </div>
                     </div>
                 </div>
@@ -1333,9 +1333,9 @@ function renderRightContent(category) {
       let rightContent = `
                 <div class="header">
                     <div class="group-text-and-button">
-                        <span class="title">Territorys</span>
+                        <span class="title">Vùng</span>
                         <div class="group-button">
-                            <span class="button" id="btnAddNew" data-category="territory"><i class="fa-solid fa-plus"></i> Add New</span>
+                            <span class="button" id="btnAddNew" data-category="territory"><i class="fa-solid fa-plus"></i> Thêm</span>
                         </div>
                     </div>
                 </div>
@@ -1396,12 +1396,12 @@ function renderRightContent(category) {
       let rightContent = `
                 <div class="header">
                     <div class="group-text-and-input">
-                        <span class="title">Provinces</span>
+                        <span class="title">Tỉnh Thành</span>
                         <form>
-                            <input type="text" id="inputProvince" placeholder="Enter the province">
+                            <input type="text" id="inputProvince" placeholder="Tìm kiếm...">
                             <label for="inputProvince"><i class="fa-solid fa-magnifying-glass"></i></label>
                             <div class="group-button">
-                                <span class="button" id="btnAddNew" data-category="province"><i class="fa-solid fa-plus"></i> Add New</span>
+                                <span class="button" id="btnAddNew" data-category="province"><i class="fa-solid fa-plus"></i> Thêm</span>
                             </div>
                         </form>
                     </div>
@@ -1410,10 +1410,10 @@ function renderRightContent(category) {
                 <div class="Provinces">
                     <table class="header-table">
                         <tr>
-                            <td>Name</td>
-                            <td>Region</td>
-                            <td>Territory</td>
-                            <td>Action</td>
+                            <td>Tên</td>
+                            <td>Miền</td>
+                            <td>Vùng</td>
+                            <td>Chức Năng</td>
                         </tr>
                     </table>
 
@@ -1465,12 +1465,12 @@ function renderRightContent(category) {
       let rightContent = `
                 <div class="header">
                     <div class="group-text-and-input">
-                        <span class="title">Places</span>
+                        <span class="title">Địa Điểm</span>
                         <form>
-                            <input type="text" id="inputPlace" placeholder="Enter the place">
+                            <input type="text" id="inputPlace" placeholder="Tìm kiếm...">
                             <label for="inputPlace"><i class="fa-solid fa-magnifying-glass"></i></label>
                             <div class="group-button">
-                                <span class="button" id="btnAddNew" data-category="place"><i class="fa-solid fa-plus"></i> Add New</span>
+                                <span class="button" id="btnAddNew" data-category="place"><i class="fa-solid fa-plus"></i> Thêm</span>
                             </div>
                         </form>
                     </div>
@@ -1479,11 +1479,11 @@ function renderRightContent(category) {
                 <div class="Places">
                     <table class="header-table">
                         <tr>
-                            <td>Name</td>
-                            <td>Region</td>
-                            <td>Territory</td>
-                            <td>Province</td>
-                            <td>Action</td>
+                            <td>Tên</td>
+                            <td>Miền</td>
+                            <td>Vùng</td>
+                            <td>Tỉnh Thành</td>
+                            <td>Chức Năng</td>
                         </tr>
                     </table>
 
@@ -1561,6 +1561,6 @@ function renderRightContent(category) {
 $(document).ready(function () {
     setupOptionBoxEvent();
     setEventButtonLogout();
-    renderRightContent('statistics');
+    renderRightContent('place');
     labelInputFocus();
 });

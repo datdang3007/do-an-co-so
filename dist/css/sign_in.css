@@ -27,7 +27,7 @@ input[type='number']::-webkit-inner-spin-button {
 }
 
 body {
-  font-family: "Urbanist";
+  font-family: "Roboto", sans-serif;
 }
 
 .bg-blur {
@@ -90,7 +90,7 @@ body {
 }
 
 .content .form-sign-in .header .title {
-  font-family: "Urbanist";
+  font-family: "Roboto", sans-serif;
   font-style: normal;
   font-weight: 700;
   font-size: 40px;
