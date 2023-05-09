@@ -43,6 +43,17 @@ async function editRegion(data) {
   return result.success;
 }
 
+async function deleteRegion(id) {
+  let result = await fetch("http://localhost:8000/api/deleteRegion", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ ID: id }),
+  }).then((data) => data.json());
+  return result.success;
+}
+
 // #TERRITORYS:
 async function getTerritoryByID(id) {
     let territory = await fetch("http://localhost:8000/api/getTerritoryByID", {
@@ -80,6 +91,17 @@ async function editTerritory(data) {
       "Content-Type": "application/json",
     },
     body: JSON.stringify(data),
+  }).then((data) => data.json());
+  return result.success;
+}
+
+async function deleteTerritory(id) {
+  let result = await fetch("http://localhost:8000/api/deleteTerritory", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ ID: id }),
   }).then((data) => data.json());
   return result.success;
 }
@@ -125,6 +147,17 @@ async function editProvince(data) {
   return result.success;
 }
 
+async function deleteProvince(id) {
+  let result = await fetch("http://localhost:8000/api/deleteProvince", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ ID: id }),
+  }).then((data) => data.json());
+  return result.success;
+}
+
 // #PLACE:
 async function getPlaceByID(id) {
     let place = await fetch("http://localhost:8000/api/getPlaceByID", {
@@ -153,6 +186,28 @@ async function addNewPlace(data) {
         body: JSON.stringify(data),
   }).then((data) => data.json());
   return info;
+}
+
+async function editPlace(data) {
+  let result = await fetch("http://localhost:8000/api/editPlace", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(data),
+  }).then((data) => data.json());
+  return result.success;
+}
+
+async function deletePlace(id) {
+  let result = await fetch("http://localhost:8000/api/deletePlace", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ ID: id }),
+  }).then((data) => data.json());
+  return result.success;
 }
 
 //----------------------------------------//
@@ -545,8 +600,6 @@ function changeToContentForm(dataCallBack) {
             likeArray: [],
             commentID: data.commentID,
           };
-          console.log(data.image);
-          console.log(dataUpload);
           addNewPlace(dataUpload).then((dataAPI) => {
             console.log(dataAPI);
           });
@@ -569,7 +622,7 @@ function changeToContentForm(dataCallBack) {
       provinceID: data.provinceID,
       territoryID: data.territoryID,
       regionID: data.regionID,
-      image: data.imageURL,
+      image: data.image,
       overview: data.overview,
       service: false,
       content: null,
@@ -875,10 +928,27 @@ function eventButtonEdit() {
           alert('edit fail!');
         }
       });
-    } else if (category == "place") {
-      
     }
   });
+}
+
+function eventRenderContentInput(bool) {
+  if (bool) {
+    let contentInputDetail = `
+      <div class="group-input">
+        <label for="inputText">Nội Dung Content</label>
+        <input class="label-input" type="text" id="inputText" name="inputText" placeholder="Nhập nội dung...">
+      </div>
+      <div class="group-input">
+        <label for="inputImageURLContent">Link Ảnh Content</label>
+        <input class="label-input" type="text" id="inputImageURLContent" name="inputImageURLContent" placeholder="Nhập link ảnh...">
+      </div>
+    `;
+    $('.group-content-details').append(contentInputDetail);
+  } else {
+    $('#inputText').parent().remove();
+    $('#inputImageURLContent').parent().remove();
+  };
 }
 
 function pushDataForEditInput(data, type) {
@@ -907,8 +977,219 @@ function pushDataForEditInput(data, type) {
     $('#inputImageURL').val(image);
     $("#cb-territory").val(cbTerritory).change();
   } else if (type == "place") {
-    
-  }
+    let dataContent = data.content;
+    let cbProvince =  `${data.provinceID},${data.territoryID},${data.regionID}`;
+    $('#inputName').val(name);
+    $('#inputOverview').val(overview);
+    $('#inputImageURL').val(image);
+    $('#cb-province').val(cbProvince).change();
+
+    var indexContentSelect = 0;
+    $("#cb-index").on("change", () => {
+      dataContent[indexContentSelect].text = $("#inputText").val();
+      dataContent[indexContentSelect].image = $("#inputImageURLContent").val();
+      indexContentSelect = $("#cb-index").val() - 1;
+      let dataContentOnIndex = dataContent[indexContentSelect];
+      $("#inputText").val(dataContentOnIndex.text);
+      $("#inputImageURLContent").val(dataContentOnIndex.image);
+    });
+
+    $("#btnEventEdit").click(() => {
+      let placeIDUpload = data._id;
+      let nameUpload = $('#inputName').val();
+      let dataCBProvince = $('#cb-province').val().split(',');
+      let provinceIDUpload = dataCBProvince[0];
+      let territoryID = dataCBProvince[1];
+      let regionID = dataCBProvince[2];
+      let imageUpload = $('#inputImageURL').val();
+      let overviewUpload = $('#inputOverview').val();
+      let imageIDUpload = data.imageID;
+      let likeArrayUpload = data.likeArray;
+      let commentIDUpload = data.commentID;
+      
+      let canAdd = true;
+      let listIndexEmpty = [];
+      if (dataContent) {
+        dataContent[indexContentSelect].text = $("#inputText").val();
+        dataContent[indexContentSelect].image = $("#inputImageURLContent").val();
+        for (const [index, val] of Object.entries(dataContent)) {
+          if (val.text == "" || val.image == "") {
+            canAdd = false;
+            listIndexEmpty.push(Number(index) + 1);
+          }
+        }
+      }
+      
+      if (canAdd) {
+        let dataUpload;
+        if (dataContent) {
+          dataUpload = {
+            placeID: placeIDUpload,
+            name: nameUpload,
+            provinceID: provinceIDUpload,
+            territoryID: territoryID,
+            regionID: regionID,
+            image: imageUpload,
+            overview: overviewUpload,
+            service: false,
+            content: dataContent,
+            imageID: imageIDUpload,
+            likeArray: likeArrayUpload,
+            commentID: commentIDUpload,
+          };
+        } else {
+          dataUpload = {
+            placeID: placeIDUpload,
+            name: nameUpload,
+            provinceID: provinceIDUpload,
+            territoryID: territoryID,
+            regionID: regionID,
+            image: imageUpload,
+            overview: overviewUpload,
+            service: false,
+            content: null,
+            imageID: imageIDUpload,
+            likeArray: likeArrayUpload,
+            commentID: commentIDUpload,
+          };
+        }
+        editPlace(dataUpload).then((dataAPI) => {
+          console.log(dataAPI);
+        });
+        closeBoxPlus();
+        alert("edit success!");
+        setTimeout(() => {
+          renderRightContent("place");
+        }, 400);
+      } else {
+        alert(`content at index [${listIndexEmpty.join(",")}] is error!`);
+      };
+    });
+
+    $('#btnAddNewContent').click(() => {
+      $('#cb-index').attr("disabled", false);
+      $('#cb-index').removeClass('disable');
+      $('#btnDeleteContent').removeClass('disable');
+
+      if (!dataContent) {
+        eventRenderContentInput(true);
+        dataContent = [];
+        dataContent[0] = {
+          text: "",
+          image: "",
+        };
+      } else {
+        dataContent[dataContent.length] = {
+          text: "",
+          image: "",
+        };
+      }
+
+      let CBIndex = ``;
+      for (let i = 1; i <= dataContent.length; i++) {
+        CBIndex += `<option value="${i}">${i}</option>`;
+      }
+      $("#cb-index").html(CBIndex);
+    });
+
+    $('#btnDeleteContent').click(() => {
+      dataContent.splice(indexContentSelect, 1);
+
+      if (dataContent.length == 0) {
+        dataContent = null
+        $('#cb-index').attr("disabled", true);
+        $('#cb-index').addClass('disable');
+        $('#btnDeleteContent').addClass('disable');
+        $("#cb-index").html('');
+        eventRenderContentInput(false);
+      } else {
+        let CBIndex = ``;
+        for (let i = 1; i <= dataContent.length; i++) {
+          CBIndex += `<option value="${i}">${i}</option>`;
+        }
+        $("#cb-index").html(CBIndex);
+
+        indexContentSelect = 0;
+        let dataContentOnIndex = dataContent[indexContentSelect];
+        $("#inputText").val(dataContentOnIndex.text);
+        $("#inputImageURLContent").val(dataContentOnIndex.image);
+      };
+    });
+
+    if (!dataContent) {
+      $('#cb-index').attr("disabled", true);
+      $('#cb-index').addClass('disable');
+      $('#btnDeleteContent').addClass('disable');
+    } else {
+      eventRenderContentInput(true);
+      let CBIndex = ``;
+      for (let i = 1; i <= dataContent.length; i++) {
+        CBIndex += `<option value="${i}">${i}</option>`;
+      }
+      $("#cb-index").html(CBIndex);
+      $("#inputText").val(dataContent[indexContentSelect].text);
+      $("#inputImageURLContent").val(dataContent[indexContentSelect].image);
+    };
+  };
+};
+
+function renderEventButtonEditPlace(ID, category) {
+  getPlaceByID(ID).then(dataPlace => {
+    if (dataPlace.success) {
+      const data = dataPlace.data;
+      let dataProvinces = getProvinces();
+      dataProvinces.then(dataProvince => {
+        if (dataProvince.length > 0) {
+          var editBox = `
+            <div class="box-plus-box">
+              <span id="btnClose"><i class="fa-solid fa-xmark"></i></span>
+              <div class="title">Sửa Địa Điểm</div>
+              <form>
+                  <div class="group-input">
+                      <label for="inputName">Tên</label>
+                      <input class="label-input" type="text" id="inputName" name="inputName" placeholder="Nhập tên...">
+                  </div>
+                  <div class="group-combobox">
+                      <span class="label">Tỉnh Thành</span>
+                      <select class="label-combobox" name="cb-province" id="cb-province"></select>
+                  </div>
+                  <div class="group-input">
+                      <label for="inputOverview">Tổng Quan</label>
+                      <input class="label-input" type="text" id="inputOverview" name="inputOverview" placeholder="Nhập tổng quan...">
+                  </div>
+                  <div class="group-input">
+                      <label for="inputImageURL">Link Ảnh</label>
+                      <input class="label-input" type="text" id="inputImageURL" name="inputImageURL" placeholder="Nhập link ảnh...">
+                  </div>
+
+                  <div class="group-content-details">
+                    <div class="group-combobox">
+                      <span class="label">Thứ Tự Content</span>
+                      <select class="label-combobox" name="cb-index" id="cb-index"></select>
+                      <span class="btn-option" id="btnAddNewContent"><i class="fa-solid fa-plus"></i></span>
+                      <span class="btn-option" id="btnDeleteContent"><i class="fa-solid fa-trash"></i></span>
+                    </div>
+                  </div>
+                  <span id="btnEventEdit" data-category="${category}" data-placeid="${ID}">Xác Nhận</span>
+              </form>
+            </div>
+          `;
+          $(".box-plus-view").html(editBox);
+          let CBProvince = ``;
+          for (const [index, province] of Object.entries(dataProvince)) {
+            let dataID = `${province._id},${province.territoryID},${province.regionID}`;
+            CBProvince += `<option value="${dataID}">${province.name}</option>`;
+          }
+          $("#cb-province").html(CBProvince);
+          pushDataForEditInput(data, 'place');
+          $(".box-plus-view").css("display", "block");
+          eventCloseBoxPlusContent();
+        } else {
+          alert("cannot edit place when province is empty!");
+        }
+      });
+    };
+  });
 }
 
 function addEventForButtonEdit() {
@@ -925,25 +1206,25 @@ function addEventForButtonEdit() {
             var editBox = `
                       <div class="box-plus-box">
                           <span id="btnClose"><i class="fa-solid fa-xmark"></i></span>
-                          <div class="title">Edit Region</div>
+                          <div class="title">Chỉnh Sửa Miền</div>
                           <form>
                               <div class="group-input">
-                                  <label for="inputName">Name</label>
-                                  <input class="label-input" type="text" id="inputName" name="inputName" placeholder="The Northern">
+                                  <label for="inputName">Tên</label>
+                                  <input class="label-input" type="text" id="inputName" name="inputName" placeholder="Nhập tên...">
                               </div>
                               <div class="group-input">
                                   <label for="inputSlogan">Slogan</label>
-                                  <input class="label-input" type="text" id="inputSlogan" name="inputSlogan" placeholder="A land of rich cultural and historical experiences">
+                                  <input class="label-input" type="text" id="inputSlogan" name="inputSlogan" placeholder="Nhập slogan...">
                               </div>
                               <div class="group-input">
-                                  <label for="inputOverview">Overview</label>
-                                  <input class="label-input" type="text" id="inputOverview" name="inputOverview" placeholder="Croatia is a fun destination with a wide range...">
+                                  <label for="inputOverview">Tổng Quan</label>
+                                  <input class="label-input" type="text" id="inputOverview" name="inputOverview" placeholder="Nhập tổng quan...">
                               </div>
                               <div class="group-input">
-                                  <label for="inputImageURL">Image URL</label>
-                                  <input class="label-input" type="text" id="inputImageURL" name="inputImageURL" placeholder="https://cdn.discordapp.com/halong_bay.png">
+                                  <label for="inputImageURL">Link Ảnh</label>
+                                  <input class="label-input" type="text" id="inputImageURL" name="inputImageURL" placeholder="Nhập link ảnh...">
                               </div>
-                              <span id="btnEventEdit" data-category="${category}" data-regionid="${ID}">Edit</span>
+                              <span id="btnEventEdit" data-category="${category}" data-regionid="${ID}">Xác Nhận</span>
                           </form>
                       </div>
             `;
@@ -964,29 +1245,29 @@ function addEventForButtonEdit() {
                 var editBox = `
                         <div class="box-plus-box">
                           <span id="btnClose"><i class="fa-solid fa-xmark"></i></span>
-                          <div class="title">Edit Territory</div>
+                          <div class="title">Chỉnh Sửa Vùng</div>
                           <form>
                               <div class="group-input">
-                                  <label for="inputName">Name</label>
-                                  <input class="label-input" type="text" id="inputName" name="inputName" placeholder="The Northwest">
+                                  <label for="inputName">Tên</label>
+                                  <input class="label-input" type="text" id="inputName" name="inputName" placeholder="Nhập tên...">
                               </div>
                               <div class="group-input">
                                   <label for="inputSlogan">Slogan</label>
-                                  <input class="label-input" type="text" id="inputSlogan" name="inputSlogan" placeholder="A land of rich cultural and historical experiences">
+                                  <input class="label-input" type="text" id="inputSlogan" name="inputSlogan" placeholder="Nhập slogan...">
                               </div>
                               <div class="group-combobox">
-                                  <span class="label">Region</span>
+                                  <span class="label">Miền</span>
                                   <select class="label-combobox" name="cb-region" id="cb-region"></select>
                               </div>
                               <div class="group-input">
-                                  <label for="inputOverview">Overview</label>
-                                  <input class="label-input" type="text" id="inputOverview" name="inputOverview" placeholder="Northwest is an area located in the northwest of Vietnam...">
+                                  <label for="inputOverview">Tổng Quan</label>
+                                  <input class="label-input" type="text" id="inputOverview" name="inputOverview" placeholder="Nhập tổng quan...">
                               </div>
                               <div class="group-input">
-                                  <label for="inputImageURL">Image URL</label>
-                                  <input class="label-input" type="text" id="inputImageURL" name="inputImageURL" placeholder="https://cdn.discordapp.com/halong_bay.png">
+                                  <label for="inputImageURL">Link Ảnh</label>
+                                  <input class="label-input" type="text" id="inputImageURL" name="inputImageURL" placeholder="Nhập link ảnh...">
                               </div>
-                              <span id="btnEventEdit" data-category="${category}" data-territoryid="${ID}">Edit</span>
+                              <span id="btnEventEdit" data-category="${category}" data-territoryid="${ID}">Xác Nhận</span>
                           </form>
                       </div>
                 `;
@@ -1016,25 +1297,25 @@ function addEventForButtonEdit() {
                 var editBox = `
                   <div class="box-plus-box">
                     <span id="btnClose"><i class="fa-solid fa-xmark"></i></span>
-                    <div class="title">Edit Province</div>
+                    <div class="title">Chỉnh Sửa Tỉnh Thành</div>
                     <form>
                         <div class="group-input">
-                            <label for="inputName">Name</label>
-                            <input class="label-input" type="text" id="inputName" name="inputName" placeholder="The Northwest">
+                            <label for="inputName">Tên</label>
+                            <input class="label-input" type="text" id="inputName" name="inputName" placeholder="Nhập tên...">
                         </div>
                         <div class="group-combobox">
-                            <span class="label">Territory</span>
+                            <span class="label">Vùng</span>
                             <select class="label-combobox" name="cb-territory" id="cb-territory"></select>
                         </div>
                         <div class="group-input">
-                            <label for="inputOverview">Overview</label>
-                            <input class="label-input" type="text" id="inputOverview" name="inputOverview" placeholder="Northwest is an area located in the northwest of Vietnam...">
+                            <label for="inputOverview">Tổng Quan</label>
+                            <input class="label-input" type="text" id="inputOverview" name="inputOverview" placeholder="Nhập tổng quan...">
                         </div>
                         <div class="group-input">
-                            <label for="inputImageURL">Image URL</label>
-                            <input class="label-input" type="text" id="inputImageURL" name="inputImageURL" placeholder="https://cdn.discordapp.com/halong_bay.png">
+                            <label for="inputImageURL">Link Ảnh</label>
+                            <input class="label-input" type="text" id="inputImageURL" name="inputImageURL" placeholder="Nhập link ảnh...">
                         </div>
-                        <span id="btnEventEdit" data-category="${category}" data-provinceid="${ID}">Edit</span>
+                        <span id="btnEventEdit" data-category="${category}" data-provinceid="${ID}">Xác Nhận</span>
                     </form>
                   </div>
                 `;
@@ -1056,7 +1337,7 @@ function addEventForButtonEdit() {
           };
         });
       } else if (category == "place") {
-        
+        renderEventButtonEditPlace(ID, category);
       }
     })
   })
@@ -1089,6 +1370,56 @@ function labelInputFocus() {
       });
   });
 }
+
+// #Event Delete Event:
+function addEventForButtonDelete() {
+  let groupButton = document.querySelectorAll("#btnDelete");
+  groupButton.forEach(btn => {
+    $(btn).click(() => {
+      let btnData = $(btn).data();
+      let ID = btnData.id;
+      let category = btnData.category;
+
+      if (category == 'region') {
+        let accept = confirm("Bạn chắc chắn muốn xóa miền này?");
+        if (!accept) return;
+        deleteRegion(ID).then(result => {
+          console.log(result);
+        });
+        setTimeout(() => {
+          renderRightContent('region');
+        }, 300);
+      } else if (category == 'territory') {
+        let accept = confirm("Bạn chắc chắn muốn xóa vùng này?");
+        if (!accept) return;
+        deleteTerritory(ID).then(result => {
+          console.log(result);
+        });
+        setTimeout(() => {
+          renderRightContent('territory');
+        }, 300);
+      } else if (category == 'province') {
+        let accept = confirm("Bạn chắc chắn muốn xóa tỉnh thành này?");
+        if (!accept) return;
+        deleteProvince(ID).then(result => {
+          console.log(result);
+        });
+        setTimeout(() => {
+          renderRightContent('province');
+        }, 300);
+      } else if (category == 'place') {
+        let accept = confirm("Bạn chắc chắn muốn xóa địa điểm này?");
+        if (!accept) return;
+        deletePlace(ID).then(result => {
+          console.log(result);
+        });
+        setTimeout(() => {
+          renderRightContent('place');
+        }, 300);
+      }
+    });
+  });
+};
 
 // #OPTION BOX EVENT:
 
@@ -1311,13 +1642,13 @@ function renderRightContent(category) {
                                 <div class="region-details">
                                     <span class="region-name">${region.name}</span>
                                     <span class="region-slogan">(${region.slogan})</span>
-                                    <span class="region-overview"><strong>Overview:</strong> ${region.overview}</span>
+                                    <span class="region-overview"><strong>Tổng quan:</strong> ${region.overview}</span>
                                 </div>
 
                                 <div class="region-group-event">
-                                    <span id="btnEdit" data-category="region" data-id="${region._id}">Edit</span>
-                                    <span id="btnDetails" data-category="region">Details</span>
-                                    <span id="btnDelete" data-category="region">Delete</span>
+                                    <span id="btnEdit" data-category="region" data-id="${region._id}">Sửa</span>
+                                    <span id="btnDetails" data-category="region" data-id="${region._id}">Chi tiết</span>
+                                    <span id="btnDelete" data-category="region" data-id="${region._id}">Xóa</span>
                                 </div>
                             </div>  
                         </div>
@@ -1325,6 +1656,7 @@ function renderRightContent(category) {
         }
         $(".Regions").html(Regions);
         addEventForButtonEdit();
+        addEventForButtonDelete();
       }
     });
   } else if (category == "territory") {
@@ -1372,20 +1704,21 @@ function renderRightContent(category) {
                                     <div class="territory-details">
                                         <span class="territory-name">${territory.name}</span>
                                         <span class="territory-slogan">(${territory.slogan})</span>
-                                        <span class="territory-address"><strong>Address:</strong> ${regionName}</span>
-                                        <span class="territory-overview"><strong>Overview:</strong> ${territory.overview}.</span>
+                                        <span class="territory-address"><strong>Miền:</strong> ${regionName}</span>
+                                        <span class="territory-overview"><strong>Tổng quan:</strong> ${territory.overview}.</span>
                                     </div>
                 
                                     <div class="territory-group-event">
-                                        <span id="btnEdit" data-category="territory" data-id="${territory._id}">Edit</span>
-                                        <span id="btnDetails">Details</span>
-                                        <span id="btnDelete">Delete</span>
+                                        <span id="btnEdit" data-category="territory" data-id="${territory._id}">Sửa</span>
+                                        <span id="btnDetails" data-category="territory" data-id="${territory._id}">Chi tiết</span>
+                                        <span id="btnDelete" data-category="territory" data-id="${territory._id}">Xóa</span>
                                     </div>
                                 </div>  
                             </div>
                         `;
             $(".Territorys").html(Territorys);
             addEventForButtonEdit();
+            addEventForButtonDelete();
           });
         }
       }
@@ -1445,15 +1778,16 @@ function renderRightContent(category) {
                                     <td>${territoryName}</td>
                                     <td class="actions">
                                         <div class="action-buttons">
-                                            <span id="btnEdit" data-category="province" data-id="${province._id}">Edit</span>
-                                            <span id="btnDetails">Details</span>
-                                            <span id="btnDelete">Delete</span>
+                                            <span id="btnEdit" data-category="province" data-id="${province._id}">Sửa</span>
+                                            <span id="btnDetails" data-category="province" data-id="${province._id}">Chi tiết</span>
+                                            <span id="btnDelete" data-category="province" data-id="${province._id}">Xóa</span>
                                         </div>
                                     </td>
                                 </tr>
                             `;
               $(".value-table").html(Provinces);
               addEventForButtonEdit();
+              addEventForButtonDelete();
             });
           });
         }
@@ -1518,15 +1852,16 @@ function renderRightContent(category) {
                                         <td>${provinceName}</td>
                                         <td class="actions">
                                             <div class="action-buttons">
-                                                <span id="btnEdit" data-category="place" data-id="${place._id}">Edit</span>
-                                                <span id="btnDetails">Details</span>
-                                                <span id="btnDelete">Delete</span>
+                                                <span id="btnEdit" data-category="place" data-id="${place._id}">Sửa</span>
+                                                <span id="btnDetails" data-category="place" data-id="${place._id}">Chi tiết</span>
+                                                <span id="btnDelete" data-category="place" data-id="${place._id}">Xóa</span>
                                             </div>
                                         </td>
                                     </tr>
                                 `;
                 $(".value-table").html(Places);
                 addEventForButtonEdit();
+                addEventForButtonDelete();
               });
             });
           });
@@ -1561,6 +1896,6 @@ function renderRightContent(category) {
 $(document).ready(function () {
     setupOptionBoxEvent();
     setEventButtonLogout();
-    renderRightContent('statistics');
+    renderRightContent('place');
     labelInputFocus();
 });

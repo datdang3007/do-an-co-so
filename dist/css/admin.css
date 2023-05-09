@@ -1223,6 +1223,77 @@ body {
   border: 1px solid #4169e1;
 }
 
+.container .box-plus-view .box-plus-box form .group-content-details .group-combobox {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+}
+
+.container .box-plus-view .box-plus-box form .group-content-details .group-combobox select {
+  width: 410px;
+}
+
+.container .box-plus-view .box-plus-box form .group-content-details .group-combobox select.disable {
+  cursor: not-allowed;
+  border: 2px solid #ccc;
+}
+
+.container .box-plus-view .box-plus-box form .group-content-details .group-combobox .btn-option {
+  cursor: pointer;
+  display: inline-block;
+  width: 65px;
+  border-radius: 8px;
+  text-align: center;
+  height: 54px;
+  line-height: 54px;
+  font-size: 24px;
+  border: 1px solid #ccc;
+  -webkit-transition: background-color 0.3s, color 0.3s;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+.container .box-plus-view .box-plus-box form .group-content-details .group-combobox .btn-option.disable {
+  cursor: not-allowed;
+}
+
+.container .box-plus-view .box-plus-box form .group-content-details .group-combobox .btn-option#btnAddNewContent:hover, .container .box-plus-view .box-plus-box form .group-content-details .group-combobox .btn-option#btnDeleteContent:hover {
+  color: #fff;
+  border: 0px solid transparent;
+}
+
+.container .box-plus-view .box-plus-box form .group-content-details .group-combobox .btn-option#btnAddNewContent {
+  font-size: 20px;
+  color: #58c54a;
+}
+
+.container .box-plus-view .box-plus-box form .group-content-details .group-combobox .btn-option#btnAddNewContent i {
+  border: 2px solid #58c54a;
+  padding: 5px 7px;
+  border-radius: 50%;
+}
+
+.container .box-plus-view .box-plus-box form .group-content-details .group-combobox .btn-option#btnAddNewContent:hover {
+  background-color: #58c54a;
+}
+
+.container .box-plus-view .box-plus-box form .group-content-details .group-combobox .btn-option#btnAddNewContent:hover i {
+  border: 2px solid #fff;
+}
+
+.container .box-plus-view .box-plus-box form .group-content-details .group-combobox .btn-option#btnDeleteContent {
+  color: #f33044;
+}
+
+.container .box-plus-view .box-plus-box form .group-content-details .group-combobox .btn-option#btnDeleteContent:hover {
+  background-color: #f33044;
+}
+
 .container .box-plus-view .box-plus-box form #btnAdd,
 .container .box-plus-view .box-plus-box form #btnContinue,
 .container .box-plus-view .box-plus-box form #btnEventEdit {

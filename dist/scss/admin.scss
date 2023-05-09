@@ -915,6 +915,63 @@ body {
                         }
                     }
                 }
+                .group-content-details {
+                    .group-combobox {
+                        display: flex;
+                        align-items: center;
+                        justify-content: space-between;
+                        select {
+                            width: 410px;
+                            &.disable {
+                                cursor: not-allowed;
+                                border: 2px solid #ccc;
+                            }
+                        }
+                        .btn-option {
+                            cursor: pointer;
+                            display: inline-block;
+                            width: 65px;
+                            border-radius: 8px;
+                            text-align: center;
+                            height: 54px;
+                            line-height: 54px;
+                            font-size: 24px;
+                            border: 1px solid #ccc;
+                            transition: background-color 0.3s, color 0.3s;
+                            &.disable {
+                                cursor: not-allowed;
+                            }
+                            &#btnAddNewContent,
+                            &#btnDeleteContent {
+                                &:hover {
+                                    color: #fff;
+                                    border: 0px solid transparent;
+                                }
+                            }
+                            &#btnAddNewContent {
+                                font-size: 20px;
+                                color: #58c54a;
+                                i {
+                                    border: 2px solid #58c54a;
+                                    padding: 5px 7px;
+                                    border-radius: 50%;
+                                }
+                                &:hover {
+                                    background-color: #58c54a;
+                                    i {
+                                        border: 2px solid #fff;
+                                    }
+                                }
+                            }
+                            &#btnDeleteContent {
+                                color: #f33044;
+                                &:hover {
+                                    background-color: #f33044;
+                                }
+                            }
+                        }
+                    }
+                }
                 #btnAdd,
                 #btnContinue,
                 #btnEventEdit {
