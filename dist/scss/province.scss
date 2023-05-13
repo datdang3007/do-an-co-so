@@ -186,6 +186,7 @@ body {
                             justify-content: space-between;
                             width: 100%;
                             height: 120px;
+                            background-color: #f4f4f4;
                             .img {
                                 cursor: pointer;
                                 position: relative;
@@ -194,11 +195,33 @@ body {
                                 overflow: hidden;
                                 img {
                                     display: block;
-                                    position: absolute;
-                                    top: 50%;
-                                    left: 50%;
-                                    transform: translate(-50%, -50%);
-                                    width: 120%;
+                                    width: 100%;
+                                    height: 100%;
+                                    object-fit: cover;
+                                }
+                            }
+                            .img-service {
+                                cursor: pointer;
+                                position: relative;
+                                width: 30%;
+                                height: 100%;
+                                overflow: hidden;
+                                &.ivivu {
+                                    background-color: rgba(0, 129, 138, 50);
+                                }
+                                a {
+                                    position: relative;
+                                    display: block;
+                                    height: 100%;
+                                    img {
+                                        position: absolute;
+                                        top: 50%;
+                                        left: 50%;
+                                        transform: translate(-50%, -50%);
+                                        display: block;
+                                        width: 75%;
+                                        object-fit: cover;
+                                    }
                                 }
                             }
                             .group-details {
@@ -225,7 +248,7 @@ body {
                                 span.details {
                                     display: block;
                                     width: 100%;
-                                    height: 55%;
+                                    height: 57%;
                                     overflow: hidden;
                                     margin-top: 5px;
                                     text-overflow: ellipsis;
@@ -287,11 +310,9 @@ body {
                         overflow: hidden;
                         img {
                             display: block;
-                            position: absolute;
-                            top: 50%;
-                            left: 50%;
-                            transform: translate(-50%, -50%);
-                            width: 120%;
+                            width: 100%;
+                            height: 100%;
+                            object-fit: cover;
                         }
                     }
                     .group-details {

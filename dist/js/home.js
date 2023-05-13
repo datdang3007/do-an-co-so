@@ -130,7 +130,7 @@ function renderTerritory() {
                 Territorys += `
                     <div class="item">
                         <div class="item-box">
-                            <div class="item-img">
+                            <div class="item-img item-img--territory" data-id="${Place.territoryID}">
                             <img
                                 src="${Place.image}"
                                 alt=""
@@ -148,6 +148,14 @@ function renderTerritory() {
                 </div>
             `;
             $(".regions-in-the-territory").html(Territorys);
+
+            let groupBtnRegion = document.querySelectorAll('.item-img--territory');
+            groupBtnRegion.forEach(btn => {
+                $(btn).click(() => {
+                    let territoryID = $(btn).data().id;
+                    window.location = `/territory.html?territoryID=${territoryID}`;
+                });
+            });
         });
     }
   });

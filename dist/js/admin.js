@@ -107,6 +107,17 @@ async function deleteTerritory(id) {
 }
 
 // #PROVINCES:
+async function getProvinceWithNameLike(name) {
+  let result = await fetch("http://localhost:8000/api/getProvinceWithNameLike", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ nameSearching: name }),
+  }).then((data) => data.json());
+  return result;
+};
+
 async function getProvinceByID(id) {
     let province = await fetch("http://localhost:8000/api/getProvinceByID", {
         method: "POST",
@@ -159,6 +170,17 @@ async function deleteProvince(id) {
 }
 
 // #PLACE:
+async function getPlaceWithNameLike(name) {
+  let result = await fetch("http://localhost:8000/api/getPlaceWithNameLike", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ nameSearching: name }),
+  }).then((data) => data.json());
+  return result;
+};
+
 async function getPlaceByID(id) {
     let place = await fetch("http://localhost:8000/api/getPlaceByID", {
         method: "POST",
@@ -1371,7 +1393,7 @@ function labelInputFocus() {
   });
 }
 
-// #Event Delete Event:
+// #Event Delete:
 function addEventForButtonDelete() {
   let groupButton = document.querySelectorAll("#btnDelete");
   groupButton.forEach(btn => {
@@ -1419,6 +1441,103 @@ function addEventForButtonDelete() {
       }
     });
   });
+};
+
+// #Event Search:
+function addEventForButtonSearch(category) {
+  if (category == "province") {
+    $('#btnSearch').click(() => {
+      let searchVal = $('#inputProvince').val();
+      getProvinceWithNameLike(searchVal).then(result => {
+        if (!result.success) {
+          $(".value-table").hide();
+          $(".error-empty").show();
+        } else {
+          $(".error-empty").hide();
+          $(".value-table").show();
+          let Provinces = ``;
+          for (const [index, province] of Object.entries(result.data)) {
+            getRegionByID(province.regionID).then((dataRegion) => {
+              let regionName = dataRegion.data.name;
+              getTerritoryByID(province.territoryID).then((dataTerritory) => {
+                let territoryName = dataTerritory.data.name;
+                Provinces += `
+                                  <tr>
+                                      <td class="image-name">
+                                          <div class="group-content">
+                                              <img src="${province.image}" alt="">
+                                              <span>${province.name}</span>
+                                          </div>
+                                      </td>
+                                      <td>${regionName}</td>
+                                      <td>${territoryName}</td>
+                                      <td class="actions">
+                                          <div class="action-buttons">
+                                              <span id="btnEdit" data-category="province" data-id="${province._id}">Sửa</span>
+                                              <span id="btnDetails" data-category="province" data-id="${province._id}">Chi tiết</span>
+                                              <span id="btnDelete" data-category="province" data-id="${province._id}">Xóa</span>
+                                          </div>
+                                      </td>
+                                  </tr>
+                              `;
+                $(".value-table").html(Provinces);
+                addEventForButtonEdit();
+                addEventForButtonDelete();
+              });
+            });
+          };
+        };
+      });
+    });
+  } else if (category == "place") {
+    $('#btnSearch').click(() => {
+      let searchVal = $('#inputPlace').val();
+      getPlaceWithNameLike(searchVal).then(result => {
+        if (!result.success) {
+          $(".value-table").hide();
+          $(".error-empty").show();
+        } else {
+          $(".error-empty").hide();
+          $(".value-table").show();
+          let Places = ``;
+          for (const [index, place] of Object.entries(result.data)) {
+            getRegionByID(place.regionID).then((dataRegion) => {
+              let regionName = dataRegion.data.name;
+              getTerritoryByID(place.territoryID).then((dataTerritory) => {
+                let territoryName = dataTerritory.data.name;
+                getProvinceByID(place.provinceID).then((dataProvince) => {
+                  let provinceName = dataProvince.data.name;
+                  Places += `
+                    <tr>
+                        <td class="image-name">
+                        <div class="group-content">
+                            <img src="${place.image}" alt="">
+                            <span>${place.name}</span>
+                        </div>
+                        </td>
+                        <td>${regionName}</td>
+                        <td>${territoryName}</td>
+                        <td>${provinceName}</td>
+                        <td class="actions">
+                            <div class="action-buttons">
+                                <span id="btnEdit" data-category="place" data-id="${place._id}">Sửa</span>
+                                <span id="btnDetails" data-category="place" data-id="${place._id}">Chi tiết</span>
+                                <span id="btnDelete" data-category="place" data-id="${place._id}">Xóa</span>
+                            </div>
+                        </td>
+                    </tr>
+                  `;
+                  $(".value-table").html(Places);
+                  addEventForButtonEdit();
+                  addEventForButtonDelete();
+                });
+              });
+            });
+          };
+        };
+      });
+    });
+  };
 };
 
 // #OPTION BOX EVENT:
@@ -1629,7 +1748,7 @@ function renderRightContent(category) {
       $(".right-content").html(rightContent);
       addEventForButtonAddNew();
       if (data.length > 0) {
-        $(".error-empty").remove();
+        $(".error-empty").hide();
         let Regions = ``;
         for (const [index, region] of Object.entries(data)) {
           Regions += `
@@ -1686,10 +1805,11 @@ function renderRightContent(category) {
                 </div>
             `;
       $(".right-content").html(rightContent);
+
       addEventForButtonAddNew();
 
       if (data.length > 0) {
-        $(".error-empty").remove();
+        $(".error-empty").hide();
         let Territorys = ``;
         for (const [index, territory] of Object.entries(data)) {
           getRegionByID(territory.regionID).then((dataRegion) => {
@@ -1732,11 +1852,20 @@ function renderRightContent(category) {
                         <span class="title">Tỉnh Thành</span>
                         <form>
                             <input type="text" id="inputProvince" placeholder="Tìm kiếm...">
-                            <label for="inputProvince"><i class="fa-solid fa-magnifying-glass"></i></label>
+                            <label for="inputProvince" id="btnSearch"><i class="fa-solid fa-magnifying-glass"></i></label>
                             <div class="group-button">
                                 <span class="button" id="btnAddNew" data-category="province"><i class="fa-solid fa-plus"></i> Thêm</span>
                             </div>
                         </form>
+                    </div>
+                </div>
+
+                <div class="error-empty">
+                    <div class="box">
+                        <div class="img">
+                            <img src="https://cdn.discordapp.com/attachments/1085804453246009374/1098783512649285642/error_empty.png" alt="">
+                        </div>
+                        <span class="error-text">Error Empty!</span>
                     </div>
                 </div>
 
@@ -1756,10 +1885,12 @@ function renderRightContent(category) {
                 </div>
             `;
       $(".right-content").html(rightContent);
+
       addEventForButtonAddNew();
+      addEventForButtonSearch('province');
 
       if (data.length > 0) {
-        $(".error-empty").remove();
+        $(".error-empty").hide();
         let Provinces = ``;
         for (const [index, province] of Object.entries(data)) {
           getRegionByID(province.regionID).then((dataRegion) => {
@@ -1802,11 +1933,20 @@ function renderRightContent(category) {
                         <span class="title">Địa Điểm</span>
                         <form>
                             <input type="text" id="inputPlace" placeholder="Tìm kiếm...">
-                            <label for="inputPlace"><i class="fa-solid fa-magnifying-glass"></i></label>
+                            <label for="inputPlace" id="btnSearch"><i class="fa-solid fa-magnifying-glass"></i></label>
                             <div class="group-button">
                                 <span class="button" id="btnAddNew" data-category="place"><i class="fa-solid fa-plus"></i> Thêm</span>
                             </div>
                         </form>
+                    </div>
+                </div>
+
+                <div class="error-empty">
+                    <div class="box">
+                        <div class="img">
+                            <img src="https://cdn.discordapp.com/attachments/1085804453246009374/1098783512649285642/error_empty.png" alt="">
+                        </div>
+                        <span class="error-text">Error Empty!</span>
                     </div>
                 </div>
 
@@ -1822,15 +1962,17 @@ function renderRightContent(category) {
                     </table>
 
                     <div class="place-list">
-                        <table class="value-table"></table>
+                      <table class="value-table"></table>
                     </div>
                 </div>
-            `;
+      `;
       $(".right-content").html(rightContent);
-      addEventForButtonAddNew();
 
+      addEventForButtonAddNew();
+      addEventForButtonSearch('place');
+      
       if (data.length > 0) {
-        $(".error-empty").remove();
+        $(".error-empty").hide();
         let Places = ``;
         for (const [index, place] of Object.entries(data)) {
           getRegionByID(place.regionID).then((dataRegion) => {
@@ -1868,18 +2010,11 @@ function renderRightContent(category) {
         }
       }
     });
-  } else if (category == "service") {
-    let rightContent = `
-        
-        `;
-    $(".right-content").html(rightContent);
-    addEventForButtonAddNew();
   } else if (category == "photo") {
     let rightContent = `
         
         `;
     $(".right-content").html(rightContent);
-    addEventForButtonAddNew();
   }
 }
 
@@ -1896,6 +2031,6 @@ function renderRightContent(category) {
 $(document).ready(function () {
     setupOptionBoxEvent();
     setEventButtonLogout();
-    renderRightContent('place');
+    renderRightContent('statistics');
     labelInputFocus();
 });

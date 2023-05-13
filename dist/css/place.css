@@ -434,6 +434,7 @@ body {
           justify-content: space-between;
   width: 100%;
   height: 120px;
+  background-color: #f4f4f4;
 }
 
 .no1-page .container .right-content .group-item .items .item .item-box .img {
@@ -446,12 +447,40 @@ body {
 
 .no1-page .container .right-content .group-item .items .item .item-box .img img {
   display: block;
+  width: 100%;
+  height: 100%;
+  -o-object-fit: cover;
+     object-fit: cover;
+}
+
+.no1-page .container .right-content .group-item .items .item .item-box .img-service {
+  cursor: pointer;
+  position: relative;
+  width: 30%;
+  height: 100%;
+  overflow: hidden;
+}
+
+.no1-page .container .right-content .group-item .items .item .item-box .img-service.ivivu {
+  background-color: #00818a;
+}
+
+.no1-page .container .right-content .group-item .items .item .item-box .img-service a {
+  position: relative;
+  display: block;
+  height: 100%;
+}
+
+.no1-page .container .right-content .group-item .items .item .item-box .img-service a img {
   position: absolute;
   top: 50%;
   left: 50%;
   -webkit-transform: translate(-50%, -50%);
           transform: translate(-50%, -50%);
-  width: 120%;
+  display: block;
+  width: 75%;
+  -o-object-fit: cover;
+     object-fit: cover;
 }
 
 .no1-page .container .right-content .group-item .items .item .item-box .group-details {
@@ -485,7 +514,7 @@ body {
 .no1-page .container .right-content .group-item .items .item .item-box .group-details span.details {
   display: block;
   width: 100%;
-  height: 55%;
+  height: 57%;
   overflow: hidden;
   margin-top: 5px;
   text-overflow: ellipsis;

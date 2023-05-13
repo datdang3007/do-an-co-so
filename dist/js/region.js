@@ -2,6 +2,8 @@
 var currentPage = 1;
 var limit = 15;
 var maxPage = 0;
+var timeoutInputId;
+var count = 0;
 
 //----------------------------------------//
 //----------- ### AOS LIBRARY ### --------//
@@ -62,7 +64,16 @@ async function getAllPlaceForListTerritory(list) {
     return result;
 }
 
-getProvinceByRegionID
+async function getProvinceWithNameLikeInRegionID(name, id) {
+    let result = await fetch("http://localhost:8000/api/getProvinceWithNameLikeInRegionID", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ nameSearching: name, ID: id }),
+    }).then((data) => data.json());
+    return result;
+};
 
 //----------------------------------------//
 //----------- ### FUNCTION ### -----------//
@@ -131,7 +142,7 @@ function renderTerritory(id) {
                         Territory += `
                             <div class="item">
                                 <div class="item-box">
-                                    <div class="item-img">
+                                    <div class="item-img item-img--territory" data-id="${Place.territoryID}">
                                     <img
                                         src="${Place.image}"
                                         alt=""
@@ -145,10 +156,26 @@ function renderTerritory(id) {
                     }
                     $('.items-territory').html(Territory);
                 };
+                let groupBtnRegion = document.querySelectorAll('.item-img--territory');
+                groupBtnRegion.forEach(btn => {
+                    $(btn).click(() => {
+                        let territoryID = $(btn).data().id;
+                        window.location = `/territory.html?territoryID=${territoryID}`;
+                    });
+                });
             });
         };
     });
 };
+
+function evenClickProvince(group) {
+    group.forEach(ele => {
+        $(ele).click(() => {
+            let ID = $(ele).data().id;
+            window.location = `/province.html?provinceID=${ID}`;
+        });
+    })
+}
 
 function renderProvince(id) {
     let Provinces = ``
@@ -162,11 +189,11 @@ function renderProvince(id) {
                     Provinces += `
                         <div class="item">
                             <div class="item-box">
-                                <div class="img">
+                                <div class="img item-img--province" data-id="${Province._id}">
                                     <img src="${Province.image}" alt="">
                                 </div>
                                 <div class="group-text">
-                                    <span class="name-of-city">${Province.name}</span>
+                                    <span class="name-of-city" data-id="${Province._id}">${Province.name}</span>
                                 </div>
                             </div>
                         </div>
@@ -174,6 +201,12 @@ function renderProvince(id) {
                 };
             };
             $('.items-province').html(Provinces);
+
+            var groupItemImageProvince = document.querySelectorAll('.item-img--province');
+            evenClickProvince(groupItemImageProvince);
+
+            var groupItemNameProvince = document.querySelectorAll('.name-of-city');
+            evenClickProvince(groupItemNameProvince);
         }
     });
 }
@@ -201,6 +234,43 @@ function setupButtonNextAndBackPage(id) {
     });
 };
 
+function addEventForButtonSearch(id) {
+    $('#btnSearch').click(() => {
+        let searchVal = $('#inputSearchCity').val();
+        if (searchVal == "") {
+            $('#pagination').show();
+            renderPageNumber(id);
+            return;
+        }
+
+        $('#pagination').hide();
+        getProvinceWithNameLikeInRegionID(searchVal, id).then(result => {
+            let Provinces = ``
+            for (const [index, Province] of Object.entries(result.data)) {
+                Provinces += `
+                    <div class="item">
+                        <div class="item-box">
+                            <div class="img item-img--province" data-id="${Province._id}">
+                                <img src="${Province.image}" alt="">
+                            </div>
+                            <div class="group-text">
+                                <span class="name-of-city" data-id="${Province._id}">${Province.name}</span>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            };
+            $('.items-province').html(Provinces);
+
+            var groupItemImageProvince = document.querySelectorAll('.item-img--province');
+            evenClickProvince(groupItemImageProvince);
+
+            var groupItemNameProvince = document.querySelectorAll('.name-of-city');
+            evenClickProvince(groupItemNameProvince);
+        });
+    });
+}
+
 function renderPage(regionID) {
     // HEADER:
     let base = `
@@ -217,7 +287,6 @@ function renderPage(regionID) {
                         <div class="header">
                             <ul class="menu-options">
                                 <li><a href="home.html">Trang Chủ</a></li>
-                                <li><a href="territory.html">Vùng</a></li>
                                 <li><a href="#">Bài Viết</a></li>
                             </ul>
                             <form class="searching-form">
@@ -279,7 +348,7 @@ function renderPage(regionID) {
                         </p>
                         <div class="group-input">
                             <input type="text" id="inputSearchCity" placeholder="Tìm kiếm...">
-                            <label for="inputSearchCity"><i class="fa-solid fa-magnifying-glass"></i></label>
+                            <label for="inputSearchCity" id="btnSearch"><i class="fa-solid fa-magnifying-glass"></i></label>
                         </div>
                     </div>
 
@@ -363,7 +432,8 @@ function renderPage(regionID) {
     renderRegion(regionID);
     renderTerritory(regionID);
     setupButtonNextAndBackPage(regionID);
-    renderPageNumber(regionID)
+    renderPageNumber(regionID);
+    addEventForButtonSearch(regionID);
 }
 
 function getMaxPage(id) {
