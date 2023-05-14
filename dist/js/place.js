@@ -22,6 +22,39 @@ async function getPlaces() {
   return allPlaces.data;
 }
 
+async function getRegionByID(id) {
+    let region = await fetch("http://localhost:8000/api/getRegionByID", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+        },
+    body: JSON.stringify({ ID: id }),
+  }).then((data) => data.json());
+  return region;
+}
+
+async function getTerritoryByID(id) {
+  let territory = await fetch("http://localhost:8000/api/getTerritoryByID", {
+      method: "POST",
+      headers: {
+          "Content-Type": "application/json",
+      },
+  body: JSON.stringify({ ID: id }),
+}).then((data) => data.json());
+return territory;
+}
+
+async function getProvinceByID(id) {
+    let province = await fetch("http://localhost:8000/api/getProvinceByID", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+        },
+    body: JSON.stringify({ ID: id }),
+  }).then((data) => data.json());
+  return province;
+}
+
 //----------------------------------------//
 //----------- ### FUNCTION ### -----------//
 //----------------------------------------//
@@ -70,6 +103,9 @@ function renderPlace(id) {
                     alt=""
                 />
             `;
+            let regionID = data.regionID;
+            let territoryID = data.territoryID;
+            let provinceID = data.provinceID;
 
             let contentPlus = ``;
             for (const [index, content] of Object.entries(data.content)) {
@@ -96,6 +132,30 @@ function renderPlace(id) {
             $('.content--overview').html(overview);
             $('.content-box--plus').html(contentPlus);
             $('.comment-list').html(commentList);
+
+            getRegionByID(regionID).then(dataRegion => {
+                if (dataRegion.success) {
+                    let data = dataRegion.data
+                    $('#direction_region').html(data.name);
+                    $('#direction_region').attr("href", `/region.html?regionID=${regionID}`);
+                };
+            });
+
+            getTerritoryByID(territoryID).then(dataTerritory => {
+                if (dataTerritory.success) {
+                    let data = dataTerritory.data
+                    $('#direction_territory').html(data.name);
+                    $('#direction_territory').attr("href", `/territory.html?territoryID=${territoryID}`);
+                };
+            });
+
+            getProvinceByID(provinceID).then(dataProvince => {
+                if (dataProvince.success) {
+                    let data = dataProvince.data
+                    $('#direction_province').html(data.name);
+                    $('#direction_province').attr("href", `/province.html?provinceID=${provinceID}`);
+                };
+            });
         };
     });
 };
@@ -300,6 +360,13 @@ function renderPage(id) {
         <div class="no1-page">
             <div class="container">
                 <div class="left-content">
+                    <div class="directory">
+                        <i class="fa-solid fa-house"></i>
+                        <a href="home.html">Trang chủ</a> > 
+                        <a id="direction_region" href="#">Miền</a> >
+                        <a id="direction_territory" href="#">Vùng</a> >
+                        <a id="direction_province" href="#">Tỉnh Thành</a>
+                    </div>
                     <span class="header-city-name"></span>
                     <div class="image image--place"></div>
                     <div class="content-box">

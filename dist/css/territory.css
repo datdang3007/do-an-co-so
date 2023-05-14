@@ -188,6 +188,37 @@ section {
   color: #4169e1;
 }
 
+.no1-page .content .container .header .searching-form {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+}
+
+.no1-page .content .container .header .searching-form input {
+  width: 300px;
+  font-size: 16px;
+  padding: 6px 15px;
+  padding-right: 0px;
+  border: 0px solid transparent;
+  border-top-left-radius: 20px;
+  border-bottom-left-radius: 20px;
+}
+
+.no1-page .content .container .header .searching-form label {
+  cursor: pointer;
+  line-height: 30px;
+  padding: 0px 10px;
+  background-color: #fff;
+  border-top-right-radius: 20px;
+  border-bottom-right-radius: 20px;
+}
+
 .no1-page .content .container .header .group-login-language {
   display: -webkit-box;
   display: -ms-flexbox;

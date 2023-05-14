@@ -174,7 +174,7 @@ section {
   padding: 0 20px;
 }
 
-.no1-page .content .container .header ul.menu-options li a {
+.no1-page .content .container .header ul.menu-options li span, .no1-page .content .container .header ul.menu-options li a {
   cursor: pointer;
   display: block;
   font-size: 18px;
@@ -184,7 +184,7 @@ section {
   transition: 0.3s;
 }
 
-.no1-page .content .container .header ul.menu-options li a:hover {
+.no1-page .content .container .header ul.menu-options li span:hover, .no1-page .content .container .header ul.menu-options li a:hover {
   color: #4169e1;
 }
 

@@ -214,6 +214,14 @@ function renderPosts() {
   $(".top-travel-stories").html(Posts);
 }
 
+function addEventScrollToRegion() {
+    $(document).scrollTop(1938);
+}
+
+function addEventScrollToTerritory() {
+    $(document).scrollTop(2730);
+}
+
 function renderPage() {
   // HEADER:
   let base = `
@@ -229,9 +237,9 @@ function renderPage() {
                 <div class="container">
                 <div class="header">
                     <ul class="menu-options">
-                    <li><a href="region.html">Miền</a></li>
-                    <li><a href="territory.html">Vùng</a></li>
-                    <li><a href="#">Bài Viết</a></li>
+                        <li><span onclick="addEventScrollToRegion()">Miền</span></li>
+                        <li><span onclick="addEventScrollToTerritory()">Vùng</span></li>
+                        <li><a href="#">Bài Viết</a></li>
                     </ul>
                     <form class="searching-form">
                         <input type="text" placeholder="Tìm kiếm...">

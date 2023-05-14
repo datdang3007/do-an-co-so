@@ -232,6 +232,48 @@ async function deletePlace(id) {
   return result.success;
 }
 
+// IMAGE:
+
+async function getImageStockByID(id) {
+  let imageList = await fetch("http://localhost:8000/api/getImageStockByID", {
+    method: "POST",
+    headers: {
+        "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ ID: id }),
+  }).then((data) => data.json());
+  return imageList;
+}
+
+async function getPlaces() {
+  let allPlaces = await fetch("http://localhost:8000/api/getPlace", {
+      method: "GET",
+  }).then((data) => data.json());
+  return allPlaces.data;
+}
+
+async function uploadImage(id, image) {
+  let result = await fetch("http://localhost:8000/api/uploadImage", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ imageID: id, imageURL: image }),
+  }).then((data) => data.json());
+  return result.success;
+}
+
+async function deleteImage(id) {
+  let result = await fetch("http://localhost:8000/api/deleteImage", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ ID: id }),
+  }).then((data) => data.json());
+  return result.success;
+}
+
 //----------------------------------------//
 //----------- ### FUNCTION ### -----------//
 //----------------------------------------//
@@ -1570,6 +1612,171 @@ function setEventButtonLogout() {
   });
 };
 
+// #IMAGE EVENT:
+function eventUploadImage() {
+  const groupImageInput = document.querySelectorAll('#image-input');
+  groupImageInput.forEach(ele => {
+    $(ele).change(function() {
+      let ID = $(ele).data().id;
+      let input = $(this)[0];
+      if (input.files && input.files.length > 0) {
+        $('.images').empty();
+        for (let i = 0; i < input.files.length; i++) {
+          let reader = new FileReader();
+          reader.onload = function (e) {
+            let imageUrl = e.target.result;
+            let tempArray = [imageUrl];
+            uploadImage(ID, tempArray)
+          };
+          reader.readAsDataURL(input.files[i]);
+          renderImage();
+        }
+      }
+    });
+  })
+}
+
+function eventSelectImg(ID, bool) {
+  const groupImage = document.querySelectorAll('.item-img');
+  groupImage.forEach(ele => {
+    const parentID = $(ele).parent().data().id;
+    if (parentID != ID) return;
+
+    if (!bool) {
+      $(ele).off('click');
+      return
+    }
+
+    $(ele).click(() => {
+      const isSelect = $(ele).hasClass('select');
+      if (isSelect) {
+        $(ele).removeClass('select');
+        return
+      }
+      $(ele).addClass('select');
+    })
+  });
+}
+
+function removeAllSelectImage(ID) {
+  const groupImage = document.querySelectorAll('.item-img');
+  groupImage.forEach(ele => {
+    const parentID = $(ele).parent().data().id;
+    if (parentID != ID) return;
+
+    const isSelect = $(ele).hasClass('select');
+    if (isSelect) {
+      $(ele).removeClass('select');
+      return
+    }
+  });
+}
+
+function setEventForButtonDeleteImage(id, btn, bool) {
+  if (!bool) {
+    btn.off('click');
+    return
+  }
+
+  btn.click(() => {
+    const groupImage = document.querySelectorAll('.item-img');
+    groupImage.forEach(ele => {
+      const parentID = $(ele).parent().data().id;
+      if (parentID != id) return;
+  
+      const isSelect = $(ele).hasClass('select');
+      if (isSelect) {
+        let deleteID = $(ele).data().id;
+        deleteImage(deleteID);
+        btn.off('click');
+        return
+      }
+    });
+    renderImage();
+  });
+};
+
+function eventCheckBoxSelect() {
+  const groupcheckBoxSelect = document.querySelectorAll('#checkBoxSelect');
+  groupcheckBoxSelect.forEach(ele => {
+    $(ele).click(() => {
+      const imageStock = $(ele).parent().parent().parent().find('.img--image_stock');
+      const btnDelete = $(ele).parent().parent().parent().find('#btnDeleteImage');
+      const isChecked = $(ele).is(':checked');
+
+      if (!isChecked) {
+        btnDelete.hide();
+        imageStock.removeClass('option-select');
+        setEventForButtonDeleteImage(imageStock.data().id, btnDelete, false);
+        eventSelectImg(imageStock.data().id, false);
+        removeAllSelectImage(imageStock.data().id);
+        return;
+      }
+
+      btnDelete.show();
+      imageStock.addClass('option-select');
+      setEventForButtonDeleteImage(imageStock.data().id, btnDelete, true);
+      eventSelectImg(imageStock.data().id, true);
+    });
+  });
+}
+
+function renderImageStock() {
+  const groupImageStock = document.querySelectorAll('.img--image_stock');
+  groupImageStock.forEach(ele => {
+    const placeID = $(ele).data().id
+    getPlaceByID(placeID).then(dataPlace => {
+      if (dataPlace.success) {
+        let data = dataPlace.data;
+        let imageID = data.imageID;
+        getImageStockByID(imageID).then(dataImage => {
+          if (dataImage.success) {
+            let image = ``;
+            let imageStock = dataImage.data;
+            for (const [index, img] of Object.entries(imageStock)) {
+              image += `
+                <div class="item-img" data-id="${img._id}">
+                  <img src="${img.imageURL}" alt="">
+                  <i class="fa-solid fa-check"></i>
+                </div>
+              `;
+            };
+            $(ele).html(image);
+          }
+        })
+      }
+    })
+  })
+}
+
+function renderImage() {
+  let base = ``;
+  const dataPlaces = getPlaces();
+  dataPlaces.then((data) => {
+    if (data.length > 0) {
+      for (const [index, place] of Object.entries(data)) {
+        base += `
+          <div class="item">
+            <div class="group-header">
+                <div class="place-name">${place.name}</div>
+                <div class="group-input">
+                  <input id="checkBoxSelect" type="checkbox">
+                  <span id="btnDeleteImage">xóa</span>
+                  <input type="file" id="image-input" data-id="${place.imageID}" multiple>
+                </div>
+            </div>
+            <div class="images img--image_stock" data-id="${place._id}"></div>
+          </div>
+        `
+      }
+      $('.items--image').html(base);
+      eventUploadImage();
+      eventCheckBoxSelect();
+      renderImageStock();
+    }
+  });
+}
+
 // #RIGHT CONTENT EVENT:
 
 function renderRightContent(category) {
@@ -2012,9 +2219,24 @@ function renderRightContent(category) {
     });
   } else if (category == "photo") {
     let rightContent = `
-        
-        `;
+      <div class="header">
+        <div class="group-text-and-input">
+            <span class="title">Kho Ảnh</span>
+            <form>
+                <input type="text" id="inputPlace" placeholder="Tìm kiếm...">
+                <label for="inputPlace" id="btnSearch"><i class="fa-solid fa-magnifying-glass"></i></label>
+            </form>
+        </div>
+      </div>
+
+      <div class="Photos">
+        <div class="items items--image"></div>
+      </div>
+    `;
     $(".right-content").html(rightContent);
+
+    // RENDER:
+    renderImage();
   }
 }
 

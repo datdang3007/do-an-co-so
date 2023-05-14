@@ -1059,6 +1059,124 @@ body {
   color: #fff;
 }
 
+.container .right-content .Photos {
+  width: 100%;
+  padding: 20px 30px 30px;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+}
+
+.container .right-content .Photos .items .item {
+  background-color: #f4f4f4;
+  padding: 20px 30px;
+  margin-bottom: 30px;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+}
+
+.container .right-content .Photos .items .item:last-child {
+  margin-bottom: 0px;
+}
+
+.container .right-content .Photos .items .item .group-header {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  width: 100%;
+}
+
+.container .right-content .Photos .items .item .group-header .place-name {
+  display: block;
+  font-size: 25px;
+  font-weight: bold;
+  color: #434349;
+}
+
+.container .right-content .Photos .items .item .group-header .group-input {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.container .right-content .Photos .items .item .group-header .group-input #btnDeleteImage {
+  display: none;
+  cursor: pointer;
+  background-color: #f33044;
+  color: #fff;
+  padding: 0 12px;
+  height: 21px;
+  border-radius: 3px;
+  margin-right: 10px;
+}
+
+.container .right-content .Photos .items .item .group-header .group-input #checkBoxSelect {
+  width: 21px;
+  height: 21px;
+  margin-right: 10px;
+}
+
+.container .right-content .Photos .items .item .images {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+  width: 100%;
+  margin-top: 20px;
+}
+
+.container .right-content .Photos .items .item .images.option-select .item-img img {
+  cursor: pointer;
+}
+
+.container .right-content .Photos .items .item .images .item-img {
+  position: relative;
+  width: calc(100% / 5);
+  height: 240px;
+  padding: 10px;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+}
+
+.container .right-content .Photos .items .item .images .item-img.select img {
+  border: 3px solid #4169e1;
+}
+
+.container .right-content .Photos .items .item .images .item-img.select i {
+  display: block;
+}
+
+.container .right-content .Photos .items .item .images .item-img img {
+  cursor: -webkit-zoom-in;
+  cursor: zoom-in;
+  display: block;
+  width: 100%;
+  height: 100%;
+  -o-object-fit: cover;
+     object-fit: cover;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+}
+
+.container .right-content .Photos .items .item .images .item-img i {
+  display: none;
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  color: #4169e1;
+  border: 1px solid black;
+  background-color: #fff;
+}
+
 .container .box-plus-view {
   display: none;
   position: absolute;

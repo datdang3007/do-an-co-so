@@ -38,6 +38,28 @@ body {
             }
         }
     }
+    .searching-form {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        input {
+            width: 300px;
+            font-size: 16px;
+            padding: 6px 15px;
+            padding-right: 0px;
+            border: 0px solid transparent;
+            border-top-left-radius: 20px;
+            border-bottom-left-radius: 20px;
+        }
+        label {
+            cursor: pointer;
+            line-height: 30px;
+            padding: 0px 10px;
+            background-color: #fff;
+            border-top-right-radius: 20px;
+            border-bottom-right-radius: 20px;
+        }
+    }
     .group-login-language {
         display: flex;
         align-items: center;
@@ -89,6 +111,18 @@ body {
         justify-content: space-between;
         .left-content {
             width: 62.5%;
+            .directory {
+                display: block;
+                color: #aaa;
+                margin-bottom: 10px;
+                a {
+                    cursor: pointer;
+                    color: #aaa;
+                    &:hover {
+                        color: #4169e1;
+                    }
+                }
+            }
             .header-city-name {
                 display: block;
                 font-size: 40px;

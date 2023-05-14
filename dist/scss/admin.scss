@@ -781,6 +781,98 @@ body {
                 }
             }
         }
+        .Photos {
+            width: 100%;
+            padding: 20px 30px 30px;
+            box-sizing: border-box;
+            .items {
+                .item {
+                    background-color: #f4f4f4;
+                    padding: 20px 30px;
+                    margin-bottom: 30px;
+                    box-sizing: border-box;
+                    &:last-child {
+                        margin-bottom: 0px;
+                    }
+                    .group-header {
+                        display: flex;
+                        align-items: center;
+                        justify-content: space-between;
+                        width: 100%;
+                        .place-name {
+                            display: block;
+                            font-size: 25px;
+                            font-weight: bold;
+                            color: #434349;
+                        }
+                        .group-input {
+                            display: flex;
+                            align-items: center;
+                            #btnDeleteImage {
+                                display: none;
+                                cursor: pointer;
+                                background-color: #f33044;
+                                color: #fff;
+                                padding: 0 12px;
+                                height: 21px;
+                                border-radius: 3px;
+                                margin-right: 10px;
+                            }
+                            #checkBoxSelect {
+                                width: 21px;
+                                height: 21px;
+                                margin-right: 10px;
+                            }
+                        }
+                    }
+                    .images {
+                        display: flex;
+                        flex-wrap: wrap;
+                        width: 100%;
+                        margin-top: 20px;
+                        &.option-select {
+                            .item-img {
+                                img {
+                                    cursor: pointer;
+                                }
+                            }
+                        }
+                        .item-img {
+                            position: relative;
+                            width: calc(100% / 5);
+                            height: 240px;
+                            padding: 10px;
+                            box-sizing: border-box;
+                            &.select {
+                                img {
+                                    border: 3px solid #4169e1;
+                                }
+                                i {
+                                    display: block;
+                                }
+                            }
+                            img {
+                                cursor: zoom-in;
+                                display: block;
+                                width: 100%;
+                                height: 100%;
+                                object-fit: cover;
+                                box-sizing: border-box;
+                            }   
+                            i {
+                                display: none;
+                                position: absolute;
+                                top: 15px;
+                                right: 15px;
+                                color: #4169e1;
+                                border: 1px solid black;
+                                background-color: #fff;
+                            }                 
+                        }
+                    }
+                }
+            }
+        }
     }
     .box-plus-view {
         display: none;

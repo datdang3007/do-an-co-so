@@ -145,16 +145,19 @@ function setupButtonNextAndBackPage(id) {
 
 function renderTerritory(id) {
     getTerritoryByID(id).then((dataRegion) => {
-        let name = dataRegion.data.name;
-        let slogan = dataRegion.data.slogan;
-        let image = dataRegion.data.image;
-        let overview = dataRegion.data.overview;
+        let data = dataRegion.data
+        let name = data.name;
+        let slogan = data.slogan;
+        let image = data.image;
+        let overview = data.overview;
+        let regionID = data.regionID
 
         $('.h1-text-shadow').html(name);
         $('.h1-text-title').html(name);
         $('.slogan').html(`<p>${slogan}</p>`);
         $('.no1-page').css('background-image', `url(${image})`);
         $('.h1-text-title').css(`background-image`, `url(${image})`);
+        $('#direction_region').attr("href", `/region.html?regionID=${regionID}`);
 
         let No2Page = `
             <div class="container">
@@ -219,9 +222,13 @@ function renderPage(territoryID) {
                         <div class="header">
                             <ul class="menu-options">
                                 <li><a href="home.html">Trang Chủ</a></li>
-                                <li><a href="region.html">Miền</a></li>
+                                <li><a id="direction_region">Miền</a></li>
                                 <li><a href="#">Bài Viết</a></li>
                             </ul>
+                            <form class="searching-form">
+                                <input type="text" placeholder="Tìm Kiếm...">
+                                <label for=""><i class="fa-solid fa-magnifying-glass"></i></label>
+                            </form>
                             <div class="group-login-language">
                                 <div class="group-login-register">
                                     <a href="sign_up.html" class="btn" id="btnRegister">Đăng Ký</a>

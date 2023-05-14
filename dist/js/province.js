@@ -29,6 +29,28 @@ async function getAllPlaceByProvinceID(id) {
     return allPlaceInProvince;
 }
 
+async function getRegionByID(id) {
+    let region = await fetch("http://localhost:8000/api/getRegionByID", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+        },
+    body: JSON.stringify({ ID: id }),
+  }).then((data) => data.json());
+  return region;
+}
+
+async function getTerritoryByID(id) {
+  let territory = await fetch("http://localhost:8000/api/getTerritoryByID", {
+      method: "POST",
+      headers: {
+          "Content-Type": "application/json",
+      },
+  body: JSON.stringify({ ID: id }),
+}).then((data) => data.json());
+return territory;
+}
+
 //----------------------------------------//
 //----------- ### FUNCTION ### -----------//
 //----------------------------------------//
@@ -236,9 +258,28 @@ function renderProvince(id) {
                     alt=""
                 />
             `;
+            let regionID = data.regionID;
+            let territoryID = data.territoryID;
+            
             $('.header-city-name').html(Name);
             $('.image--province').html(image);
             $('.content--overview').html(Overview);
+
+            getRegionByID(regionID).then(dataRegion => {
+                if (dataRegion.success) {
+                    let data = dataRegion.data
+                    $('#direction_region').html(data.name);
+                    $('#direction_region').attr("href", `/region.html?regionID=${regionID}`);
+                }
+            })
+
+            getTerritoryByID(territoryID).then(dataTerritory => {
+                if (dataTerritory.success) {
+                    let data = dataTerritory.data
+                    $('#direction_territory').html(data.name);
+                    $('#direction_territory').attr("href", `/territory.html?territoryID=${territoryID}`);
+                }
+            })
         };
     });
 };
@@ -255,10 +296,12 @@ function renderPage(id) {
             <div class="container">
                 <ul class="menu-options">
                     <li><a href="home.html">Trang Chủ</a></li>
-                    <li><a href="region.html">Miền</a></li>
-                    <li><a href="territory.html">Vùng</a></li>
                     <li><a href="#">Bài Viết</a></li>
                 </ul>
+                <form class="searching-form">
+                    <input type="text" placeholder="Tìm Kiếm...">
+                    <label for=""><i class="fa-solid fa-magnifying-glass"></i></label>
+                </form>
                 <div class="group-login-language">
                     <div class="group-login-register">
                         <a href="sign_up.html" class="btn" id="btnRegister">Đăng Ký</a>
@@ -278,6 +321,12 @@ function renderPage(id) {
         <div class="no1-page">
             <div class="container">
                 <div class="left-content">
+                    <div class="directory">
+                        <i class="fa-solid fa-house"></i>
+                        <a href="home.html">Trang chủ</a> > 
+                        <a id="direction_region" href="#">Miền</a> >
+                        <a id="direction_territory" href="#">Vùng</a>
+                    </div>
                     <span class="header-city-name"></span>
                     <div class="image image--province"></div>
                     <div class="overview">
