@@ -4,6 +4,17 @@ const placeRecommendCount = 5;
 //----------------------------------------//
 //------------- ### API ### --------------//
 //----------------------------------------//
+async function getUserByID(id) {
+    let user = await fetch("http://localhost:8000/api/getUserByID", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ ID: id }),
+    }).then((data) => data.json());
+    return user;
+}
+
 async function getPlaceByID(id) {
     let place = await fetch("http://localhost:8000/api/getPlaceByID", {
         method: "POST",
@@ -82,16 +93,16 @@ function getRandomNumberTypeInt(min, max) {
     return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
-function eventClickPlace(group) {
+function eventClickPlace(userID, group) {
     group.forEach(ele => {
         $(ele).click(() => {
             let ID = $(ele).data().id;
-            window.location = `/place.html?placeID=${ID}`;
+            window.location = `/place.html?userID=${userID}&placeID=${ID}`;
         });
     });
 };
 
-function renderPlace(id) {
+function renderPlace(userID, id) {
     getPlaceByID(id).then(dataPlace => {
         if (dataPlace.success) {
             const data = dataPlace.data;
@@ -137,7 +148,12 @@ function renderPlace(id) {
                 if (dataRegion.success) {
                     let data = dataRegion.data
                     $('#direction_region').html(data.name);
-                    $('#direction_region').attr("href", `/region.html?regionID=${regionID}`);
+
+                    if (!userID) {
+                        $('#direction_region').attr("href", `/region.html?regionID=${regionID}`);
+                    } else {
+                        $('#direction_region').attr("href", `/region.html?userID=${userID}&regionID=${regionID}`);
+                    }
                 };
             });
 
@@ -145,7 +161,12 @@ function renderPlace(id) {
                 if (dataTerritory.success) {
                     let data = dataTerritory.data
                     $('#direction_territory').html(data.name);
-                    $('#direction_territory').attr("href", `/territory.html?territoryID=${territoryID}`);
+
+                    if (!userID) {
+                        $('#direction_territory').attr("href", `/territory.html?territoryID=${territoryID}`);
+                    } else {
+                        $('#direction_territory').attr("href", `/territory.html?userID=${userID}&territoryID=${territoryID}`);
+                    }
                 };
             });
 
@@ -153,14 +174,26 @@ function renderPlace(id) {
                 if (dataProvince.success) {
                     let data = dataProvince.data
                     $('#direction_province').html(data.name);
-                    $('#direction_province').attr("href", `/province.html?provinceID=${provinceID}`);
+
+                    if (!userID) {
+                        $('#direction_province').attr("href", `/province.html?provinceID=${provinceID}`);
+                    } else {
+                        $('#direction_province').attr("href", `/province.html?userID=${userID}&provinceID=${provinceID}`);
+                    }
                 };
             });
+
+            if (userID) {
+                const groupButtonDirectionHome = document.querySelectorAll('#btnDirectionHome');
+                groupButtonDirectionHome.forEach(btn => {
+                    $(btn).attr("href", `/home.html?userID=${userID}`);
+                });
+            };
         };
     });
 };
 
-function renderPlaceRecommend() {
+function renderPlaceRecommend(userID) {
     getPlaces().then(dataPlaces => {
         if (dataPlaces) {
             let placeRecommend = ``;
@@ -206,7 +239,7 @@ function renderPlaceRecommend() {
             $('.items--place_recommend').html(placeRecommend);
 
             const groupImagePlaceRecommend = document.querySelectorAll('.img--place_recommend');
-            eventClickPlace(groupImagePlaceRecommend);
+            eventClickPlace(userID, groupImagePlaceRecommend);
         };
     });
 
@@ -330,27 +363,79 @@ function renderImageStock(id) {
     $('.items--image_stock').html(ImageStock);
 }
 
-function renderPage(id) {
-    // HEADER:
-    let base = `
-        <div class="header">
-            <div class="container">
-                <ul class="menu-options">
-                    <li><a href="home.html">Trang Chủ</a></li>
-                    <li><a href="region.html">Miền</a></li>
-                    <li><a href="territory.html">Vùng</a></li>
-                    <li><a href="#">Bài Viết</a></li>
-                </ul>
-                <div class="group-login-language">
-                    <div class="group-login-register">
-                        <a href="sign_up.html" class="btn" id="btnRegister">Đăng Ký</a>
-                        <a href="sign_in.html" class="btn" id="btnLogin">Đăng Nhập</a>
+function addEventButtonUser() {
+    $('#userProfile').click(() => {
+        const isSelect = $('#userProfile').hasClass('select');
+
+        if (isSelect) {
+            $('#userProfile').removeClass('select');
+            $('#userOpions').hide();
+            return;
+        }
+        $('#userProfile').addClass('select');
+        $('#userOpions').show();
+    });
+}
+
+function renderProfile(userID, placeID) {
+    if (userID) {
+        getUserByID(userID).then(dataUser => {
+            if (dataUser.success) {
+                const data = dataUser.data;
+                const name = data.fist_name + " " + data.last_name;
+                let Profile = `
+                    <div class="profile" data-id="${data._id}">
+                        <span class="user-name">${name}</span>
+                        <div class="user" id="userProfile">
+                            <i class="fa-regular fa-user"></i>
+                        </div>
+                        <ul class="user-options" id="userOpions">
+                            <li><a href="profile.html">Trang Cá Nhân</a></li>
+                            <li><a href="place.html?placeID=${placeID}">Đăng Xuất</a></li>
+                        </ul>
                     </div>
                     <div class="language">
                         <i class="fa-solid fa-earth-americas"></i>
                         <span>VN</span>
                     </div>
-                </div>
+                `;
+                $('.group-login-language').html(Profile);
+
+                addEventButtonUser();
+                return;
+            };
+        });
+    };
+
+    let groupLoginAndLanguage = `
+        <div class="group-login-language">
+            <div class="group-login-register">
+                <a href="sign_up.html" class="btn" id="btnRegister">Đăng Ký</a>
+                <a href="sign_in.html" class="btn" id="btnLogin">Đăng Nhập</a>
+            </div>
+            <div class="language">
+                <i class="fa-solid fa-earth-americas"></i>
+                <span>VN</span>
+            </div>
+        </div>
+    `;
+    $('.group-login-language').html(groupLoginAndLanguage);
+}
+
+function renderPage(userID, id) {
+    // HEADER:
+    let base = `
+        <div class="header">
+            <div class="container">
+                <ul class="menu-options">
+                    <li><a id="btnDirectionHome" href="home.html">Trang Chủ</a></li>
+                    <li><a href="#">Bài Viết</a></li>
+                </ul>
+                <form class="searching-form">
+                    <input type="text" placeholder="Tìm Kiếm...">
+                    <label for=""><i class="fa-solid fa-magnifying-glass"></i></label>
+                </form>
+                <div class="group-login-language"></div>
             </div>
         </div>
     `;
@@ -362,7 +447,7 @@ function renderPage(id) {
                 <div class="left-content">
                     <div class="directory">
                         <i class="fa-solid fa-house"></i>
-                        <a href="home.html">Trang chủ</a> > 
+                        <a id="btnDirectionHome" href="home.html">Trang chủ</a> > 
                         <a id="direction_region" href="#">Miền</a> >
                         <a id="direction_territory" href="#">Vùng</a> >
                         <a id="direction_province" href="#">Tỉnh Thành</a>
@@ -509,13 +594,15 @@ function renderPage(id) {
     $("body").html(base);
 
     // RENDER:
+    renderProfile(userID, id);
     renderService();
-    renderPlace(id);
-    renderPlaceRecommend();
+    renderPlace(userID, id);
+    renderPlaceRecommend(userID);
     renderImageStock(id);
 }
 
 $(document).ready(function () {
-    let placeID = getUrlParameter("placeID");
-    renderPage(placeID);
+    const userID = getUrlParameter("userID");
+    const placeID = getUrlParameter("placeID");
+    renderPage(userID, placeID);
 });

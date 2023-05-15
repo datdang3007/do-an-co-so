@@ -14,6 +14,17 @@ AOS.init();
 //------------- ### API ### --------------//
 //----------------------------------------//
 
+async function getUserByID(id) {
+    let user = await fetch("http://localhost:8000/api/getUserByID", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ ID: id }),
+    }).then((data) => data.json());
+    return user;
+}
+
 async function getRegionByID(id) {
     let region = await fetch("http://localhost:8000/api/getRegionByID", {
       method: "POST",
@@ -106,7 +117,7 @@ function getSetListTerritoryID(data) {
     return setListTerritoryID;
 }
 
-function renderRegion(id) {
+function renderRegion(userID, id) {
     getRegionByID(id).then((dataRegion) => {
         let name = dataRegion.data.name;
         let slogan = dataRegion.data.slogan;
@@ -118,7 +129,6 @@ function renderRegion(id) {
         $('.slogan').html(`<p>${slogan}</p>`);
         $('.no1-page').css('background-image', `url(${image})`);
         $('.h1-text-title').css(`background-image`, `url(${image})`);
-
         let No2Page = `
             <div class="container">
                 <h1>${name}</h1>
@@ -126,10 +136,14 @@ function renderRegion(id) {
             </div>
         `
         $('.no2-page').html(No2Page);
+
+        if (userID) {
+            $('#btnDirectionHome').attr("href", `/home.html?userID=${userID}`);
+        };
     });
 }
 
-function renderTerritory(id) {
+function renderTerritory(userID, id) {
     let Territory = ``;
     getAllPlaceByRegionID(id).then((dataPlace) => {
         if (dataPlace.success) {
@@ -160,7 +174,11 @@ function renderTerritory(id) {
                 groupBtnRegion.forEach(btn => {
                     $(btn).click(() => {
                         let territoryID = $(btn).data().id;
-                        window.location = `/territory.html?territoryID=${territoryID}`;
+                        if (!userID) {
+                            window.location = `/territory.html?territoryID=${territoryID}`;
+                            return;
+                        }
+                        window.location = `/territory.html?userID=${userID}&territoryID=${territoryID}`;
                     });
                 });
             });
@@ -168,16 +186,20 @@ function renderTerritory(id) {
     });
 };
 
-function evenClickProvince(group) {
+function evenClickProvince(userID, group) {
     group.forEach(ele => {
         $(ele).click(() => {
             let ID = $(ele).data().id;
-            window.location = `/province.html?provinceID=${ID}`;
+            if (!userID) {
+                window.location = `/province.html?provinceID=${ID}`;
+                return;
+            }
+            window.location = `/province.html?userID=${userID}&provinceID=${ID}`;
         });
     })
 }
 
-function renderProvince(id) {
+function renderProvince(userID, id) {
     let Provinces = ``
 
     getProvinceByRegionID(id).then((dataProvince) => {
@@ -203,43 +225,41 @@ function renderProvince(id) {
             $('.items-province').html(Provinces);
 
             var groupItemImageProvince = document.querySelectorAll('.item-img--province');
-            evenClickProvince(groupItemImageProvince);
+            evenClickProvince(userID, groupItemImageProvince);
 
             var groupItemNameProvince = document.querySelectorAll('.name-of-city');
-            evenClickProvince(groupItemNameProvince);
+            evenClickProvince(userID, groupItemNameProvince);
         }
     });
 }
 
-function renderPageNumber(id) {
+function renderPageNumber(userID, id) {
     $('#pageNumber').html(`${currentPage} / ${maxPage}`);
     currentPage == 1 ? $("#btnPrev").attr("disabled", true) : $("#btnPrev").attr("disabled", false);
     currentPage == maxPage ? $("#btnNext").attr("disabled", true) : $("#btnNext").attr("disabled", false);
-    renderProvince(id);
+    renderProvince(userID, id);
 }
 
-function setupButtonNextAndBackPage(id) {
+function setupButtonNextAndBackPage(userID, id) {
     $('#btnPrev').click(function (e) {
         if (currentPage == 1) return;
         currentPage -= 1
-        renderPageNumber(id);
-        // currentPage == 1 ? $("#btnPrev").attr("disabled", true) : $("#btnPrev").attr("disabled", false);
+        renderPageNumber(userID, id);
     });
 
     $('#btnNext').click(function (e) { 
         if (currentPage == maxPage) return;
         currentPage += 1
-        renderPageNumber(id);
-        // currentPage == maxPage ? $("#btnNext").attr("disabled", true) : $("#btnNext").attr("disabled", false);
+        renderPageNumber(userID, id);
     });
 };
 
-function addEventForButtonSearch(id) {
+function addEventForButtonSearch(userID, id) {
     $('#btnSearch').click(() => {
         let searchVal = $('#inputSearchCity').val();
         if (searchVal == "") {
             $('#pagination').show();
-            renderPageNumber(id);
+            renderPageNumber(userID, id);
             return;
         }
 
@@ -263,15 +283,74 @@ function addEventForButtonSearch(id) {
             $('.items-province').html(Provinces);
 
             var groupItemImageProvince = document.querySelectorAll('.item-img--province');
-            evenClickProvince(groupItemImageProvince);
+            evenClickProvince(userID, groupItemImageProvince);
 
             var groupItemNameProvince = document.querySelectorAll('.name-of-city');
-            evenClickProvince(groupItemNameProvince);
+            evenClickProvince(userID, groupItemNameProvince);
         });
     });
 }
 
-function renderPage(regionID) {
+function addEventButtonUser() {
+    $('#userProfile').click(() => {
+        const isSelect = $('#userProfile').hasClass('select');
+
+        if (isSelect) {
+            $('#userProfile').removeClass('select');
+            $('#userOpions').hide();
+            return;
+        }
+        $('#userProfile').addClass('select');
+        $('#userOpions').show();
+    });
+}
+
+function renderProfile(userID, regionID) {
+    if (userID) {
+        getUserByID(userID).then(dataUser => {
+            if (dataUser.success) {
+                const data = dataUser.data;
+                const name = data.fist_name + " " + data.last_name;
+                let Profile = `
+                    <div class="profile" data-id="${data._id}">
+                        <span class="user-name">${name}</span>
+                        <div class="user" id="userProfile">
+                            <i class="fa-regular fa-user"></i>
+                        </div>
+                        <ul class="user-options" id="userOpions">
+                            <li><a href="profile.html">Trang Cá Nhân</a></li>
+                            <li><a href="region.html?regionID=${regionID}">Đăng Xuất</a></li>
+                        </ul>
+                    </div>
+                    <div class="language">
+                        <i class="fa-solid fa-earth-americas"></i>
+                        <span>VN</span>
+                    </div>
+                `;
+                $('.group-login-language').html(Profile);
+
+                addEventButtonUser();
+                return;
+            };
+        });
+    };
+
+    let groupLoginAndLanguage = `
+        <div class="group-login-language">
+            <div class="group-login-register">
+                <a href="sign_up.html" class="btn" id="btnRegister">Đăng Ký</a>
+                <a href="sign_in.html" class="btn" id="btnLogin">Đăng Nhập</a>
+            </div>
+            <div class="language">
+                <i class="fa-solid fa-earth-americas"></i>
+                <span>VN</span>
+            </div>
+        </div>
+    `;
+    $('.group-login-language').html(groupLoginAndLanguage);
+}
+
+function renderPage(userID, regionID) {
     // HEADER:
     let base = `
         <section>
@@ -286,23 +365,14 @@ function renderPage(regionID) {
                     <div class="container">
                         <div class="header">
                             <ul class="menu-options">
-                                <li><a href="home.html">Trang Chủ</a></li>
+                                <li><a id="btnDirectionHome" href="/home.html">Trang Chủ</a></li>
                                 <li><a href="#">Bài Viết</a></li>
                             </ul>
                             <form class="searching-form">
                                 <input type="text" placeholder="Tìm Kiếm...">
                                 <label for=""><i class="fa-solid fa-magnifying-glass"></i></label>
                             </form>
-                            <div class="group-login-language">
-                                <div class="group-login-register">
-                                    <a href="sign_up.html" class="btn" id="btnRegister">Đăng Ký</a>
-                                    <a href="sign_in.html" class="btn" id="btnLogin">Đăng Nhập</a>
-                                </div>
-                                <div class="language">
-                                    <i class="fa-solid fa-earth-americas"></i>
-                                    <span>VN</span>
-                                </div>
-                            </div>
+                            <div class="group-login-language"></div>
                         </div>
                     </div>
                     <div class="h1-text-shadow"></div>
@@ -429,11 +499,12 @@ function renderPage(regionID) {
     $("body").html(base);
   
     // RENDER:
-    renderRegion(regionID);
-    renderTerritory(regionID);
-    setupButtonNextAndBackPage(regionID);
-    renderPageNumber(regionID);
-    addEventForButtonSearch(regionID);
+    renderProfile(userID, regionID);
+    renderRegion(userID, regionID);
+    renderTerritory(userID, regionID);
+    setupButtonNextAndBackPage(userID, regionID);
+    renderPageNumber(userID, regionID);
+    addEventForButtonSearch(userID, regionID);
 }
 
 function getMaxPage(id) {
@@ -448,9 +519,10 @@ function getMaxPage(id) {
 };
 
 $(document).ready(function () {
-    let regionID = getUrlParameter("regionID");
+    const userID = getUrlParameter("userID");
+    const regionID = getUrlParameter("regionID");
     getMaxPage(regionID).then(max => {
         maxPage = max;
-        renderPage(regionID);
+        renderPage(userID, regionID);
     });
 });

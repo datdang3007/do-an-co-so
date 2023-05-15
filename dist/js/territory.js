@@ -12,6 +12,17 @@ AOS.init();
 //----------------------------------------//
 //------------- ### API ### --------------//
 //----------------------------------------//
+async function getUserByID(id) {
+    let user = await fetch("http://localhost:8000/api/getUserByID", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ ID: id }),
+    }).then((data) => data.json());
+    return user;
+}
+
 async function getProvinceByTerritoryID(id) {
     let allProvinceInTerritory = await fetch(
       "http://localhost:8000/api/getProvinceByTerritoryID",
@@ -80,16 +91,20 @@ function getMaxPage(id) {
     });
 };
 
-function evenClickProvince(group) {
+function evenClickProvince(userID, group) {
     group.forEach(ele => {
         $(ele).click(() => {
             let ID = $(ele).data().id;
-            window.location = `/province.html?provinceID=${ID}`;
+            if (!userID) {
+                window.location = `/province.html?provinceID=${ID}`;
+                return;
+            }
+            window.location = `/province.html?userID=${userID}&provinceID=${ID}`;
         });
     })
 }
 
-function renderProvince(id) {
+function renderProvince(userID, id) {
     let Provinces = ``
     getProvinceByTerritoryID(id).then((dataProvince) => {
         if (dataProvince.success) {
@@ -114,36 +129,36 @@ function renderProvince(id) {
             $('.items-province').html(Provinces);
 
             var groupItemImageProvince = document.querySelectorAll('.item-img--province');
-            evenClickProvince(groupItemImageProvince);
+            evenClickProvince(userID, groupItemImageProvince);
 
             var groupItemNameProvince = document.querySelectorAll('.name-of-city');
-            evenClickProvince(groupItemNameProvince);
+            evenClickProvince(userID, groupItemNameProvince);
         }
     });
 }
 
-function renderPageNumber(id) {
+function renderPageNumber(userID, id) {
     $('#pageNumber').html(`${currentPage} / ${maxPage}`);
     currentPage == 1 ? $("#btnPrev").attr("disabled", true) : $("#btnPrev").attr("disabled", false);
     currentPage == maxPage ? $("#btnNext").attr("disabled", true) : $("#btnNext").attr("disabled", false);
-    renderProvince(id);
+    renderProvince(userID, id);
 }
 
-function setupButtonNextAndBackPage(id) {
+function setupButtonNextAndBackPage(userID, id) {
     $('#btnPrev').click(function (e) {
         if (currentPage == 1) return;
         currentPage -= 1
-        renderPageNumber(id);
+        renderPageNumber(userID, id);
     });
 
     $('#btnNext').click(function (e) { 
         if (currentPage == maxPage) return;
         currentPage += 1
-        renderPageNumber(id);
+        renderPageNumber(userID, id);
     });
 };
 
-function renderTerritory(id) {
+function renderTerritory(userID, id) {
     getTerritoryByID(id).then((dataRegion) => {
         let data = dataRegion.data
         let name = data.name;
@@ -166,15 +181,22 @@ function renderTerritory(id) {
             </div>
         `
         $('.no2-page').html(No2Page);
+
+        if (userID) {
+            $('#btnDirectionHome').attr("href", `/home.html?userID=${userID}`);
+            $('#direction_region').attr("href", `/region.html?userID=${userID}&regionID=${regionID}`);
+            return;
+        };
+        $('#direction_region').attr("href", `/region.html?regionID=${regionID}`);
     });
 }
 
-function addEventForButtonSearch(id) {
+function addEventForButtonSearch(userID, id) {
     $('#btnSearch').click(() => {
         let searchVal = $('#inputSearchCity').val();
         if (searchVal == "") {
             $('#pagination').show();
-            renderPageNumber(id);
+            renderPageNumber(userID, id);
             return;
         }
 
@@ -198,15 +220,74 @@ function addEventForButtonSearch(id) {
             $('.items-province').html(Provinces);
 
             var groupItemImageProvince = document.querySelectorAll('.item-img--province');
-            evenClickProvince(groupItemImageProvince);
+            evenClickProvince(userID, groupItemImageProvince);
 
             var groupItemNameProvince = document.querySelectorAll('.name-of-city');
-            evenClickProvince(groupItemNameProvince);
+            evenClickProvince(userID, groupItemNameProvince);
         });
     });
 }
 
-function renderPage(territoryID) {
+function addEventButtonUser() {
+    $('#userProfile').click(() => {
+        const isSelect = $('#userProfile').hasClass('select');
+
+        if (isSelect) {
+            $('#userProfile').removeClass('select');
+            $('#userOpions').hide();
+            return;
+        }
+        $('#userProfile').addClass('select');
+        $('#userOpions').show();
+    });
+}
+
+function renderProfile(userID, territoryID) {
+    if (userID) {
+        getUserByID(userID).then(dataUser => {
+            if (dataUser.success) {
+                const data = dataUser.data;
+                const name = data.fist_name + " " + data.last_name;
+                let Profile = `
+                    <div class="profile" data-id="${data._id}">
+                        <span class="user-name">${name}</span>
+                        <div class="user" id="userProfile">
+                            <i class="fa-regular fa-user"></i>
+                        </div>
+                        <ul class="user-options" id="userOpions">
+                            <li><a href="profile.html">Trang Cá Nhân</a></li>
+                            <li><a href="territory.html?territoryID=${territoryID}">Đăng Xuất</a></li>
+                        </ul>
+                    </div>
+                    <div class="language">
+                        <i class="fa-solid fa-earth-americas"></i>
+                        <span>VN</span>
+                    </div>
+                `;
+                $('.group-login-language').html(Profile);
+
+                addEventButtonUser();
+                return;
+            };
+        });
+    };
+
+    let groupLoginAndLanguage = `
+        <div class="group-login-language">
+            <div class="group-login-register">
+                <a href="sign_up.html" class="btn" id="btnRegister">Đăng Ký</a>
+                <a href="sign_in.html" class="btn" id="btnLogin">Đăng Nhập</a>
+            </div>
+            <div class="language">
+                <i class="fa-solid fa-earth-americas"></i>
+                <span>VN</span>
+            </div>
+        </div>
+    `;
+    $('.group-login-language').html(groupLoginAndLanguage);
+}
+
+function renderPage(userID, territoryID) {
     // HEADER:
     let base = `
         <section>
@@ -221,7 +302,7 @@ function renderPage(territoryID) {
                     <div class="container">
                         <div class="header">
                             <ul class="menu-options">
-                                <li><a href="home.html">Trang Chủ</a></li>
+                                <li><a id="btnDirectionHome" href="home.html">Trang Chủ</a></li>
                                 <li><a id="direction_region">Miền</a></li>
                                 <li><a href="#">Bài Viết</a></li>
                             </ul>
@@ -229,16 +310,7 @@ function renderPage(territoryID) {
                                 <input type="text" placeholder="Tìm Kiếm...">
                                 <label for=""><i class="fa-solid fa-magnifying-glass"></i></label>
                             </form>
-                            <div class="group-login-language">
-                                <div class="group-login-register">
-                                    <a href="sign_up.html" class="btn" id="btnRegister">Đăng Ký</a>
-                                    <a href="sign_in.html" class="btn" id="btnLogin">Đăng Nhập</a>
-                                </div>
-                                <div class="language">
-                                    <i class="fa-solid fa-earth-americas"></i>
-                                    <span>VN</span>
-                                </div>
-                            </div>
+                            <div class="group-login-language"></div>
                         </div>
                     </div>
 
@@ -287,18 +359,6 @@ function renderPage(territoryID) {
             </div>
         </div>
     `;
-
-    // <div class="item">
-    //     <div class="item-box">
-    //         <div class="img">
-    //             <img src="https://cdn.discordapp.com/attachments/1089123119668658206/1094288746297426130/868420.png" alt="">
-    //         </div>
-    //         <div class="group-text">
-    //             <span class="name-of-city">Hai Phong</span>
-    //             <span class="name-of-territory">The North</span>
-    //         </div>
-    //     </div>
-    // </div>
 
     // FOOTER:
     base += `
@@ -363,16 +423,18 @@ function renderPage(territoryID) {
     $("body").html(base);
   
     // RENDER:
-    renderTerritory(territoryID);
-    setupButtonNextAndBackPage(territoryID);
-    renderPageNumber(territoryID);
-    addEventForButtonSearch(territoryID);
+    renderProfile(userID, territoryID);
+    renderTerritory(userID, territoryID);
+    setupButtonNextAndBackPage(userID, territoryID);
+    renderPageNumber(userID, territoryID);
+    addEventForButtonSearch(userID, territoryID);
 };
 
 $(document).ready(function () {
-    let territoryID = getUrlParameter("territoryID");
+    const userID = getUrlParameter("userID");
+    const territoryID = getUrlParameter("territoryID");
     getMaxPage(territoryID).then(max => {
         maxPage = max;
-        renderPage(territoryID);
+        renderPage(userID, territoryID);
     });
 });

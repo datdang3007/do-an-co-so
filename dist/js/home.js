@@ -39,6 +39,17 @@ async function getAllPlaceForTerritory() {
   return result;
 }
 
+async function getUserByID(id) {
+    let user = await fetch("http://localhost:8000/api/getUserByID", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ ID: id }),
+    }).then((data) => data.json());
+    return user;
+}
+
 //----------------------------------------//
 //----------- ### FUNCTION ### -----------//
 //----------------------------------------//
@@ -61,7 +72,7 @@ function getUrlParameter(sParam) {
     return false;
 };
 
-function renderRegion() {
+function renderRegion(userID) {
   let dataRegions = getRegions();
   dataRegions.then((data) => {
     if (data.length > 0) {
@@ -102,14 +113,18 @@ function renderRegion() {
       groupBtnRegion.forEach(btn => {
         $(btn).click(() => {
             let regionID = $(btn).data().id;
-            window.location = `/region.html?regionID=${regionID}`;
+            if (!userID) {
+                window.location = `/region.html?regionID=${regionID}`;
+                return;
+            }
+            window.location = `/region.html?userID=${userID}&regionID=${regionID}`;
         });
       });
     }
   });
 }
 
-function renderTerritory() {
+function renderTerritory(userID) {
   let dataTerritorys = getTerritorys();
   dataTerritorys.then((data) => {
     if (data.length > 0) {
@@ -153,7 +168,11 @@ function renderTerritory() {
             groupBtnRegion.forEach(btn => {
                 $(btn).click(() => {
                     let territoryID = $(btn).data().id;
-                    window.location = `/territory.html?territoryID=${territoryID}`;
+                    if (!userID) {
+                        window.location = `/territory.html?territoryID=${territoryID}`;
+                        return;
+                    }
+                    window.location = `/territory.html?userID=${userID}&territoryID=${territoryID}`;
                 });
             });
         });
@@ -161,7 +180,7 @@ function renderTerritory() {
   });
 }
 
-function renderPosts() {
+function renderPosts(userID) {
   let Posts = `
         <div class="header-title">
             <span class="big-title">Bài Viết</span>
@@ -222,9 +241,69 @@ function addEventScrollToTerritory() {
     $(document).scrollTop(2730);
 }
 
-function renderPage() {
-  // HEADER:
-  let base = `
+function addEventButtonUser() {
+    $('#userProfile').click(() => {
+        const isSelect = $('#userProfile').hasClass('select');
+
+        if (isSelect) {
+            $('#userProfile').removeClass('select');
+            $('#userOpions').hide();
+            return;
+        }
+        $('#userProfile').addClass('select');
+        $('#userOpions').show();
+    });
+}
+
+function renderProfile(userID) {
+    if (userID) {
+        getUserByID(userID).then(dataUser => {
+            if (dataUser.success) {
+                const data = dataUser.data;
+                const name = data.fist_name + " " + data.last_name;
+                let Profile = `
+                    <div class="profile" data-id="${data._id}">
+                        <span class="user-name">${name}</span>
+                        <div class="user" id="userProfile">
+                            <i class="fa-regular fa-user"></i>
+                        </div>
+                        <ul class="user-options" id="userOpions">
+                            <li><a href="profile.html">Trang Cá Nhân</a></li>
+                            <li><a href="home.html">Đăng Xuất</a></li>
+                        </ul>
+                    </div>
+                    <div class="language">
+                        <i class="fa-solid fa-earth-americas"></i>
+                        <span>VN</span>
+                    </div>
+                `;
+                $('.group-login-language').html(Profile);
+
+                addEventButtonUser();
+                return;
+            };
+        });
+    };
+
+    let groupLoginAndLanguage = `
+        <div class="group-login-language">
+            <div class="group-login-register">
+                <a href="sign_up.html" class="btn" id="btnRegister">Đăng Ký</a>
+                <a href="sign_in.html" class="btn" id="btnLogin">Đăng Nhập</a>
+            </div>
+            <div class="language">
+                <i class="fa-solid fa-earth-americas"></i>
+                <span>VN</span>
+            </div>
+        </div>
+    `;
+    $('.group-login-language').html(groupLoginAndLanguage);
+    
+}
+
+function renderPage(userID) {
+    // HEADER:
+    let base = `
         <section>
             <div
             class="no1-page scroll-trigger"
@@ -245,16 +324,7 @@ function renderPage() {
                         <input type="text" placeholder="Tìm kiếm...">
                         <label for=""><i class="fa-solid fa-magnifying-glass"></i></label>
                     </form>
-                    <div class="group-login-language">
-                    <div class="group-login-register">
-                        <a href="sign_up.html" class="btn" id="btnRegister">Đăng Ký</a>
-                        <a href="sign_in.html" class="btn" id="btnLogin">Đăng Nhập</a>
-                    </div>
-                    <div class="language">
-                        <i class="fa-solid fa-earth-americas"></i>
-                        <span>VN</span>
-                    </div>
-                    </div>
+                    <div class="group-login-language"></div>
                 </div>
                 </div>
 
@@ -395,11 +465,13 @@ function renderPage() {
   $("body").html(base);
 
   // RENDER:
-  renderRegion();
-  renderTerritory();
-  renderPosts();
+  renderProfile(userID);
+  renderRegion(userID);
+  renderTerritory(userID);
+  renderPosts(userID);
 }
 
 $(document).ready(function () {
-  renderPage();
+    let userID = getUrlParameter("userID");
+    renderPage(userID);
 });

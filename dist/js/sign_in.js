@@ -88,7 +88,7 @@ $("#btnSignIn").click((e) => {
           if (dataUser.data.password != password) {
             sendElementAlert($("#inputPassword").parent(), `Invalid password!`);
           } else {
-            window.location = "/home.html";
+            window.location = `/home.html?userID=${dataUser.data._id}`;
           }
         }
       });

@@ -4,6 +4,17 @@ const placeCount = 3;
 //----------------------------------------//
 //------------- ### API ### --------------//
 //----------------------------------------//
+async function getUserByID(id) {
+    let user = await fetch("http://localhost:8000/api/getUserByID", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ ID: id }),
+    }).then((data) => data.json());
+    return user;
+}
+
 async function getProvinceByID(id) {
     let province = await fetch("http://localhost:8000/api/getProvinceByID", {
         method: "POST",
@@ -72,11 +83,16 @@ function getUrlParameter(sParam) {
     return false;
 };
 
-function eventClickPlace(group) {
+function eventClickPlace(userID, group) {
     group.forEach(ele => {
         $(ele).click(() => {
             let ID = $(ele).data().id;
-            window.location = `/place.html?placeID=${ID}`;
+            
+            if (!userID) {
+                window.location = `/place.html?placeID=${ID}`;
+                return;
+            }
+            window.location = `/place.html?userID=${userID}&placeID=${ID}`;
         });
     });
 };
@@ -194,7 +210,7 @@ function renderService() {
     $('.items--service').html(Service);
 }
 
-function renderPlace(id) {
+function renderPlace(userID, id) {
     let Place = ``;
     getAllPlaceByProvinceID(id).then(dataPlace => {
         if (dataPlace.success) {
@@ -241,12 +257,12 @@ function renderPlace(id) {
             $('.items--place').html(Place);
 
             const groupImagePlace = document.querySelectorAll('.img--place');
-            eventClickPlace(groupImagePlace);
+            eventClickPlace(userID, groupImagePlace);
         };
     });
 };
 
-function renderProvince(id) {
+function renderProvince(userID, id) {
     getProvinceByID(id).then(dataProvince => {
         if (dataProvince.success) {
             let data = dataProvince.data;
@@ -269,7 +285,11 @@ function renderProvince(id) {
                 if (dataRegion.success) {
                     let data = dataRegion.data
                     $('#direction_region').html(data.name);
-                    $('#direction_region').attr("href", `/region.html?regionID=${regionID}`);
+                    if (!userID) {
+                        $('#direction_region').attr("href", `/region.html?regionID=${regionID}`);
+                    } else {
+                        $('#direction_region').attr("href", `/region.html?userID=${userID}&regionID=${regionID}`);
+                    }
                 }
             })
 
@@ -277,9 +297,20 @@ function renderProvince(id) {
                 if (dataTerritory.success) {
                     let data = dataTerritory.data
                     $('#direction_territory').html(data.name);
-                    $('#direction_territory').attr("href", `/territory.html?territoryID=${territoryID}`);
+                    if (!userID) {
+                        $('#direction_territory').attr("href", `/territory.html?territoryID=${territoryID}`);
+                    } else {
+                        $('#direction_territory').attr("href", `/territory.html?userID=${userID}&territoryID=${territoryID}`);
+                    }
                 }
             })
+
+            if (userID) {
+                const groupButtonDirectionHome = document.querySelectorAll('#btnDirectionHome');
+                groupButtonDirectionHome.forEach(btn => {
+                    $(btn).attr("href", `/home.html?userID=${userID}`);
+                });
+            };
         };
     });
 };
@@ -289,29 +320,79 @@ function renderImageStock() {
     $('.items--image_stock').html(ImageStock);
 }
 
-function renderPage(id) {
+function addEventButtonUser() {
+    $('#userProfile').click(() => {
+        const isSelect = $('#userProfile').hasClass('select');
+
+        if (isSelect) {
+            $('#userProfile').removeClass('select');
+            $('#userOpions').hide();
+            return;
+        }
+        $('#userProfile').addClass('select');
+        $('#userOpions').show();
+    });
+}
+
+function renderProfile(userID, provinceID) {
+    if (userID) {
+        getUserByID(userID).then(dataUser => {
+            if (dataUser.success) {
+                const data = dataUser.data;
+                const name = data.fist_name + " " + data.last_name;
+                let Profile = `
+                    <div class="profile" data-id="${data._id}">
+                        <span class="user-name">${name}</span>
+                        <div class="user" id="userProfile">
+                            <i class="fa-regular fa-user"></i>
+                        </div>
+                        <ul class="user-options" id="userOpions">
+                            <li><a href="profile.html">Trang Cá Nhân</a></li>
+                            <li><a href="province.html?provinceID=${provinceID}">Đăng Xuất</a></li>
+                        </ul>
+                    </div>
+                    <div class="language">
+                        <i class="fa-solid fa-earth-americas"></i>
+                        <span>VN</span>
+                    </div>
+                `;
+                $('.group-login-language').html(Profile);
+
+                addEventButtonUser();
+                return;
+            };
+        });
+    };
+
+    let groupLoginAndLanguage = `
+        <div class="group-login-language">
+            <div class="group-login-register">
+                <a href="sign_up.html" class="btn" id="btnRegister">Đăng Ký</a>
+                <a href="sign_in.html" class="btn" id="btnLogin">Đăng Nhập</a>
+            </div>
+            <div class="language">
+                <i class="fa-solid fa-earth-americas"></i>
+                <span>VN</span>
+            </div>
+        </div>
+    `;
+    $('.group-login-language').html(groupLoginAndLanguage);
+}
+
+function renderPage(userID, id) {
     // HEADER:
     let base = `
         <div class="header">
             <div class="container">
                 <ul class="menu-options">
-                    <li><a href="home.html">Trang Chủ</a></li>
+                    <li><a id="btnDirectionHome" href="home.html">Trang Chủ</a></li>
                     <li><a href="#">Bài Viết</a></li>
                 </ul>
                 <form class="searching-form">
                     <input type="text" placeholder="Tìm Kiếm...">
                     <label for=""><i class="fa-solid fa-magnifying-glass"></i></label>
                 </form>
-                <div class="group-login-language">
-                    <div class="group-login-register">
-                        <a href="sign_up.html" class="btn" id="btnRegister">Đăng Ký</a>
-                        <a href="sign_in.html" class="btn" id="btnLogin">Đăng Nhập</a>
-                    </div>
-                    <div class="language">
-                        <i class="fa-solid fa-earth-americas"></i>
-                        <span>VN</span>
-                    </div>
-                </div>
+                <div class="group-login-language"></div>
             </div>
         </div>
     `;
@@ -323,7 +404,7 @@ function renderPage(id) {
                 <div class="left-content">
                     <div class="directory">
                         <i class="fa-solid fa-house"></i>
-                        <a href="home.html">Trang chủ</a> > 
+                        <a id="btnDirectionHome" href="home.html">Trang chủ</a> > 
                         <a id="direction_region" href="#">Miền</a> >
                         <a id="direction_territory" href="#">Vùng</a>
                     </div>
@@ -432,13 +513,15 @@ function renderPage(id) {
     $("body").html(base);
 
     // RENDER:
-    renderProvince(id);
-    renderPlace(id);
+    renderProfile(userID, id);
+    renderProvince(userID, id);
+    renderPlace(userID, id);
     renderImageStock(id);
     renderService();
 }
 
 $(document).ready(function () {
-    let provinceID = getUrlParameter("provinceID");
-    renderPage(provinceID);
+    const userID = getUrlParameter("userID");
+    const provinceID = getUrlParameter("provinceID");
+    renderPage(userID, provinceID);
 });
