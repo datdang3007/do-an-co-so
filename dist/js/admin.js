@@ -1,4 +1,17 @@
 //----------------------------------------//
+//----------- ### FIREBASE ### -----------//
+//----------------------------------------//
+const firebaseConfig = {
+  apiKey: "AIzaSyAEdgYwOD3LSc_En_PE5BQrs0S608Cfxl4",
+  authDomain: "upload-img-fe871.firebaseapp.com",
+  projectId: "upload-img-fe871",
+  storageBucket: "upload-img-fe871.appspot.com",
+  messagingSenderId: "921179138895",
+  appId: "1:921179138895:web:d169df8086d99cb6c6733a",
+  measurementId: "G-GYJ5K9XJBV",
+};
+
+//----------------------------------------//
 //------------- ### API ### --------------//
 //----------------------------------------//
 
@@ -230,6 +243,17 @@ async function deletePlace(id) {
     body: JSON.stringify({ ID: id }),
   }).then((data) => data.json());
   return result.success;
+}
+
+async function getPlaceByImageID(id) {
+  let place = await fetch("http://localhost:8000/api/getPlaceByImageID", {
+    method: "POST",
+    headers: {
+        "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ ID: id }),
+  }).then((data) => data.json());
+  return place;
 }
 
 // IMAGE:
@@ -1612,26 +1636,78 @@ function setEventButtonLogout() {
   });
 };
 
+function uploadFileToFireBase(file) {
+  return new Promise((resolve, reject) => {
+    var storageRef = firebase.storage().ref(); // Thay 'firebase' bằng tên đối tượng lưu trữ đám mây của bạn
+
+    var uploadTask = storageRef.child('images/' + file.name).put(file);
+  
+    uploadTask.on('state_changed', null, function(error) {
+      console.error('Lỗi khi tải lên:', error);
+      resolve(null);
+    }, function() {
+      uploadTask.snapshot.ref.getDownloadURL().then(function(downloadURL) {
+        resolve(downloadURL);
+      });
+    });
+  });
+}
+
+function renderImageByImageID(imageID) {
+  let base = ``;
+  const Place = getPlaceByImageID(imageID);
+  Place.then((dataPlace) => {
+    if (dataPlace.success) {
+      const data = dataPlace.data;
+      const data_id = data._id;
+      const data_name = data.name;
+      const data_imageID = data.imageID;
+
+      let groupImages = document.querySelectorAll('.img--image_stock');
+      groupImages.forEach(images => {
+        const images_id = $(images).data().id;
+        if (data_id == images_id) {
+          getImageStockByID(data_imageID).then(dataImage => {
+            if (dataImage.success) {
+              let image = ``;
+              let imageStock = dataImage.data;
+              for (const [index, img] of Object.entries(imageStock)) {
+                image += `
+                  <div class="item-img" data-id="${img._id}">
+                    <img src="${img.imageURL}" alt="">
+                    <i class="fa-solid fa-check"></i>
+                  </div>
+                `;
+              };
+              $(images).html(image);
+            };
+          });
+        };
+      });
+    };
+  });
+};
+
 // #IMAGE EVENT:
 function eventUploadImage() {
   const groupImageInput = document.querySelectorAll('#image-input');
   groupImageInput.forEach(ele => {
-    $(ele).change(function() {
+    $(ele).on('change', (e) => {
       let ID = $(ele).data().id;
-      let input = $(this)[0];
-      if (input.files && input.files.length > 0) {
-        $('.images').empty();
-        for (let i = 0; i < input.files.length; i++) {
-          let reader = new FileReader();
-          reader.onload = function (e) {
-            let imageUrl = e.target.result;
-            let tempArray = [imageUrl];
-            uploadImage(ID, tempArray)
-          };
-          reader.readAsDataURL(input.files[i]);
-          renderImage();
-        }
+      var files = e.target.files;
+      if (files.length === 0) {
+        return;
       }
+      for (var i = 0; i < files.length; i++) {
+        var file = files[i];
+        uploadFileToFireBase(file).then(linkUrl => {
+          if (!linkUrl) return;
+          uploadImage(ID, linkUrl);
+        });
+      }
+      setTimeout(() => {
+        renderImageByImageID(ID);
+      }, 3500);
     });
   })
 }
@@ -2251,8 +2327,11 @@ function renderRightContent(category) {
 // });
 
 $(document).ready(function () {
-    setupOptionBoxEvent();
-    setEventButtonLogout();
-    renderRightContent('statistics');
-    labelInputFocus();
+  // Khởi tạo Firebase
+  firebase.initializeApp(firebaseConfig);
+  
+  setupOptionBoxEvent();
+  setEventButtonLogout();
+  renderRightContent('statistics');
+  labelInputFocus();
 });

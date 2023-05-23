@@ -67,7 +67,7 @@ $("#btnSignIn").click((e) => {
             sendElementAlert($("#inputPassword").parent(), `Invalid password!`);
           } else {
             if (dataUser.data.admin == 0) {
-              window.location = "/home.html";
+              window.location = `/home.html?userID=${dataUser.data._id}`;
             } else if (dataUser.data.admin == 1) {
               window.location = "/admin.html?permission=1";
             } else if (dataUser.data.admin == 2) {
@@ -88,7 +88,13 @@ $("#btnSignIn").click((e) => {
           if (dataUser.data.password != password) {
             sendElementAlert($("#inputPassword").parent(), `Invalid password!`);
           } else {
-            window.location = `/home.html?userID=${dataUser.data._id}`;
+            if (dataUser.data.admin == 0) {
+              window.location = `/home.html?userID=${dataUser.data._id}`;
+            } else if (dataUser.data.admin == 1) {
+              window.location = "/admin.html?permission=1";
+            } else if (dataUser.data.admin == 2) {
+              window.location = "/admin.html?permission=2";
+            }
           }
         }
       });

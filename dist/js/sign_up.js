@@ -151,6 +151,7 @@ $("#btnSignUp").click((e) => {
                         admin: 0,
                     };
         
+                    alert('Đăng ký thành công');
                     Register(data).then(data => {
                         console.log(data);
                     });
