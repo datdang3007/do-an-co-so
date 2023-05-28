@@ -1638,6 +1638,43 @@ function addEventForButtonSearch(category) {
         };
       });
     });
+  } else if (category == "photo") {
+    $('#btnSearch').click(() => {
+      showLoader();
+      let searchVal = $('#inputPlace').val();
+      getPlaceWithNameLike(searchVal).then(result => {
+        if (!result.success) {
+          $(".items--image").hide();
+          $(".error-empty").show();
+        } else {
+          $(".error-empty").hide();
+          $(".items--image").show();
+          if(result.success) {
+            let Places = ``;
+            for (const [index, place] of Object.entries(result.data)) {
+              Places += `
+                <div class="item">
+                  <div class="group-header">
+                      <div class="place-name">${place.name}</div>
+                      <div class="group-input">
+                        <input id="checkBoxSelect" type="checkbox">
+                        <span id="btnDeleteImage">xóa</span>
+                        <input type="file" id="image-input" data-id="${place.imageID}" multiple>
+                      </div>
+                  </div>
+                  <div class="images img--image_stock" data-id="${place._id}"></div>
+                </div>
+              `;
+            };
+            $('.items--image').html(Places);
+            eventUploadImage();
+            eventCheckBoxSelect();
+            renderImageStock();
+          }
+        };
+        hideLoader();
+      });
+    });
   };
 };
 
@@ -1865,30 +1902,33 @@ function renderImage() {
   let base = ``;
   const dataPlaces = getPlaces();
   dataPlaces.then((data) => {
-    if (data.length > 0) {
-      for (const [index, place] of Object.entries(data)) {
-        base += `
-          <div class="item">
-            <div class="group-header">
-                <div class="place-name">${place.name}</div>
-                <div class="group-input">
-                  <input id="checkBoxSelect" type="checkbox">
-                  <span id="btnDeleteImage">xóa</span>
-                  <input type="file" id="image-input" data-id="${place.imageID}" multiple>
-                </div>
-            </div>
-            <div class="images img--image_stock" data-id="${place._id}"></div>
-          </div>
-        `
-      }
-      $('.items--image').html(base);
-      hideLoader();
-      eventUploadImage();
-      eventCheckBoxSelect();
-      renderImageStock();
+    if (data.length == 0) {
+      $(".error-empty").show();
     }
+    
+    $(".error-empty").hide();
+    for (const [index, place] of Object.entries(data)) {
+      base += `
+        <div class="item">
+          <div class="group-header">
+              <div class="place-name">${place.name}</div>
+              <div class="group-input">
+                <input id="checkBoxSelect" type="checkbox">
+                <span id="btnDeleteImage">xóa</span>
+                <input type="file" id="image-input" data-id="${place.imageID}" multiple>
+              </div>
+          </div>
+          <div class="images img--image_stock" data-id="${place._id}"></div>
+        </div>
+      `;
+    };
+    $('.items--image').html(base);
+    hideLoader();
+    eventUploadImage();
+    eventCheckBoxSelect();
+    renderImageStock();
   });
-}
+};
 
 function renderUser(perm) {
   getUser().then(Users => {
@@ -2438,6 +2478,15 @@ function renderRightContent(category, permission) {
         </div>
       </div>
 
+      <div class="error-empty">
+        <div class="box">
+            <div class="img">
+                <img src="https://cdn.discordapp.com/attachments/1085804453246009374/1098783512649285642/error_empty.png" alt="">
+            </div>
+            <span class="error-text">Error Empty!</span>
+        </div>
+      </div>
+
       <div class="Photos">
         <div class="items items--image"></div>
       </div>
@@ -2446,6 +2495,7 @@ function renderRightContent(category, permission) {
 
     // RENDER:
     renderImage();
+    addEventForButtonSearch('photo');
   }
 }
 
