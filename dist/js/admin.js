@@ -1709,63 +1709,81 @@ function setEventButtonLogout() {
   });
 };
 
-function uploadFileToFireBase(file) {
-  return new Promise((resolve, reject) => {
-    var storageRef = firebase.storage().ref(); // Thay 'firebase' bằng tên đối tượng lưu trữ đám mây của bạn
-
-    var uploadTask = storageRef.child('images/' + file.name).put(file);
-  
-    uploadTask.on('state_changed', null, function(error) {
-      console.error('Lỗi khi tải lên:', error);
-      resolve(null);
-    }, function() {
-      uploadTask.snapshot.ref.getDownloadURL().then(function(downloadURL) {
-        resolve(downloadURL);
-      });
-    });
-  });
-}
-
 function renderImageByImageID(imageID) {
   let base = ``;
   const Place = getPlaceByImageID(imageID);
   Place.then((dataPlace) => {
-    if (dataPlace.success) {
-      const data = dataPlace.data;
-      const data_id = data._id;
-      const data_name = data.name;
-      const data_imageID = data.imageID;
+    if (!dataPlace.success) {
+      hideLoader();
+      return;
+    }
 
-      let groupImages = document.querySelectorAll('.img--image_stock');
-      groupImages.forEach(images => {
-        const images_id = $(images).data().id;
-        if (data_id == images_id) {
-          getImageStockByID(data_imageID).then(dataImage => {
-            if (dataImage.success) {
-              let image = ``;
-              let imageStock = dataImage.data;
-              for (const [index, img] of Object.entries(imageStock)) {
-                image += `
-                  <div class="item-img" data-id="${img._id}">
-                    <img src="${img.imageURL}" alt="">
-                    <i class="fa-solid fa-check"></i>
-                  </div>
-                `;
-              };
-              $(images).html(image);
+    const data = dataPlace.data;
+    const data_id = data._id;
+    const data_name = data.name;
+    const data_imageID = data.imageID;
+
+    let groupImages = document.querySelectorAll('.img--image_stock');
+    groupImages.forEach(images => {
+      const images_id = $(images).data().id;
+      if (data_id == images_id) {
+        getImageStockByID(data_imageID).then(dataImage => {
+          if (dataImage.success) {
+            let image = ``;
+            let imageStock = dataImage.data;
+            for (const [index, img] of Object.entries(imageStock)) {
+              image += `
+                <div class="item-img" data-id="${img._id}">
+                  <img src="${img.imageURL}" alt="">
+                  <i class="fa-solid fa-check"></i>
+                </div>
+              `;
             };
-          });
-        };
-      });
-    };
+            $(images).html(image);
+            hideLoader();
+          };
+        });
+      };
+    });
   });
 };
 
 // #IMAGE EVENT:
+function uploadFileToDiscordWebhook(file) {
+  return new Promise((resolve, reject) => {
+    const webhookUrl = 'https://discord.com/api/webhooks/1112290843236253767/qSvESemlahnPjVVBTu5HQPZbuOmmpBqFbo91zZS3K40-BW9GfpN4npmGkNXqaFznjMDs';
+
+    const formData = new FormData();
+    formData.append('file', file);
+
+    $.ajax({
+      url: webhookUrl,
+      type: 'POST',
+      data: formData,
+      processData: false,
+      contentType: false,
+      success: function(response) {
+        if (response.attachments && response.attachments.length > 0) {
+          const imageURL = response.attachments[0].url;
+          resolve(imageURL);
+        } else {
+          console.error('Không có tệp tin đính kèm trả về từ Discord Webhook');
+          resolve(null);
+        }
+      },
+      error: function(error) {
+        console.error('Lỗi khi gửi ảnh lên Discord Webhook:', error);
+        resolve(null);
+      }
+    });
+  });
+}
+
 function eventUploadImage() {
   const groupImageInput = document.querySelectorAll('#image-input');
   groupImageInput.forEach(ele => {
     $(ele).on('change', (e) => {
+      showLoader();
       let ID = $(ele).data().id;
       var files = e.target.files;
       if (files.length === 0) {
@@ -1773,7 +1791,7 @@ function eventUploadImage() {
       }
       for (var i = 0; i < files.length; i++) {
         var file = files[i];
-        uploadFileToFireBase(file).then(linkUrl => {
+        uploadFileToDiscordWebhook(file).then(linkUrl => {
           if (!linkUrl) return;
           uploadImage(ID, linkUrl);
         });
@@ -1782,7 +1800,7 @@ function eventUploadImage() {
         renderImageByImageID(ID);
       }, 3500);
     });
-  })
+  });
 }
 
 function eventSelectImg(ID, bool) {
@@ -1828,6 +1846,7 @@ function setEventForButtonDeleteImage(id, btn, bool) {
   }
 
   btn.click(() => {
+    showLoader();
     const groupImage = document.querySelectorAll('.item-img');
     groupImage.forEach(ele => {
       const parentID = $(ele).parent().data().id;
