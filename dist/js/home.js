@@ -318,7 +318,6 @@ function renderPage(userID) {
                     <ul class="menu-options">
                         <li><span onclick="addEventScrollToRegion()">Miền</span></li>
                         <li><span onclick="addEventScrollToTerritory()">Vùng</span></li>
-                        <li><a href="#">Bài Viết</a></li>
                     </ul>
                     <form class="searching-form">
                         <input type="text" placeholder="Tìm kiếm...">
@@ -468,7 +467,7 @@ function renderPage(userID) {
   renderProfile(userID);
   renderRegion(userID);
   renderTerritory(userID);
-  renderPosts(userID);
+//   renderPosts(userID);
 }
 
 $(document).ready(function () {

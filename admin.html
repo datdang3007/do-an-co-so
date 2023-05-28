@@ -42,7 +42,7 @@
                     </div>
                 </div>
 
-                <div class="options">
+                <!-- <div class="options">
                     <span class="title">Bài Viết</span>
                     <div class="option">
                         <div class="option-box" data-category="advertisements">
@@ -57,9 +57,9 @@
                             <i class="fa-solid fa-caret-right"></i>
                         </div>
                     </div>
-                </div>
+                </div> -->
 
-                <div class="options">
+                <div class="options" id="user-options">
                     <span class="title">Người Dùng</span>
                     <div class="option">
                         <div class="option-box" data-category="reviewers">
@@ -114,6 +114,44 @@
             </div>
         </div>
         <div class="right-content">
+
+            <!-- ### User Manager ### -->
+
+            <div class="header">
+                <div class="group-text-and-input">
+                    <span class="title">Quản Lý Người Dùng</span>
+                    <form>
+                        <input type="text" id="inputProvince" placeholder="Tìm kiếm">
+                        <label for="inputProvince"><i class="fa-solid fa-magnifying-glass"></i></label>
+                    </form>
+                </div>
+            </div>
+
+            <div class="user-manager">
+                <table class="header-table">
+                    <tr>
+                        <td>ID</td>
+                        <td>Tên</td>
+                        <td>Email</td>
+                        <td style="padding-right: 40px;">Thao Tác</td>
+                    </tr>
+                </table>
+
+                <div class="user-list">
+                    <table class="value-table">
+                        <tr>
+                            <td>64663cfe8183bcf22fdc8561</td>
+                            <td>Dat DT</td>
+                            <td>datdt@example.com</td>
+                            <td class="actions">
+                                <div class="action-buttons">
+                                    <span id="btnDelete">Delete</span>
+                                </div>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
 
             <!-- ### Statistical ### -->
 
@@ -623,6 +661,26 @@
                 </form>
             </div> -->
 
+            </div>
+        </div>
+
+        <div class="loader">
+            <div class="loader-inner">
+                <div class="loader-line-wrap">
+                    <div class="loader-line"></div>
+                </div>
+                <div class="loader-line-wrap">
+                    <div class="loader-line"></div>
+                </div>
+                <div class="loader-line-wrap">
+                    <div class="loader-line"></div>
+                </div>
+                <div class="loader-line-wrap">
+                    <div class="loader-line"></div>
+                </div>
+                <div class="loader-line-wrap">
+                    <div class="loader-line"></div>
+                </div>
             </div>
         </div>
     </body>

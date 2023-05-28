@@ -2,13 +2,13 @@
 //----------- ### FIREBASE ### -----------//
 //----------------------------------------//
 const firebaseConfig = {
-  apiKey: "AIzaSyAEdgYwOD3LSc_En_PE5BQrs0S608Cfxl4",
-  authDomain: "upload-img-fe871.firebaseapp.com",
-  projectId: "upload-img-fe871",
-  storageBucket: "upload-img-fe871.appspot.com",
-  messagingSenderId: "921179138895",
-  appId: "1:921179138895:web:d169df8086d99cb6c6733a",
-  measurementId: "G-GYJ5K9XJBV",
+  apiKey: "AIzaSyDXAFPGynh_oRdkUgfWnifu8XZ-Mgzfx7s",
+  authDomain: "doancoso-3bdb2.firebaseapp.com",
+  projectId: "doancoso-3bdb2",
+  storageBucket: "doancoso-3bdb2.appspot.com",
+  messagingSenderId: "629857970348",
+  appId: "1:629857970348:web:b86002f29ee5b213ab1709",
+  measurementId: "G-TTXNGES9QZ"
 };
 
 //----------------------------------------//
@@ -298,9 +298,27 @@ async function deleteImage(id) {
   return result.success;
 }
 
+// USER:
+async function getUser() {
+  let allUsers = await fetch("http://localhost:8000/api/getUser", {
+      method: "GET",
+  }).then((data) => data.json());
+  return allUsers;
+}
+
 //----------------------------------------//
 //----------- ### FUNCTION ### -----------//
 //----------------------------------------//
+
+function showLoader() {
+  $('.loader').fadeIn(300);
+}
+
+function hideLoader() {
+  setTimeout(() => {
+    $('.loader').fadeOut(300);
+  }, 1000);
+}
 
 function closeBoxPlus() {
   $(".box-plus-view").css("display", "none");
@@ -326,6 +344,23 @@ function randomString(length, specialWord) {
 }
 
 // #ADD NEW BOX EVENT
+function getUrlParameter(sParam) {
+  var sPageURL = window.location.search.substring(1),
+    sURLVariables = sPageURL.split("&"),
+    sParameterName,
+    i;
+
+  for (i = 0; i < sURLVariables.length; i++) {
+    sParameterName = sURLVariables[i].split("=");
+
+    if (sParameterName[0] === sParam) {
+      return sParameterName[1] === undefined
+        ? true
+        : decodeURIComponent(sParameterName[1]);
+    }
+  }
+  return false;
+};
 
 function randomCommentID() {
   return new Promise((resolve, reject) => {
@@ -1615,7 +1650,7 @@ function removeAllOptionBoxActive() {
   });
 }
 
-function setupOptionBoxEvent() {
+function setupOptionBoxEvent(permission) {
   let groupOptionBox = document.querySelectorAll(".option-box");
   groupOptionBox.forEach((ele) => {
     $(ele).click(() => {
@@ -1624,6 +1659,7 @@ function setupOptionBoxEvent() {
       if (!isActive) {
         removeAllOptionBoxActive();
         $(ele).addClass("active");
+        if (permission) renderRightContent(category, permission);
         renderRightContent(category);
       }
     });
@@ -1818,12 +1854,12 @@ function renderImageStock() {
               `;
             };
             $(ele).html(image);
-          }
-        })
-      }
-    })
-  })
-}
+          };
+        });
+      };
+    });
+  });
+};
 
 function renderImage() {
   let base = ``;
@@ -1846,6 +1882,7 @@ function renderImage() {
         `
       }
       $('.items--image').html(base);
+      hideLoader();
       eventUploadImage();
       eventCheckBoxSelect();
       renderImageStock();
@@ -1853,9 +1890,44 @@ function renderImage() {
   });
 }
 
+function renderUser(perm) {
+  getUser().then(Users => {
+    if (Users.success) {
+      let userList = ``;
+      const Users_data = Users.data;
+      for (const [index, user] of Object.entries(Users_data)) {
+        const isAdmin = user.admin;
+        if (perm == 1) {
+          if (isAdmin != 0) continue;
+        } else if (perm == 2) {
+          if (isAdmin == 0) continue;
+        }
+        const user_id = user._id;
+        const user_name = `${user.fist_name} ${user.last_name}`;
+        const user_email = user.email;
+        userList += `
+          <tr>
+            <td>${user_id}</td>
+            <td>${user_name}</td>
+            <td>${user_email}</td>
+            <td class="actions">
+                <div class="action-buttons">
+                    <span id="btnBlock" data-id="${user_id}">Chặn</span>
+                </div>
+            </td>
+          </tr>
+        `;
+      };
+      $('#user_items').html(userList);
+      hideLoader();
+    };
+  });
+};
+
 // #RIGHT CONTENT EVENT:
 
-function renderRightContent(category) {
+function renderRightContent(category, permission) {
+  showLoader();
   if (category == "statistics") {
     let rightContent = `
             <div class="header">
@@ -1936,6 +2008,7 @@ function renderRightContent(category) {
             </div>
         `;
     $(".right-content").html(rightContent);
+    hideLoader();
   } else if (category == "advertisements") {
     let rightContent = `
             <div class="header">
@@ -1994,6 +2067,7 @@ function renderRightContent(category) {
             </div>
         `;
     $(".right-content").html(rightContent);
+    hideLoader();
   } else if (category == "posts") {
     let rightContent = `
 
@@ -2001,9 +2075,64 @@ function renderRightContent(category) {
     $(".right-content").html(rightContent);
   } else if (category == "reviewers") {
     let rightContent = `
-        
-        `;
+      <div class="header">
+        <div class="group-text-and-input">
+            <span class="title">Quản Lý Người Dùng</span>
+            <form>
+                <input type="text" id="inputProvince" placeholder="Tìm kiếm">
+                <label for="inputProvince"><i class="fa-solid fa-magnifying-glass"></i></label>
+            </form>
+        </div>
+      </div>
+
+      <div class="user-manager">
+        <table class="header-table">
+            <tr>
+                <td>ID</td>
+                <td>Tên</td>
+                <td>Email</td>
+                <td style="padding-right: 40px;">Thao Tác</td>
+            </tr>
+        </table>
+
+        <div class="user-list">
+          <table class="value-table" id="user_items"></table>
+        </div>
+      </div>
+    `;
     $(".right-content").html(rightContent);
+
+    renderUser(1);
+  } else if (category == "moderators" && permission == 2) {
+    let rightContent = `
+      <div class="header">
+        <div class="group-text-and-input">
+            <span class="title">Quản Lý Quản Trị Viên</span>
+            <form>
+                <input type="text" id="inputProvince" placeholder="Tìm kiếm">
+                <label for="inputProvince"><i class="fa-solid fa-magnifying-glass"></i></label>
+            </form>
+        </div>
+      </div>
+
+      <div class="user-manager">
+        <table class="header-table">
+            <tr>
+                <td>ID</td>
+                <td>Tên</td>
+                <td>Email</td>
+                <td style="padding-right: 40px;">Thao Tác</td>
+            </tr>
+        </table>
+
+        <div class="user-list">
+          <table class="value-table" id="user_items"></table>
+        </div>
+      </div>
+    `;
+    $(".right-content").html(rightContent);
+
+    renderUser(2);
   } else if (category == "region") {
     let dataRegions = getRegions();
     dataRegions.then((data) => {
@@ -2057,6 +2186,7 @@ function renderRightContent(category) {
                     `;
         }
         $(".Regions").html(Regions);
+        hideLoader();
         addEventForButtonEdit();
         addEventForButtonDelete();
       }
@@ -2120,6 +2250,7 @@ function renderRightContent(category) {
                             </div>
                         `;
             $(".Territorys").html(Territorys);
+            hideLoader();
             addEventForButtonEdit();
             addEventForButtonDelete();
           });
@@ -2200,6 +2331,7 @@ function renderRightContent(category) {
                                 </tr>
                             `;
               $(".value-table").html(Provinces);
+              hideLoader();
               addEventForButtonEdit();
               addEventForButtonDelete();
             });
@@ -2285,6 +2417,7 @@ function renderRightContent(category) {
                                     </tr>
                                 `;
                 $(".value-table").html(Places);
+                hideLoader();
                 addEventForButtonEdit();
                 addEventForButtonDelete();
               });
@@ -2327,11 +2460,30 @@ function renderRightContent(category) {
 // });
 
 $(document).ready(function () {
+  let permission = getUrlParameter('permission');
+  if (!permission) {
+    let accept = confirm("Bạn không có quyền vào trang này, trở về trang đăng nhập?");
+    if (accept) window.location = "/sign_in.html";
+    return;
+  }
+  
+  if (permission == 2) {
+    $('#user-options').append(`
+      <div class="option">
+        <div class="option-box" data-category="moderators">
+            <i class="fa-solid fa-list"></i>
+            <span>Danh sách quản trị viên</span>
+            <i class="fa-solid fa-caret-right"></i>
+        </div>
+      </div>
+    `);
+  };
+
   // Khởi tạo Firebase
   firebase.initializeApp(firebaseConfig);
   
-  setupOptionBoxEvent();
+  setupOptionBoxEvent(permission);
   setEventButtonLogout();
-  renderRightContent('statistics');
+  renderRightContent('statistics', permission);
   labelInputFocus();
 });

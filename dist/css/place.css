@@ -438,7 +438,12 @@ body {
   font-size: 1em;
 }
 
+.no1-page .container .left-content .content-box .star-list .group-star .star.active i {
+  color: #f5be29;
+}
+
 .no1-page .container .left-content .content-box .star-list .group-star .star i {
+  cursor: pointer;
   color: #aaa;
   font-size: 18px;
   padding: 0 5px;

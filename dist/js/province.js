@@ -62,6 +62,20 @@ async function getTerritoryByID(id) {
 return territory;
 }
 
+async function getAllImageInProvince(id) {
+    let allImageStockForProvince = await fetch(
+      "http://localhost:8000/api/getAllImageInProvince",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ ID: id }),
+      }
+    ).then((data) => data.json());
+    return allImageStockForProvince;
+}
+
 //----------------------------------------//
 //----------- ### FUNCTION ### -----------//
 //----------------------------------------//
@@ -315,9 +329,34 @@ function renderProvince(userID, id) {
     });
 };
 
-function renderImageStock() {
-    let ImageStock = ``;
-    $('.items--image_stock').html(ImageStock);
+function renderImageStock(id) {
+    getAllImageInProvince(id).then(dataImageStock => {
+        console.log(dataImageStock);
+        if (dataImageStock.success) {
+            let ImageStock = ``;
+            const data = dataImageStock.data;
+            for (const [index, value] of Object.entries(data)) {
+                const place_name = value.name;
+                const image_stock = value.imageStock;
+                ImageStock += image_stock.map(val => `
+                    <div class="item">
+                        <div class="item-box">
+                            <div class="img">
+                                <img
+                                src="${val}"
+                                alt=""
+                                />
+                            </div>
+                            <div class="group-details">
+                                <p>${place_name}</p>
+                            </div>
+                        </div>
+                    </div>
+                `);
+            };
+            $('.items--image_stock').html(ImageStock);
+        };
+    });
 }
 
 function addEventButtonUser() {
@@ -386,7 +425,6 @@ function renderPage(userID, id) {
             <div class="container">
                 <ul class="menu-options">
                     <li><a id="btnDirectionHome" href="home.html">Trang Chủ</a></li>
-                    <li><a href="#">Bài Viết</a></li>
                 </ul>
                 <form class="searching-form">
                     <input type="text" placeholder="Tìm Kiếm...">

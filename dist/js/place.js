@@ -1,5 +1,6 @@
 // Set max render place recommend:
 const placeRecommendCount = 5;
+let tickedStarScore = null;
 
 //----------------------------------------//
 //------------- ### API ### --------------//
@@ -117,6 +118,18 @@ async function handleLikeByID(id, userID) {
   return result.success;
 }
 
+async function editArrayLikeByID(id, data) {
+    let result = await fetch("http://localhost:8000/api/editArrayLikeByID", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+        },
+    body: JSON.stringify({ ID: id, data: data }),
+  }).then((data) => data.json());
+  return result.success;
+}
+
+
 //----------------------------------------//
 //----------- ### FUNCTION ### -----------//
 //----------------------------------------//
@@ -193,7 +206,7 @@ function compareTime(createdAt) {
     if (hoursDiff == 0 && minutesDiff == 0 && secondsDiff < 60) {
         return `vài giây trước`;
     };
-    if (hoursDiff == 0 && minutesDiff < 60) {
+    if (hoursDiff == 0 && minutesDiff > 0 && minutesDiff < 60) {
         return `${minutesDiff} phút trước`;
     };
     if (hoursDiff != 0 && hoursDiff < 24) {
@@ -211,6 +224,8 @@ function eventClickPlace(userID, group) {
         });
     });
 };
+
+// COMMENT:
 
 function addEventButtonLikeComment(userID, commentID) {
     const groupBtnLike = document.querySelectorAll('#btnLikeComment');
@@ -284,7 +299,7 @@ function renderCommentList(userID, commentID) {
     return new Promise((resolve, reject) => {
         const emptyMsg = `<span class="Error">Chưa có bình luận nào</span>`;
         getAllCommentByTargetID(commentID).then(dataComment => {
-            if (!dataComment.success) {
+            if (!dataComment.success || dataComment.data.length == 0) {
                 $('.comment-list-items').before(emptyMsg);
                 return
             }
@@ -336,8 +351,6 @@ function renderCommentList(userID, commentID) {
                     $('.comment-list-items').append(commentItem);
                 });
             };
-            addEventButtonLikeComment(userID, commentID);
-            addEventButtonReplyComment(userID);
             resolve();
         });
     });
@@ -386,8 +399,118 @@ function renderCommentContent(userID, commentID) {
                 });
             }
         });
+
+        addEventButtonLikeComment(userID, commentID);
+        addEventButtonReplyComment(userID);
     });
 }
+
+// STARS:
+function showStar(score) {
+    var groupStar = document.querySelectorAll(".star");
+  
+    groupStar.forEach((star) => {
+        const star_no = $(star).data().no;
+      if (star_no <= score) {
+        $(star).addClass("active");
+      } else {
+        $(star).removeClass("active");
+      }
+    });
+};
+
+function starEvent(userID, id) {
+    const groupStars = document.querySelectorAll('.star');
+    groupStars.forEach(star => {
+        $(star).hover(() => {
+            const star_no = $(star).data().no;
+            showStar(star_no);
+        });
+
+        $(star).mouseleave(() => {
+            if (!tickedStarScore) {
+                showStar(0);
+            } else {
+                showStar(tickedStarScore);
+            };
+        });
+
+        $(star).click(() => {
+            if (!userID) {
+                alert('Bạn cần đăng nhập để có thể đánh giá địa điểm!');
+                return;
+            };
+
+            const star_no = $(star).data().no;
+            tickedStarScore = star_no;
+            showStar(star_no);
+
+            let data = {
+                userID: userID,
+                score: star_no
+            }
+            
+            editArrayLikeByID(id, data).then(result => {
+                if (result) {
+
+                }
+            });
+        });
+    });
+}
+
+
+function renderStarContent(userID, id) {
+    getPlaceByID(id).then(dataPlace => {
+        if (dataPlace.success) {
+            const data = dataPlace.data;
+            const dataArrayLike = data.likeArray;
+            const reviewerLikeCount = dataArrayLike.length;
+            let score = 0;
+            if (reviewerLikeCount > 0) {
+                let totalScore = 0
+                dataArrayLike.map(val => totalScore += val.score);
+                score = Math.floor(totalScore / reviewerLikeCount);
+            }
+            let starList = `
+                <div class="group-star">
+                    <span>Đánh giá: </span>
+                    <div class="star" id="star-no1" data-no="1">
+                        <i class="fa-solid fa-star"></i>
+                    </div>
+                    <div class="star" id="star-no2" data-no="2">
+                        <i class="fa-solid fa-star"></i>
+                    </div>
+                    <div class="star" id="star-no3" data-no="3">
+                        <i class="fa-solid fa-star"></i>
+                    </div>
+                    <div class="star" id="star-no4" data-no="4">
+                        <i class="fa-solid fa-star"></i>
+                    </div>
+                    <div class="star" id="star-no5" data-no="5">
+                        <i class="fa-solid fa-star"></i>
+                    </div>
+                </div>
+                <div class="group-point">
+                    <span class="star-point">
+                        <span style="color: green;">${score}/5</span>
+                        <i class="fa-solid fa-star"></i>
+                    </span>
+                    <p>(${reviewerLikeCount} người đánh giá)</p>
+                </div>
+            `;
+
+            $('.star-list').html(starList);
+
+            const isStared = dataArrayLike.length > 0 ? dataArrayLike.filter(val => val.userID == userID)[0].score : 0;
+            if (isStared) {
+                tickedStarScore = isStared
+                showStar(tickedStarScore);
+            };
+            starEvent(userID, id);
+        };
+    });
+};
 
 function renderPlace(userID, id) {
     getPlaceByID(id).then(dataPlace => {
@@ -429,6 +552,7 @@ function renderPlace(userID, id) {
             $('.content-box--plus').html(contentPlus);
 
             renderCommentContent(userID, commentID);
+            renderStarContent(userID, id);
 
             getRegionByID(regionID).then(dataRegion => {
                 if (dataRegion.success) {
@@ -715,7 +839,6 @@ function renderPage(userID, id) {
             <div class="container">
                 <ul class="menu-options">
                     <li><a id="btnDirectionHome" href="home.html">Trang Chủ</a></li>
-                    <li><a href="#">Bài Viết</a></li>
                 </ul>
                 <form class="searching-form">
                     <input type="text" placeholder="Tìm Kiếm...">
@@ -750,33 +873,7 @@ function renderPage(userID, id) {
 
                     <div class="content-box">
                         <span class="title">Bình Luận & Đánh Giá</span><br />
-                        <div class="star-list">
-                            <div class="group-star">
-                                <span>Đánh giá: </span>
-                                <div class="star" id="star-no1">
-                                    <i class="fa-solid fa-star"></i>
-                                </div>
-                                <div class="star" id="star-no2">
-                                    <i class="fa-solid fa-star"></i>
-                                </div>
-                                <div class="star" id="star-no3">
-                                    <i class="fa-solid fa-star"></i>
-                                </div>
-                                <div class="star" id="star-no4">
-                                    <i class="fa-solid fa-star"></i>
-                                </div>
-                                <div class="star" id="star-no5">
-                                    <i class="fa-solid fa-star"></i>
-                                </div>
-                            </div>
-                            <div class="group-point">
-                                <span class="star-point">
-                                    <span style="color: green;">5/5</span>
-                                    <i class="fa-solid fa-star"></i>
-                                </span>
-                                <p>(20 người đánh giá)</p>
-                            </div>
-                        </div>
+                        <div class="star-list"></div>
                     </div>
 
                     <div class="content-box">

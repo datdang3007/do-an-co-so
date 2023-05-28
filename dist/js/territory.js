@@ -304,7 +304,6 @@ function renderPage(userID, territoryID) {
                             <ul class="menu-options">
                                 <li><a id="btnDirectionHome" href="home.html">Trang Chủ</a></li>
                                 <li><a id="direction_region">Miền</a></li>
-                                <li><a href="#">Bài Viết</a></li>
                             </ul>
                             <form class="searching-form">
                                 <input type="text" placeholder="Tìm Kiếm...">
