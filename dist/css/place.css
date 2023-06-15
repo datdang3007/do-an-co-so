@@ -142,6 +142,8 @@ body {
 }
 
 .header .searching-form {
+  z-index: 1;
+  position: relative;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -154,7 +156,7 @@ body {
 }
 
 .header .searching-form input {
-  width: 300px;
+  width: 400px;
   font-size: 16px;
   padding: 6px 15px;
   padding-right: 0px;
@@ -170,6 +172,68 @@ body {
   background-color: #fff;
   border-top-right-radius: 20px;
   border-bottom-right-radius: 20px;
+}
+
+.header .searching-form ul.result-searching-form {
+  z-index: -1;
+  position: absolute;
+  top: calc(100% - 15px);
+  left: 0;
+  background-color: #ccc;
+  color: black;
+  border-bottom-left-radius: 20px;
+  border-bottom-right-radius: 20px;
+  padding: 25px 0 5px;
+  width: 100%;
+  max-height: 500px;
+  overflow-x: hidden;
+  overflow-y: scroll;
+}
+
+.header .searching-form ul.result-searching-form li.result-searching-form__items {
+  padding: 0px 10px;
+}
+
+.header .searching-form ul.result-searching-form li.result-searching-form__items span.header-title {
+  display: block;
+  color: black;
+  border-bottom: 1px solid black;
+}
+
+.header .searching-form ul.result-searching-form li.result-searching-form__items .result-searching-form__item {
+  cursor: pointer;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  margin: 10px 0;
+  -webkit-transition: 0.3s;
+  transition: 0.3s;
+}
+
+.header .searching-form ul.result-searching-form li.result-searching-form__items .result-searching-form__item:hover {
+  background-color: #4169e1;
+}
+
+.header .searching-form ul.result-searching-form li.result-searching-form__items .result-searching-form__item:hover span.item-name {
+  color: #fff;
+}
+
+.header .searching-form ul.result-searching-form li.result-searching-form__items .result-searching-form__item img.item-img {
+  display: block;
+  width: 60px;
+  height: 60px;
+  -o-object-fit: cover;
+     object-fit: cover;
+}
+
+.header .searching-form ul.result-searching-form li.result-searching-form__items .result-searching-form__item span.item-name {
+  margin-left: 8px;
+  color: black;
+  -webkit-transition: 0.3s;
+  transition: 0.3s;
 }
 
 .header .group-login-language {
@@ -848,12 +912,10 @@ body {
 
 .no2-page .container .items .item .item-box .img img {
   display: block;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  -webkit-transform: translate(-50%, -50%);
-          transform: translate(-50%, -50%);
-  width: 120%;
+  width: 100%;
+  height: 100%;
+  -o-object-fit: cover;
+     object-fit: cover;
 }
 
 .no2-page .container .items .item .item-box .group-details {

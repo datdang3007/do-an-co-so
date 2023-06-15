@@ -129,6 +129,42 @@ async function editArrayLikeByID(id, data) {
   return result.success;
 }
 
+async function getImageStockByID(id) {
+    let imageList = await fetch("http://localhost:8000/api/getImageStockByID", {
+      method: "POST",
+      headers: {
+          "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ ID: id }),
+    }).then((data) => data.json());
+    return imageList;
+}
+
+async function addConnectPlace(id) {
+    console.log(id);
+    let result = await fetch(
+      "http://localhost:8000/api/addConnectPlace",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ ID: id }),
+      }
+    ).then((data) => data.json());
+    return result;
+}
+
+async function getAllCollectionHaveNameLike(searchValue) {
+    let result = await fetch("http://localhost:8000/api/getAllCollectionHaveNameLike", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ searchValue: searchValue }),
+    }).then((data) => data.json());
+    return result;
+}
 
 //----------------------------------------//
 //----------- ### FUNCTION ### -----------//
@@ -157,70 +193,109 @@ function getRandomNumberTypeInt(min, max) {
     return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
-function compareDate(createdDate) {
-    let currentDate = new Date();
-    let day = currentDate.getDate();
-    let month = currentDate.getMonth() + 1;
-    let year = currentDate.getFullYear();
-    let nowDate = year + '-' + (month < 10 ? '0' + month : month) + '-' + (day < 10 ? '0' + day : day);
+// function compareDate(createdDate) {
+//     let currentDate = new Date();
+//     let day = currentDate.getDate();
+//     let month = currentDate.getMonth() + 1;
+//     let year = currentDate.getFullYear();
+//     let nowDate = year + '-' + (month < 10 ? '0' + month : month) + '-' + (day < 10 ? '0' + day : day);
 
-    let startDate = new Date(createdDate);
-    let endDate = new Date(nowDate);
+//     let startDate = new Date(createdDate);
+//     let endDate = new Date(nowDate);
 
-    let timeDiff = endDate.getTime() - startDate.getTime();
-    let daysDiff = Math.floor(timeDiff / (1000 * 60 * 60 * 24));
+//     let timeDiff = endDate.getTime() - startDate.getTime();
+//     let daysDiff = Math.floor(timeDiff / (1000 * 60 * 60 * 24));
     
-    if (daysDiff == 0) {
-        return null
+//     if (daysDiff == 0) {
+//         return null
+//     }
+//     if (daysDiff < 31) {
+//         return  `${daysDiff} ngày trước`;
+//     }
+//     if (daysDiff > 31 && daysDiff < 365) {
+//         let monthsDiff = Math.floor(daysDiff / 30.436875);
+//         return `${monthsDiff} tháng trước`;
+//     } else {
+//         let monthsDiff = Math.floor(daysDiff / 30.436875);
+//         let yearsDiff = Math.floor(monthsDiff / 12);
+//         return `${yearsDiff} năm trước`;
+//     }
+// }
+
+// function compareTime(createdAt) {
+//     let createdTimeSplit = createdAt.split(':');
+//     let hoursCreated = +createdTimeSplit[0] + 7;
+//     let minutesCreated = createdTimeSplit[1];
+//     let secondsCreated = createdTimeSplit[2];
+    
+//     let currentDate = new Date();
+//     let hours = currentDate.getHours();
+//     let minutes = currentDate.getMinutes();
+//     let seconds = currentDate.getSeconds();
+
+//     if (hours < hoursCreated ? hours = hours + 24 : hours)
+
+//     var hoursDiff = hours - hoursCreated;
+//     var minutesDiff = minutes - minutesCreated;
+//     var secondsDiff = seconds - secondsCreated;
+
+//     if (hoursDiff == 0 && minutesDiff == 0 && secondsDiff < 60) {
+//         return `vài giây trước`;
+//     };
+//     if (hoursDiff == 0 && minutesDiff > 0 && minutesDiff < 60) {
+//         return `${minutesDiff} phút trước`;
+//     };
+//     if (hoursDiff != 0 && hoursDiff < 24) {
+//         return `${hoursDiff} giờ trước`;
+//     } else {
+//         return null;
+//     };
+// };
+
+function formatTime(created) {
+    let createdDate = new Date(created);
+    let currentDate = new Date();
+  
+    let timeDiff = Math.abs(currentDate - createdDate) / 1000; // Đổi sang giây
+  
+    if (timeDiff < 60) {
+      return `${Math.floor(timeDiff)} giây trước`;
     }
-    if (daysDiff < 31) {
-        return  `${daysDiff} ngày trước`;
+    timeDiff /= 60; // Đổi sang phút
+  
+    if (timeDiff < 60) {
+      return `${Math.floor(timeDiff)} phút trước`;
     }
-    if (daysDiff > 31 && daysDiff < 365) {
-        let monthsDiff = Math.floor(daysDiff / 30.436875);
-        return `${monthsDiff} tháng trước`;
-    } else {
-        let monthsDiff = Math.floor(daysDiff / 30.436875);
-        let yearsDiff = Math.floor(monthsDiff / 12);
-        return `${yearsDiff} năm trước`;
+    timeDiff /= 60; // Đổi sang giờ
+  
+    if (timeDiff < 24) {
+      return `${Math.floor(timeDiff)} giờ trước`;
     }
+    timeDiff /= 24; // Đổi sang ngày
+  
+    if (timeDiff < 31) {
+      return `${Math.floor(timeDiff)} ngày trước`;
+    }
+    timeDiff /= 30.436875; // Đổi sang tháng
+  
+    if (timeDiff < 12) {
+      return `${Math.floor(timeDiff)} tháng trước`;
+    }
+    
+    timeDiff /= 12; // Đổi sang năm
+  
+    return `${Math.floor(timeDiff)} năm trước`;
 }
-
-function compareTime(createdAt) {
-    let createdTimeSplit = createdAt.split(':');
-    let hoursCreated = +createdTimeSplit[0] + 7;
-    let minutesCreated = createdTimeSplit[1];
-    let secondsCreated = createdTimeSplit[2];
-    
-    let currentDate = new Date();
-    let hours = currentDate.getHours();
-    let minutes = currentDate.getMinutes();
-    let seconds = currentDate.getSeconds();
-
-    if (hours < hoursCreated ? hours = hours + 24 : hours)
-
-    var hoursDiff = hours - hoursCreated;
-    var minutesDiff = minutes - minutesCreated;
-    var secondsDiff = seconds - secondsCreated;
-
-    if (hoursDiff == 0 && minutesDiff == 0 && secondsDiff < 60) {
-        return `vài giây trước`;
-    };
-    if (hoursDiff == 0 && minutesDiff > 0 && minutesDiff < 60) {
-        return `${minutesDiff} phút trước`;
-    };
-    if (hoursDiff != 0 && hoursDiff < 24) {
-        return `${hoursDiff} giờ trước`;
-    } else {
-        return null;
-    };
-};
 
 function eventClickPlace(userID, group) {
     group.forEach(ele => {
         $(ele).click(() => {
             let ID = $(ele).data().id;
-            window.location = `/place.html?userID=${userID}&placeID=${ID}`;
+            if (userID) {
+                window.location = `/place.html?userID=${userID}&placeID=${ID}`;
+                return
+            }
+            window.location = `/place.html?placeID=${ID}`;
         });
     });
 };
@@ -301,7 +376,6 @@ function renderCommentList(userID, commentID) {
         getAllCommentByTargetID(commentID).then(dataComment => {
             if (!dataComment.success || dataComment.data.length == 0) {
                 $('.comment-list-items').before(emptyMsg);
-                return
             }
 
             const data = dataComment.data;
@@ -314,13 +388,7 @@ function renderCommentList(userID, commentID) {
                 const createdTimeSplit = createdTime.split('T');
                 const date = createdTimeSplit[0];
                 const time = createdTimeSplit[1].split('.')[0];
-                const fomatTime = compareTime(time);
-
-                if (fomatTime) {
-                    commentTime = fomatTime;
-                } else {
-                    commentTime = compareDate(date);
-                }
+                const fomatTime = formatTime(`${date} ${time}`);
 
                 checkUserTag(txtComment).then(txtCommentAfterCheckUserTag => {
                     let commentItem = `
@@ -342,7 +410,7 @@ function renderCommentList(userID, commentID) {
                                         <i class="fa-solid fa-reply active"></i>
                                     </div>
                                     <div class="option-comment-box time">
-                                        <span>${commentTime}</span>
+                                        <span>${fomatTime}</span>
                                     </div>
                                 </div>
                             </div>
@@ -390,7 +458,7 @@ function renderCommentContent(userID, commentID) {
     
                 addNewComment(dataComment).then(result => {
                     if (result.success) {
-                        console.log(result);
+                        $('.Error').remove();
                         $('#txtComment').val(``);
                         setTimeout(() => {
                             renderCommentList(userID, commentID);
@@ -502,7 +570,9 @@ function renderStarContent(userID, id) {
 
             $('.star-list').html(starList);
 
-            const isStared = dataArrayLike.length > 0 ? dataArrayLike.filter(val => val.userID == userID)[0].score : 0;
+            const filteredData = dataArrayLike.filter(val => val.userID == userID);
+            const isStared = filteredData.length > 0 ? filteredData[0].score : 0;
+            
             if (isStared) {
                 tickedStarScore = isStared
                 showStar(tickedStarScore);
@@ -769,9 +839,28 @@ function renderService() {
 }
 
 function renderImageStock(id) {
-    let ImageStock = ``;
-    $('.items--image_stock').html(ImageStock);
-}
+    getPlaceByID(id).then(dataPlace => {
+        if (dataPlace.success) {
+            const image_stock_id = dataPlace.data.imageID;
+            getImageStockByID(image_stock_id).then(dataImage => {
+                if (dataImage.success) {
+                    const ImageStock = dataImage.data.map(val =>
+                        `
+                        <div class="item">
+                            <div class="item-box">
+                                <div class="img">
+                                    <img src="${val.imageURL}" alt="" />
+                                </div>
+                            </div>
+                        </div>
+                      `
+                    ).join('');
+                    $('.items--image_stock').html(ImageStock);
+                };
+            });
+        };
+    });
+};
 
 function addEventButtonUser() {
     $('#userProfile').click(() => {
@@ -832,6 +921,140 @@ function renderProfile(userID, placeID) {
     $('.group-login-language').html(groupLoginAndLanguage);
 }
 
+// Header Search:
+function addEventForChoseSearchOption(userID) {
+    const groupSearchOption = document.querySelectorAll('.result-searching-form__item');
+    groupSearchOption.forEach(option => {
+        $(option).click(e => {
+            e.preventDefault();
+            const direction = $(option).data().direction;
+            if (!userID) {
+                window.location = `${direction}`;
+                return;
+            }
+            window.location = `${direction}&userID=${userID}`;
+        });
+    });
+};
+
+function renderHeaderSearch(userID, searchValue) {
+    getAllCollectionHaveNameLike(searchValue).then(result => {
+        if (result.success) {
+            const dataResult = result.data;
+            const regionData = dataResult.regions;
+            const territoryData = dataResult.territories;
+            const provinceData = dataResult.provinces;
+            const placeData = dataResult.places;
+            
+            let isRegionEmpty = regionData.length == 0 ? true : false;
+            let isTerritoryEmpty = territoryData.length == 0 ? true : false;
+            let isProvinceEmpty = provinceData.length == 0 ? true : false;
+            let isPlaceEmpty = placeData.length == 0 ? true : false;
+
+            if (isRegionEmpty || isTerritoryEmpty || isProvinceEmpty || isPlaceEmpty) {
+                $('.result-searching-form').hide();
+                return;
+            }
+
+            let SearchResult = ``;
+
+            // Region Result:
+            if (!isRegionEmpty) {
+                SearchResult += `
+                    <li class="result-searching-form__items">
+                        <span class="header-title">Miền</span>
+                `;
+                for (const [index, region] of Object.entries(regionData)) {
+                    const id = region._id;
+                    const image = region.image;
+                    const name = region.name;
+                    SearchResult += `
+                        <div class="result-searching-form__item" data-direction="/region.html?regionID=${id}">
+                            <img class="item-img" src="${image}" alt="loading...">
+                            <span class="item-name">${name}</span>
+                        </div>
+                    `;
+                };
+                SearchResult += `</li>`;
+            };
+
+            // Territory Result:
+            if (!isTerritoryEmpty) {
+                SearchResult += `
+                    <li class="result-searching-form__items">
+                        <span class="header-title">Vùng</span>
+                `;
+                for (const [index, territory] of Object.entries(territoryData)) {
+                    const id = territory._id;
+                    const image = territory.image;
+                    const name = territory.name;
+                    SearchResult += `
+                        <div class="result-searching-form__item" data-direction="/territory.html?territoryID=${id}">
+                            <img class="item-img" src="${image}" alt="loading...">
+                            <span class="item-name">${name}</span>
+                        </div>
+                    `;
+                };
+                SearchResult += `</li>`;
+            };
+
+            // Province Result:
+            if (!isProvinceEmpty) {
+                SearchResult += `
+                    <li class="result-searching-form__items">
+                        <span class="header-title">Tỉnh Thành</span>
+                `;
+                for (const [index, province] of Object.entries(provinceData)) {
+                    const id = province._id;
+                    const image = province.image;
+                    const name = province.name;
+                    SearchResult += `
+                        <div class="result-searching-form__item" data-direction="/province.html?provinceID=${id}">
+                            <img class="item-img" src="${image}" alt="loading...">
+                            <span class="item-name">${name}</span>
+                        </div>
+                    `;
+                };
+                SearchResult += `</li>`;
+            };
+
+            // Place Result:
+            if (!isPlaceEmpty) {
+                SearchResult += `
+                    <li class="result-searching-form__items">
+                        <span class="header-title">Địa Điểm</span>
+                `;
+                for (const [index, place] of Object.entries(placeData)) {
+                    const id = place._id;
+                    const image = place.image;
+                    const name = place.name;
+                    SearchResult += `
+                        <div class="result-searching-form__item" data-direction="/place.html?placeID=${id}">
+                            <img class="item-img" src="${image}" alt="loading...">
+                            <span class="item-name">${name}</span>
+                        </div>
+                    `;
+                };
+                SearchResult += `</li>`;
+            };
+
+            $('.result-searching-form').html(SearchResult);
+            $('.result-searching-form').show();
+            addEventForChoseSearchOption(userID);
+        };
+    });
+}
+
+function addEventForInputHeaderSearch(userID) {
+    $('#inputHeaderSearch').on('keypress', (e) => {
+        const searchValue = $('#inputHeaderSearch').val();
+        if (e.which == 13) {
+            e.preventDefault();
+            renderHeaderSearch(userID, searchValue);
+        };
+    });
+};
+
 function renderPage(userID, id) {
     // HEADER:
     let base = `
@@ -841,8 +1064,9 @@ function renderPage(userID, id) {
                     <li><a id="btnDirectionHome" href="home.html">Trang Chủ</a></li>
                 </ul>
                 <form class="searching-form">
-                    <input type="text" placeholder="Tìm Kiếm...">
+                    <input type="text" placeholder="Tìm kiếm..." id="inputHeaderSearch">
                     <label for=""><i class="fa-solid fa-magnifying-glass"></i></label>
+                    <ul class="result-searching-form"></ul>
                 </form>
                 <div class="group-login-language"></div>
             </div>
@@ -985,10 +1209,15 @@ function renderPage(userID, id) {
     renderPlace(userID, id);
     renderPlaceRecommend(userID);
     renderImageStock(id);
+
+    // HEADER SEARCH:
+    $('.result-searching-form').hide();
+    addEventForInputHeaderSearch(userID);
 }
 
 $(document).ready(function () {
     const userID = getUrlParameter("userID");
     const placeID = getUrlParameter("placeID");
+    addConnectPlace(placeID);
     renderPage(userID, placeID);
 });

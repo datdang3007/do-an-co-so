@@ -1,27 +1,14 @@
 //----------------------------------------//
-//----------- ### FIREBASE ### -----------//
-//----------------------------------------//
-const firebaseConfig = {
-  apiKey: "AIzaSyDXAFPGynh_oRdkUgfWnifu8XZ-Mgzfx7s",
-  authDomain: "doancoso-3bdb2.firebaseapp.com",
-  projectId: "doancoso-3bdb2",
-  storageBucket: "doancoso-3bdb2.appspot.com",
-  messagingSenderId: "629857970348",
-  appId: "1:629857970348:web:b86002f29ee5b213ab1709",
-  measurementId: "G-TTXNGES9QZ"
-};
-
-//----------------------------------------//
 //------------- ### API ### --------------//
 //----------------------------------------//
 
 // #REGIONS:
 async function getRegionByID(id) {
-    let region = await fetch("http://localhost:8000/api/getRegionByID", {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json",
-        },
+  let region = await fetch("http://localhost:8000/api/getRegionByID", {
+      method: "POST",
+      headers: {
+          "Content-Type": "application/json",
+      },
     body: JSON.stringify({ ID: id }),
   }).then((data) => data.json());
   return region;
@@ -306,6 +293,25 @@ async function getUser() {
   return allUsers;
 }
 
+async function deleteUser(id) {
+  let result = await fetch("http://localhost:8000/api/deleteUser", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ ID: id }),
+  }).then((data) => data.json());
+  return result.success;
+}
+
+// STATISCAL:
+async function getStatiscal() {
+  let result = await fetch("http://localhost:8000/api/getStatiscal", {
+      method: "GET",
+  }).then((data) => data.json());
+  return result;
+}
+
 //----------------------------------------//
 //----------- ### FUNCTION ### -----------//
 //----------------------------------------//
@@ -413,6 +419,7 @@ function checkRegionInputEmpty() {
       slogan: slogan,
       image: imageURL,
       overview: overview,
+      connect: 0
     };
     return data;
   }
@@ -441,6 +448,7 @@ function checkTerritoryInputEmpty() {
       regionID: regionID,
       image: imageURL,
       overview: overview,
+      connect: 0
     };
     return data;
   }
@@ -466,6 +474,7 @@ function checkProvinceInputEmpty() {
       regionID: regionID,
       image: imageURL,
       overview: overview,
+      connect: 0
     };
     return data;
   }
@@ -554,6 +563,7 @@ function checkPlaceInputEmpty() {
                 imageID: imageID,
                 likeArray: [],
                 commentID: commentID,
+                connect: 0
               };
 
               let dataCallBack = {
@@ -1949,6 +1959,27 @@ function renderImage() {
   });
 };
 
+// USER:
+function addEventForButtonContact(perm) {
+  if (perm == 1) {
+    
+  } else if (perm == 2) {
+    let groupButtonDelete = document.querySelectorAll('#btnDelete');
+    groupButtonDelete.forEach(btn => {
+      $(btn).click(() => {
+        const user_id = $(btn).data().id;
+        if (confirm(`Bạn có chắc muốn xóa user-${user_id}`)) {
+          deleteUser(user_id).then(success => {
+            if(success) {
+              renderUser(perm);
+            };
+          });
+        };
+      });
+    });
+  };
+};
+
 function renderUser(perm) {
   getUser().then(Users => {
     if (Users.success) {
@@ -1956,14 +1987,19 @@ function renderUser(perm) {
       const Users_data = Users.data;
       for (const [index, user] of Object.entries(Users_data)) {
         const isAdmin = user.admin;
+        const user_id = user._id;
+
         if (perm == 1) {
+          var buttonContact = `<span id="btnBlock" data-id="${user_id}">Chặn</span>`;
           if (isAdmin != 0) continue;
         } else if (perm == 2) {
-          if (isAdmin == 0) continue;
+          var buttonContact = `<span id="btnDelete" data-id="${user_id}">Xoá</span>`;
+          if (isAdmin != 1) continue;
         }
-        const user_id = user._id;
+
         const user_name = `${user.fist_name} ${user.last_name}`;
         const user_email = user.email;
+
         userList += `
           <tr>
             <td>${user_id}</td>
@@ -1971,13 +2007,106 @@ function renderUser(perm) {
             <td>${user_email}</td>
             <td class="actions">
                 <div class="action-buttons">
-                    <span id="btnBlock" data-id="${user_id}">Chặn</span>
+                  ${buttonContact}
                 </div>
             </td>
           </tr>
         `;
       };
       $('#user_items').html(userList);
+      hideLoader();
+      addEventForButtonContact(perm);
+    };
+  });
+};
+
+function evenetForSearchUser(perm) {
+  $('#btnSearchUser').click(() => {
+    const search_user = $('#inputSearchUser').val();
+    getUser().then(Users => {
+      if (Users.success) {
+        let userList = ``;
+        const Users_data = Users.data;
+        for (const [index, user] of Object.entries(Users_data)) {
+          const isAdmin = user.admin;
+          const user_id = user._id;
+
+          if (perm == 1) {
+            var buttonContact = `<span id="btnBlock" data-id="${user_id}">Chặn</span>`;
+            if (isAdmin != 0) continue;
+          } else if (perm == 2) {
+            var buttonContact = `<span id="btnDelete" data-id="${user_id}">Xoá</span>`;
+            if (isAdmin == 0) continue;
+          }
+
+          const user_name = `${user.fist_name} ${user.last_name}`;
+          const user_email = user.email;
+          if (user_name.toLowerCase().includes(search_user.toLowerCase()) || user_id.includes(search_user)) {
+            userList += `
+              <tr>
+                <td>${user_id}</td>
+                <td>${user_name}</td>
+                <td>${user_email}</td>
+                <td class="actions">
+                    <div class="action-buttons">
+                      ${buttonContact}
+                    </div>
+                </td>
+              </tr>
+            `;
+          }
+        };
+        $('#user_items').html(userList);
+        hideLoader();
+        addEventForButtonContact(perm);
+      };
+    });
+  });
+}
+
+// STATISTICS:
+function renderStatistics() {
+  getStatiscal().then(resultStatiscal => {
+    if (resultStatiscal.success) {
+      const data = resultStatiscal.data;
+      let statistical = `
+        <div class="box-statistical">
+          <div class="box">
+            <span class="title-box-statistical">
+                Số Lượt Truy Cập
+            </span>
+            <span class="title-box-content">
+              <i class="fa-solid fa-arrow-pointer"></i>
+              ${data.connectCount}
+            </span>
+          </div>
+        </div>
+
+        <div class="box-statistical">
+          <div class="box">
+            <span class="title-box-statistical">
+              Số Lượt Đánh Giá
+            </span>
+            <span class="title-box-content">
+              <i class="fa-solid fa-thumbs-up"></i>
+              ${data.likeCount}
+            </span>
+          </div>
+        </div>
+
+        <div class="box-statistical">
+          <div class="box">
+            <span class="title-box-statistical">
+              Trung Bình Điểm Đánh Giá
+            </span>
+            <span class="title-box-content">
+              <i class="fa-solid fa-star"></i>
+              ${data.ScorePercent}
+            </span>
+          </div>
+        </div>
+      `;
+      $('.statistical').html(statistical);
       hideLoader();
     };
   });
@@ -1992,82 +2121,10 @@ function renderRightContent(category, permission) {
             <div class="header">
                 <div class="title">Thống Kê</div>
             </div>
-            <div class="statistical">
-                <div class="box-statistical">
-                    <div class="box">
-                        <span class="title-box-statistical">
-                            The number of website visits
-                        </span>
-                        <span class="title-box-content">
-                            <i class="fa-solid fa-calendar-check"></i>
-                            4543
-                        </span>
-                    </div>
-                </div>
-
-                <div class="box-statistical">
-                    <div class="box">
-                        <span class="title-box-statistical">
-                            The number of website visits
-                        </span>
-                        <span class="title-box-content">
-                            <i class="fa-solid fa-calendar-check"></i>
-                            4543
-                        </span>
-                    </div>
-                </div>
-
-                <div class="box-statistical">
-                    <div class="box">
-                        <span class="title-box-statistical">
-                            The number of website visits
-                        </span>
-                        <span class="title-box-content">
-                            <i class="fa-solid fa-calendar-check"></i>
-                            4543
-                        </span>
-                    </div>
-                </div>
-
-                <div class="box-statistical">
-                    <div class="box">
-                        <span class="title-box-statistical">
-                            The number of website visits
-                        </span>
-                        <span class="title-box-content">
-                            <i class="fa-solid fa-calendar-check"></i>
-                            4543
-                        </span>
-                    </div>
-                </div>
-
-                <div class="box-statistical">
-                    <div class="box">
-                        <span class="title-box-statistical">
-                            The number of website visits
-                        </span>
-                        <span class="title-box-content">
-                            <i class="fa-solid fa-calendar-check"></i>
-                            4543
-                        </span>
-                    </div>
-                </div>
-
-                <div class="box-statistical">
-                    <div class="box">
-                        <span class="title-box-statistical">
-                            The number of website visits
-                        </span>
-                        <span class="title-box-content">
-                            <i class="fa-solid fa-calendar-check"></i>
-                            4543
-                        </span>
-                    </div>
-                </div>
-            </div>
+            <div class="statistical"></div>
         `;
     $(".right-content").html(rightContent);
-    hideLoader();
+    renderStatistics();
   } else if (category == "advertisements") {
     let rightContent = `
             <div class="header">
@@ -2138,8 +2195,8 @@ function renderRightContent(category, permission) {
         <div class="group-text-and-input">
             <span class="title">Quản Lý Người Dùng</span>
             <form>
-                <input type="text" id="inputProvince" placeholder="Tìm kiếm">
-                <label for="inputProvince"><i class="fa-solid fa-magnifying-glass"></i></label>
+                <input type="text" id="inputSearchUser" placeholder="Tìm kiếm">
+                <label id="btnSearchUser" for="inputSearchUser"><i class="fa-solid fa-magnifying-glass"></i></label>
             </form>
         </div>
       </div>
@@ -2162,14 +2219,15 @@ function renderRightContent(category, permission) {
     $(".right-content").html(rightContent);
 
     renderUser(1);
+    evenetForSearchUser(1);
   } else if (category == "moderators" && permission == 2) {
     let rightContent = `
       <div class="header">
         <div class="group-text-and-input">
             <span class="title">Quản Lý Quản Trị Viên</span>
             <form>
-                <input type="text" id="inputProvince" placeholder="Tìm kiếm">
-                <label for="inputProvince"><i class="fa-solid fa-magnifying-glass"></i></label>
+                <input type="text" id="inputSearchUser" placeholder="Tìm kiếm">
+                <label id="btnSearchUser" for="inputSearchUser"><i class="fa-solid fa-magnifying-glass"></i></label>
             </form>
         </div>
       </div>
@@ -2192,6 +2250,7 @@ function renderRightContent(category, permission) {
     $(".right-content").html(rightContent);
 
     renderUser(2);
+    evenetForSearchUser(2);
   } else if (category == "region") {
     let dataRegions = getRegions();
     dataRegions.then((data) => {
@@ -2548,9 +2607,6 @@ $(document).ready(function () {
     `);
   };
 
-  // Khởi tạo Firebase
-  firebase.initializeApp(firebaseConfig);
-  
   setupOptionBoxEvent(permission);
   setEventButtonLogout();
   renderRightContent('statistics', permission);

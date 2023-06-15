@@ -86,6 +86,31 @@ async function getProvinceWithNameLikeInRegionID(name, id) {
     return result;
 };
 
+async function addConnectRegion(id) {
+    let result = await fetch(
+      "http://localhost:8000/api/addConnectRegion",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ ID: id }),
+      }
+    ).then((data) => data.json());
+    return result;
+}
+
+async function getAllCollectionHaveNameLike(searchValue) {
+    let result = await fetch("http://localhost:8000/api/getAllCollectionHaveNameLike", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ searchValue: searchValue }),
+    }).then((data) => data.json());
+    return result;
+}
+
 //----------------------------------------//
 //----------- ### FUNCTION ### -----------//
 //----------------------------------------//
@@ -350,6 +375,140 @@ function renderProfile(userID, regionID) {
     $('.group-login-language').html(groupLoginAndLanguage);
 }
 
+// Header Search:
+function addEventForChoseSearchOption(userID) {
+    const groupSearchOption = document.querySelectorAll('.result-searching-form__item');
+    groupSearchOption.forEach(option => {
+        $(option).click(e => {
+            e.preventDefault();
+            const direction = $(option).data().direction;
+            if (!userID) {
+                window.location = `${direction}`;
+                return;
+            }
+            window.location = `${direction}&userID=${userID}`;
+        });
+    });
+};
+
+function renderHeaderSearch(userID, searchValue) {
+    getAllCollectionHaveNameLike(searchValue).then(result => {
+        if (result.success) {
+            const dataResult = result.data;
+            const regionData = dataResult.regions;
+            const territoryData = dataResult.territories;
+            const provinceData = dataResult.provinces;
+            const placeData = dataResult.places;
+            
+            let isRegionEmpty = regionData.length == 0 ? true : false;
+            let isTerritoryEmpty = territoryData.length == 0 ? true : false;
+            let isProvinceEmpty = provinceData.length == 0 ? true : false;
+            let isPlaceEmpty = placeData.length == 0 ? true : false;
+
+            if (isRegionEmpty || isTerritoryEmpty || isProvinceEmpty || isPlaceEmpty) {
+                $('.result-searching-form').hide();
+                return;
+            }
+
+            let SearchResult = ``;
+
+            // Region Result:
+            if (!isRegionEmpty) {
+                SearchResult += `
+                    <li class="result-searching-form__items">
+                        <span class="header-title">Miền</span>
+                `;
+                for (const [index, region] of Object.entries(regionData)) {
+                    const id = region._id;
+                    const image = region.image;
+                    const name = region.name;
+                    SearchResult += `
+                        <div class="result-searching-form__item" data-direction="/region.html?regionID=${id}">
+                            <img class="item-img" src="${image}" alt="loading...">
+                            <span class="item-name">${name}</span>
+                        </div>
+                    `;
+                };
+                SearchResult += `</li>`;
+            };
+
+            // Territory Result:
+            if (!isTerritoryEmpty) {
+                SearchResult += `
+                    <li class="result-searching-form__items">
+                        <span class="header-title">Vùng</span>
+                `;
+                for (const [index, territory] of Object.entries(territoryData)) {
+                    const id = territory._id;
+                    const image = territory.image;
+                    const name = territory.name;
+                    SearchResult += `
+                        <div class="result-searching-form__item" data-direction="/territory.html?territoryID=${id}">
+                            <img class="item-img" src="${image}" alt="loading...">
+                            <span class="item-name">${name}</span>
+                        </div>
+                    `;
+                };
+                SearchResult += `</li>`;
+            };
+
+            // Province Result:
+            if (!isProvinceEmpty) {
+                SearchResult += `
+                    <li class="result-searching-form__items">
+                        <span class="header-title">Tỉnh Thành</span>
+                `;
+                for (const [index, province] of Object.entries(provinceData)) {
+                    const id = province._id;
+                    const image = province.image;
+                    const name = province.name;
+                    SearchResult += `
+                        <div class="result-searching-form__item" data-direction="/province.html?provinceID=${id}">
+                            <img class="item-img" src="${image}" alt="loading...">
+                            <span class="item-name">${name}</span>
+                        </div>
+                    `;
+                };
+                SearchResult += `</li>`;
+            };
+
+            // Place Result:
+            if (!isPlaceEmpty) {
+                SearchResult += `
+                    <li class="result-searching-form__items">
+                        <span class="header-title">Địa Điểm</span>
+                `;
+                for (const [index, place] of Object.entries(placeData)) {
+                    const id = place._id;
+                    const image = place.image;
+                    const name = place.name;
+                    SearchResult += `
+                        <div class="result-searching-form__item" data-direction="/place.html?placeID=${id}">
+                            <img class="item-img" src="${image}" alt="loading...">
+                            <span class="item-name">${name}</span>
+                        </div>
+                    `;
+                };
+                SearchResult += `</li>`;
+            };
+
+            $('.result-searching-form').html(SearchResult);
+            $('.result-searching-form').show();
+            addEventForChoseSearchOption(userID);
+        };
+    });
+}
+
+function addEventForInputHeaderSearch(userID) {
+    $('#inputHeaderSearch').on('keypress', (e) => {
+        const searchValue = $('#inputHeaderSearch').val();
+        if (e.which == 13) {
+            e.preventDefault();
+            renderHeaderSearch(userID, searchValue);
+        };
+    });
+};
+
 function renderPage(userID, regionID) {
     // HEADER:
     let base = `
@@ -368,8 +527,9 @@ function renderPage(userID, regionID) {
                                 <li><a id="btnDirectionHome" href="/home.html">Trang Chủ</a></li>
                             </ul>
                             <form class="searching-form">
-                                <input type="text" placeholder="Tìm Kiếm...">
+                                <input type="text" placeholder="Tìm kiếm..." id="inputHeaderSearch">
                                 <label for=""><i class="fa-solid fa-magnifying-glass"></i></label>
+                                <ul class="result-searching-form"></ul>
                             </form>
                             <div class="group-login-language"></div>
                         </div>
@@ -504,6 +664,10 @@ function renderPage(userID, regionID) {
     setupButtonNextAndBackPage(userID, regionID);
     renderPageNumber(userID, regionID);
     addEventForButtonSearch(userID, regionID);
+
+    // HEADER SEARCH:
+    $('.result-searching-form').hide();
+    addEventForInputHeaderSearch(userID);
 }
 
 function getMaxPage(id) {
@@ -520,6 +684,7 @@ function getMaxPage(id) {
 $(document).ready(function () {
     const userID = getUrlParameter("userID");
     const regionID = getUrlParameter("regionID");
+    addConnectRegion(regionID);
     getMaxPage(regionID).then(max => {
         maxPage = max;
         renderPage(userID, regionID);

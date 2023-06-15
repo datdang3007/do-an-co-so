@@ -400,13 +400,12 @@ body {
 
 .container .right-content .statistical .box-statistical .box .title-box-content {
   position: absolute;
-  top: 70%;
+  top: 75%;
   left: 50%;
   -webkit-transform: translate(-50%, -50%);
           transform: translate(-50%, -50%);
   color: #fff;
-  font-size: 60px;
-  padding: 0px 10px;
+  font-size: 55px;
 }
 
 .container .right-content .statistical .box-statistical .box .title-box-content i {
@@ -771,7 +770,7 @@ body {
   border-radius: 3px;
 }
 
-.container .right-content .user-manager .user-list .value-table td.actions .action-buttons #btnBlock {
+.container .right-content .user-manager .user-list .value-table td.actions .action-buttons #btnBlock, .container .right-content .user-manager .user-list .value-table td.actions .action-buttons #btnDelete {
   background-color: #f33044;
   color: #fff;
 }

@@ -50,6 +50,17 @@ async function getUserByID(id) {
     return user;
 }
 
+async function getAllCollectionHaveNameLike(searchValue) {
+    let result = await fetch("http://localhost:8000/api/getAllCollectionHaveNameLike", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ searchValue: searchValue }),
+    }).then((data) => data.json());
+    return result;
+}
+
 //----------------------------------------//
 //----------- ### FUNCTION ### -----------//
 //----------------------------------------//
@@ -180,58 +191,58 @@ function renderTerritory(userID) {
   });
 }
 
-function renderPosts(userID) {
-  let Posts = `
-        <div class="header-title">
-            <span class="big-title">Bài Viết</span>
-            <p class="details-title">
-                Cùng nhau chia sẻ vẻ đẹp của núi rừng, biển đảo
-            </p>
-            <a class="view-all-stories" href="#">View All Stories</a>
-        </div>
-        <div class="body-content">
-            <div class="items">
-                <div class="item">
-                    <div class="item-box">
-                        <div class="item-img">
-                        <img
-                            src="https://cdn.discordapp.com/attachments/1089123119668658206/1091253516120637516/Hinh-anh-nen-Ha-Noi.png"
-                            alt=""
-                        />
-                        </div>
-                        <div class="group-details-post">
-                            <div class="group-address-and-date">
-                                <div class="address">
-                                <span>Mumbai, India</span>
-                                </div>
-                                <div class="date">
-                                <div class="day">
-                                    <span>Feb 27, 2023</span>
-                                </div>
-                                <div class="dot"></div>
-                                <div class="time">
-                                    <span>8 min read</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="detail-title">
-                            <span>A Wonderful Journey to India</span>
-                        </div>
-                        <div class="detail-content">
-                            I had always been interested in spirituality, so I decided
-                            to take a year-long journey to India to explore various
-                            religious practices and traditions.
-                        </div>
-                        <a class="btn-view-post"
-                            >Read Full Post <i class="fa-solid fa-arrow-right"></i
-                        ></a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    `;
-  $(".top-travel-stories").html(Posts);
-}
+// function renderPosts(userID) {
+//   let Posts = `
+//         <div class="header-title">
+//             <span class="big-title">Bài Viết</span>
+//             <p class="details-title">
+//                 Cùng nhau chia sẻ vẻ đẹp của núi rừng, biển đảo
+//             </p>
+//             <a class="view-all-stories" href="#">View All Stories</a>
+//         </div>
+//         <div class="body-content">
+//             <div class="items">
+//                 <div class="item">
+//                     <div class="item-box">
+//                         <div class="item-img">
+//                         <img
+//                             src="https://cdn.discordapp.com/attachments/1089123119668658206/1091253516120637516/Hinh-anh-nen-Ha-Noi.png"
+//                             alt=""
+//                         />
+//                         </div>
+//                         <div class="group-details-post">
+//                             <div class="group-address-and-date">
+//                                 <div class="address">
+//                                 <span>Mumbai, India</span>
+//                                 </div>
+//                                 <div class="date">
+//                                 <div class="day">
+//                                     <span>Feb 27, 2023</span>
+//                                 </div>
+//                                 <div class="dot"></div>
+//                                 <div class="time">
+//                                     <span>8 min read</span>
+//                                 </div>
+//                             </div>
+//                         </div>
+//                         <div class="detail-title">
+//                             <span>A Wonderful Journey to India</span>
+//                         </div>
+//                         <div class="detail-content">
+//                             I had always been interested in spirituality, so I decided
+//                             to take a year-long journey to India to explore various
+//                             religious practices and traditions.
+//                         </div>
+//                         <a class="btn-view-post"
+//                             >Read Full Post <i class="fa-solid fa-arrow-right"></i
+//                         ></a>
+//                     </div>
+//                 </div>
+//             </div>
+//         </div>
+//     `;
+//   $(".top-travel-stories").html(Posts);
+// }
 
 function addEventScrollToRegion() {
     $(document).scrollTop(1938);
@@ -301,6 +312,140 @@ function renderProfile(userID) {
     
 }
 
+// Header Search:
+function addEventForChoseSearchOption(userID) {
+    const groupSearchOption = document.querySelectorAll('.result-searching-form__item');
+    groupSearchOption.forEach(option => {
+        $(option).click(e => {
+            e.preventDefault();
+            const direction = $(option).data().direction;
+            if (!userID) {
+                window.location = `${direction}`;
+                return;
+            }
+            window.location = `${direction}&userID=${userID}`;
+        });
+    });
+};
+
+function renderHeaderSearch(userID, searchValue) {
+    getAllCollectionHaveNameLike(searchValue).then(result => {
+        if (result.success) {
+            const dataResult = result.data;
+            const regionData = dataResult.regions;
+            const territoryData = dataResult.territories;
+            const provinceData = dataResult.provinces;
+            const placeData = dataResult.places;
+            
+            let isRegionEmpty = regionData.length == 0 ? true : false;
+            let isTerritoryEmpty = territoryData.length == 0 ? true : false;
+            let isProvinceEmpty = provinceData.length == 0 ? true : false;
+            let isPlaceEmpty = placeData.length == 0 ? true : false;
+
+            if (isRegionEmpty || isTerritoryEmpty || isProvinceEmpty || isPlaceEmpty) {
+                $('.result-searching-form').hide();
+                return;
+            }
+
+            let SearchResult = ``;
+
+            // Region Result:
+            if (!isRegionEmpty) {
+                SearchResult += `
+                    <li class="result-searching-form__items">
+                        <span class="header-title">Miền</span>
+                `;
+                for (const [index, region] of Object.entries(regionData)) {
+                    const id = region._id;
+                    const image = region.image;
+                    const name = region.name;
+                    SearchResult += `
+                        <div class="result-searching-form__item" data-direction="/region.html?regionID=${id}">
+                            <img class="item-img" src="${image}" alt="loading...">
+                            <span class="item-name">${name}</span>
+                        </div>
+                    `;
+                };
+                SearchResult += `</li>`;
+            };
+
+            // Territory Result:
+            if (!isTerritoryEmpty) {
+                SearchResult += `
+                    <li class="result-searching-form__items">
+                        <span class="header-title">Vùng</span>
+                `;
+                for (const [index, territory] of Object.entries(territoryData)) {
+                    const id = territory._id;
+                    const image = territory.image;
+                    const name = territory.name;
+                    SearchResult += `
+                        <div class="result-searching-form__item" data-direction="/territory.html?territoryID=${id}">
+                            <img class="item-img" src="${image}" alt="loading...">
+                            <span class="item-name">${name}</span>
+                        </div>
+                    `;
+                };
+                SearchResult += `</li>`;
+            };
+
+            // Province Result:
+            if (!isProvinceEmpty) {
+                SearchResult += `
+                    <li class="result-searching-form__items">
+                        <span class="header-title">Tỉnh Thành</span>
+                `;
+                for (const [index, province] of Object.entries(provinceData)) {
+                    const id = province._id;
+                    const image = province.image;
+                    const name = province.name;
+                    SearchResult += `
+                        <div class="result-searching-form__item" data-direction="/province.html?provinceID=${id}">
+                            <img class="item-img" src="${image}" alt="loading...">
+                            <span class="item-name">${name}</span>
+                        </div>
+                    `;
+                };
+                SearchResult += `</li>`;
+            };
+
+            // Place Result:
+            if (!isPlaceEmpty) {
+                SearchResult += `
+                    <li class="result-searching-form__items">
+                        <span class="header-title">Địa Điểm</span>
+                `;
+                for (const [index, place] of Object.entries(placeData)) {
+                    const id = place._id;
+                    const image = place.image;
+                    const name = place.name;
+                    SearchResult += `
+                        <div class="result-searching-form__item" data-direction="/place.html?placeID=${id}">
+                            <img class="item-img" src="${image}" alt="loading...">
+                            <span class="item-name">${name}</span>
+                        </div>
+                    `;
+                };
+                SearchResult += `</li>`;
+            };
+
+            $('.result-searching-form').html(SearchResult);
+            $('.result-searching-form').show();
+            addEventForChoseSearchOption(userID);
+        };
+    });
+}
+
+function addEventForInputHeaderSearch(userID) {
+    $('#inputHeaderSearch').on('keypress', (e) => {
+        const searchValue = $('#inputHeaderSearch').val();
+        if (e.which == 13) {
+            e.preventDefault();
+            renderHeaderSearch(userID, searchValue);
+        };
+    });
+};
+
 function renderPage(userID) {
     // HEADER:
     let base = `
@@ -320,8 +465,9 @@ function renderPage(userID) {
                         <li><span onclick="addEventScrollToTerritory()">Vùng</span></li>
                     </ul>
                     <form class="searching-form">
-                        <input type="text" placeholder="Tìm kiếm...">
+                        <input type="text" placeholder="Tìm kiếm..." id="inputHeaderSearch">
                         <label for=""><i class="fa-solid fa-magnifying-glass"></i></label>
+                        <ul class="result-searching-form"></ul>
                     </form>
                     <div class="group-login-language"></div>
                 </div>
@@ -468,6 +614,10 @@ function renderPage(userID) {
   renderRegion(userID);
   renderTerritory(userID);
 //   renderPosts(userID);
+
+    // HEADER SEARCH:
+    $('.result-searching-form').hide();
+    addEventForInputHeaderSearch(userID);
 }
 
 $(document).ready(function () {

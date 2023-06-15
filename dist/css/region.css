@@ -191,6 +191,7 @@ section {
 }
 
 .no1-page .content .container .header .searching-form {
+  position: relative;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -203,7 +204,7 @@ section {
 }
 
 .no1-page .content .container .header .searching-form input {
-  width: 300px;
+  width: 400px;
   font-size: 16px;
   padding: 6px 15px;
   padding-right: 0px;
@@ -219,6 +220,68 @@ section {
   background-color: #fff;
   border-top-right-radius: 20px;
   border-bottom-right-radius: 20px;
+}
+
+.no1-page .content .container .header .searching-form ul.result-searching-form {
+  z-index: -1;
+  position: absolute;
+  top: calc(100% - 15px);
+  left: 0;
+  background-color: #fff;
+  color: #fff;
+  border-bottom-left-radius: 20px;
+  border-bottom-right-radius: 20px;
+  padding: 25px 0 5px;
+  width: 100%;
+  max-height: 307px;
+  overflow-x: hidden;
+  overflow-y: scroll;
+}
+
+.no1-page .content .container .header .searching-form ul.result-searching-form li.result-searching-form__items {
+  padding: 0px 10px;
+}
+
+.no1-page .content .container .header .searching-form ul.result-searching-form li.result-searching-form__items span.header-title {
+  display: block;
+  color: black;
+  border-bottom: 1px solid #aaa;
+}
+
+.no1-page .content .container .header .searching-form ul.result-searching-form li.result-searching-form__items .result-searching-form__item {
+  cursor: pointer;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  margin: 10px 0;
+  -webkit-transition: 0.3s;
+  transition: 0.3s;
+}
+
+.no1-page .content .container .header .searching-form ul.result-searching-form li.result-searching-form__items .result-searching-form__item:hover {
+  background-color: #4169e1;
+}
+
+.no1-page .content .container .header .searching-form ul.result-searching-form li.result-searching-form__items .result-searching-form__item:hover span.item-name {
+  color: #fff;
+}
+
+.no1-page .content .container .header .searching-form ul.result-searching-form li.result-searching-form__items .result-searching-form__item img.item-img {
+  display: block;
+  width: 60px;
+  height: 60px;
+  -o-object-fit: cover;
+     object-fit: cover;
+}
+
+.no1-page .content .container .header .searching-form ul.result-searching-form li.result-searching-form__items .result-searching-form__item span.item-name {
+  margin-left: 8px;
+  color: black;
+  -webkit-transition: 0.3s;
+  transition: 0.3s;
 }
 
 .no1-page .content .container .header .group-login-language {

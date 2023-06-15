@@ -70,11 +70,12 @@ section {
                     }
                 }
                 .searching-form {
+                    position: relative;
                     display: flex;
                     align-items: center;
                     justify-content: center;
                     input {
-                        width: 300px;
+                        width: 400px;
                         font-size: 16px;
                         padding: 6px 15px;
                         padding-right: 0px;
@@ -89,6 +90,53 @@ section {
                         background-color: #fff;
                         border-top-right-radius: 20px;
                         border-bottom-right-radius: 20px;
+                    }
+                    ul.result-searching-form {
+                        z-index: -1;
+                        position: absolute;
+                        top: calc(100% - 15px);
+                        left: 0;
+                        background-color: #fff;
+                        color: #fff;
+                        border-bottom-left-radius: 20px;
+                        border-bottom-right-radius: 20px;
+                        padding: 25px 0 5px;
+                        width: 100%;
+                        max-height: 500px;
+                        overflow-x: hidden;
+                        overflow-y: scroll;
+                        li.result-searching-form__items {
+                            padding: 0px 10px;
+                            span.header-title {
+                                display: block;
+                                color: black;
+                                border-bottom: 1px solid #aaa;
+                            }
+                            .result-searching-form__item {
+                                cursor: pointer;
+                                display: flex;
+                                align-items: center;
+                                margin: 10px 0;
+                                transition: 0.3s;
+                                &:hover {
+                                    background-color: #4169e1;
+                                    span.item-name {
+                                        color: #fff;
+                                    }
+                                }
+                                img.item-img {
+                                    display: block;
+                                    width: 60px;
+                                    height: 60px;
+                                    object-fit: cover;
+                                }
+                                span.item-name {
+                                    margin-left: 8px;
+                                    color: black;
+                                    transition: 0.3s;
+                                }
+                            }
+                        }
                     }
                 }
                 .group-login-language {
