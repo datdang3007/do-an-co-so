@@ -257,6 +257,8 @@ function formatTime(created) {
     let currentDate = new Date();
   
     let timeDiff = Math.abs(currentDate - createdDate) / 1000; // Đổi sang giây
+    let hoursDiff = 7 * 60 * 60; // 7 giờ = 7 * 60 phút * 60 giây
+    timeDiff = timeDiff - hoursDiff;
   
     if (timeDiff < 60) {
       return `${Math.floor(timeDiff)} giây trước`;
